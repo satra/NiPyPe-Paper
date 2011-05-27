@@ -169,8 +169,9 @@ for setting inputs, executing and retrieving outputs; 2) a workflow
 engine that allows creating analysis pipelines by connecting inputs and
 outputs of interfaces as a directed acyclic graph (DAG); and 3) plugins
 that execute workflows either locally or in a distributed processing
-environment (e.g., Torque - REF, SGE/OGE). In the following sections, we
-describe key architectural components and features of this software.
+environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
+following sections, we describe key architectural components and
+features of this software.
 
 Interfaces
 
@@ -201,7 +202,31 @@ Interfaces that call command line programs are derived from the
 CommandLine class, which provides methods to translate Interface inputs
 into command line parameters and for calling the command).
 
-[Insert a short interface code example here]
+from nipype.interfaces.base import (
+ TraitedSpec,
+ CommandLineInputSpec,
+ CommandLine,
+ File
+)
+import os
+class GZipInputSpec(CommandLineInputSpec):
+ input\_file = File(desc = "File", exists = True, mandatory = True,
+argstr="%s")
+class GZipOutputSpec(TraitedSpec):
+ output\_file = File(desc = "Zip file", exists = True)
+class GZipTask(CommandLine):
+ input\_spec = GZipInputSpec
+ output\_spec = GZipOutputSpec
+ cmd = 'gzip'
+ def \_list\_outputs(self):
+ outputs = self.output\_spec().get()
+ outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
+".gz")
+ return outputs
+if \_\_name\_\_ == '\_\_main\_\_':
+ zipper = GZipTask(input\_file='an\_existing\_file')
+ print zipper.cmdline
+ zipper.run()
 
 We use Enthought Traits (REF) to create a formal definition for
 Interface inputs and outputs, to define input constraints (e.g., type,
@@ -211,7 +236,126 @@ detected prior to executing the underlying program. The input definition
 also allows specifying relations between inputs. Often, some input
 options should not be set together (mutual exclusion) while other inputs
 need to be set as a group (mutual inclusion). An example input
-specification for the XX program from YY is shown in Figure XX.
+specification for the BET program from FSL is shown in Figure below.
+
+class BETInputSpec(FSLCommandInputSpec):\ :sup:``[a] <#cmnt1>`_`\ 
+
+""""""
+
+# We use position args here as list indices - so a negative number
+
+# will put something on the end
+
+in\_file = File(exists=True,
+
+desc = 'input file to skull strip',
+
+argstr='%s', position=0, mandatory=True)
+
+out\_file = File(desc = 'name of output skull stripped image',
+
+argstr='%s', position=1, genfile=True)
+
+outline = traits.Bool(desc = 'create surface outline image',
+
+argstr='-o')
+
+mask = traits.Bool(desc = 'create binary mask image',
+
+argstr='-m')
+
+skull = traits.Bool(desc = 'create skull image',
+
+argstr='-s')
+
+no\_output = traits.Bool(argstr='-n',
+
+desc="Don't generate segmented output")
+
+frac = traits.Float(desc = 'fractional intensity threshold',
+
+argstr='-f %.2f')
+
+vertical\_gradient = traits.Float(argstr='-g %.2f',
+
+desc='vertical gradient in fractional intensity ' \\
+
+'threshold (-1, 1)')
+
+radius = traits.Int(argstr='-r %d', units='mm',
+
+desc="head radius")
+
+center = traits.List(traits.Int, desc = 'center of gravity in voxels',
+
+argstr='-c %s', minlen=0, maxlen=3,
+
+units='voxels')
+
+threshold = traits.Bool(argstr='-t',
+
+desc="apply thresholding to segmented brain image and mask")
+
+mesh = traits.Bool(argstr='-e',
+
+desc="generate a vtk mesh brain surface")
+
+# the remaining 'options' are more like modes (mutually exclusive) that
+
+# FSL actually implements in a shell script wrapper around the bet
+binary.
+
+# for some combinations of them in specific order a call would not fail,
+
+# but in general using more than one of the following is clearly not
+
+# supported
+
+\_xor\_inputs = ('functional', 'reduce\_bias', 'robust', 'padding',
+
+'remove\_eyes', 'surfaces', 't2\_guided')
+
+robust = traits.Bool(desc='robust brain centre estimation ' \\
+
+'(iterates BET several times)',
+
+argstr='-R', xor=\_xor\_inputs)
+
+padding = traits.Bool(desc='improve BET if FOV is very small in Z ' \\
+
+'(by temporarily padding end slices)',
+
+argstr='-Z', xor=\_xor\_inputs)
+
+remove\_eyes = traits.Bool(desc='eye & optic nerve cleanup (can be ' \\
+
+'useful in SIENA)',
+
+argstr='-S', xor=\_xor\_inputs)
+
+surfaces = traits.Bool(desc='run bet2 and then betsurf to get additional
+' \\
+
+'skull and scalp surfaces (includes ' \\
+
+'registrations)',
+
+argstr='-A', xor=\_xor\_inputs)
+
+t2\_guided = File(desc='as with creating surfaces, when also feeding in
+' \\
+
+'non-brain-extracted T2 (includes registrations)',
+
+argstr='-A2 %s', xor=\_xor\_inputs)
+
+functional = traits.Bool(argstr='-F', xor=\_xor\_inputs,
+
+desc="apply to 4D fMRI data")
+
+reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
+
+desc="bias field and neck cleanup")
 
 Currently NiPyPE (version 0.4) ships with XXX interfaces (for full list
 of supported software
@@ -224,7 +368,15 @@ line execution modules come with an XML specification that allows NiPyPE
 to wrap them without creating individual interfaces. Interfaces can be
 used directly as a Python object and incorporated into any custom Python
 script or used interactively in a Python console (see Figure
-XX\ :sup:``[a] <#cmnt1>`_`\ ).
+XX\ :sup:``[b] <#cmnt2>`_`\ ).
+
+>>> import nipype.interfaces.spm as spm
+>>> from glob import glob
+>>> allepi = glob('epi\*.nii') # this will return an unsorted list
+>>> allepi.sort()
+>>> realigner = spm.Realign()
+>>> realigner.inputs.in\_files = allepi
+>>> result = realigner.run()
 
 Nodes, MapNodes, and Workflows
 
@@ -416,7 +568,7 @@ Therefore the way its development is managed is part of the solution.
 NiPyPE is distributed under Berkeley Software Distribution license which
 allows free copying, modification and distribution and, in fact, NiPyPE
 meets all the requirements of open source definition (see Open Source
-Initiative\ :sup:``[2] <#ftnt2>`_`\ ). Development is also carried out
+Initiative\ :sup:``[3] <#ftnt3>`_`\ ). Development is also carried out
 openly through distributed version control (via GitHub) in an online
 community. Most current version of the source code with complete history
 is accessible to everyone. Discussions between developers and design
@@ -776,28 +928,11 @@ Figures
 
 `[1] <#ftnt_ref1>`_ http://www.vistrails.org/
 
-`[2] <#ftnt_ref2>`_http://www.opensource.org/docs/osd
+`[2] <#ftnt_ref2>`_`http://www.clusterresources.com/products/torque-resource-manager.php <http://www.clusterresources.com/products/torque-resource-manager.php>`_
+
+`[3] <#ftnt_ref3>`_http://www.opensource.org/docs/osd
 
 `[a] <#cmnt_ref1>`_krzysztof.gorgolewski:
-
-What figure dis you have in mind here?
-
---------------
-
-satrajit.ghosh:
-
-i was thinking of a simple doctest code
-
-`[b] <#cmnt_ref2>`_helenlramsden:
-
-until
-
-`[c] <#cmnt_ref3>`_davclark:
-
-delete? Verbose and (to my eye) counter to the clearly evident truth
-("in fact" often cues "you might not have thought XXX")
-
-`[d] <#cmnt_ref4>`_krzysztof.gorgolewski:
 
 I could not find a shorter example of a well known program with
 dependecies in inputs. We can alternatively show only part of this.
@@ -819,6 +954,25 @@ cindeem:
 Second Davs comment, dont let them get lost in the code, just outline
 the impt parts, use highlighting? Im not sure what the journal allows,
 but this would help.
+
+`[b] <#cmnt_ref2>`_krzysztof.gorgolewski:
+
+What figure dis you have in mind here?
+
+--------------
+
+satrajit.ghosh:
+
+i was thinking of a simple doctest code
+
+`[c] <#cmnt_ref3>`_helenlramsden:
+
+until
+
+`[d] <#cmnt_ref4>`_davclark:
+
+delete? Verbose and (to my eye) counter to the clearly evident truth
+("in fact" often cues "you might not have thought XXX")
 
 `[e] <#cmnt_ref5>`_cindeem:
 
