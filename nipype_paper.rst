@@ -173,6 +173,8 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
+|image0|Figure architecture\_overview.
+
 Interfaces
 
 Interfaces form the core of NiPyPE. As stated earlier, the goal of
@@ -228,6 +230,8 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
+|image1|Figure simplified\_class\_hierarchy.
+
 We use Enthought Traits (REF) to create a formal definition for
 Interface inputs and outputs, to define input constraints (e.g., type,
 dependency, whether mandatory) and to provide validation (e.g., file
@@ -236,7 +240,7 @@ detected prior to executing the underlying program. The input definition
 also allows specifying relations between inputs. Often, some input
 options should not be set together (mutual exclusion) while other inputs
 need to be set as a group (mutual inclusion). An example input
-specification for the BET program from FSL is shown in Figure below.
+specification for the ‘bet’ program from FSL is shown in Figure below.
 
 class BETInputSpec(FSLCommandInputSpec):\ :sup:``[a] <#cmnt1>`_`\ 
 
@@ -367,8 +371,7 @@ support these programs automatically. For example, the Slicer command
 line execution modules come with an XML specification that allows NiPyPE
 to wrap them without creating individual interfaces. Interfaces can be
 used directly as a Python object and incorporated into any custom Python
-script or used interactively in a Python console (see Figure
-XX\ :sup:``[b] <#cmnt2>`_`\ ).
+script or used interactively in a Python console (see Figure below).
 
 >>> import nipype.interfaces.spm as spm
 >>> from glob import glob
@@ -441,24 +444,26 @@ enable such parametric exploration, Nodes have a property called
 iterables.
 
 When an iterable is set on a Node input, the Node and its subgraph are
-executed for each value of the iterable input (see Figure XXX for a
-schematized representation of the impact of iterables). Iterables can
-also be set on multiple inputs of a Node (e.g., somenode.iterables =
-[(‘input1’, [1,2,3]), (‘input2’, [‘a’, ‘b’])]). In such cases, every
-combination of those values is used as a parameter set (the prior
-example would result in the following parameter sets: (1, ‘a’), (1,
-‘b’), (2, ‘a’), etc.,.). This feature is especially useful to
-investigate interactions between parameters of intermediate stages with
-respect to the final results of a workflow. A common use-case of
-iterables is to execute the same Workflow for many subjects in an fMRI
-experiment and to simultaneously look at the impact of parameter
-variations on the results of the Workflow.
+executed for each value of the iterable input (see Figure
+XXX\ :sup:``[b] <#cmnt2>`_`\  for a schematized representation of the
+impact of iterables). Iterables can also be set on multiple inputs of a
+Node (e.g., somenode.iterables = [(‘input1’, [1,2,3]), (‘input2’, [‘a’,
+‘b’])]). In such cases, every combination of those values is used as a
+parameter set (the prior example would result in the following parameter
+sets: (1, ‘a’), (1, ‘b’), (2, ‘a’), etc.,.). This feature is especially
+useful to investigate interactions between parameters of intermediate
+stages with respect to the final results of a workflow. A common
+use-case of iterables is to execute the same Workflow for many subjects
+in an fMRI experiment and to simultaneously look at the impact of
+parameter variations on the results of the Workflow.
 
 It is important to note that unlike MapNode, which creates copies of the
 underlying interface for every element of an input of type list,
 iterables operate on the subgraph of a node and creates copies of not
 only the node but also all the nodes dependent on it (see Figure
 iterables\_vs\_mapnode).
+
+|image2|Figure iterables\_vs\_mapnode.
 
 Parallel Distribution and Execution Plug-ins
 
@@ -520,7 +525,7 @@ expands workflows and iterables, and hierarchical – expands workflows
 but maintains their hierarchy. Graphs can be saved in a variety of file
 formats including Scalable Vector Graphics (SVG) and Portable Network
 Graphics (PNG). An example for each of these graphical outputs is shown
-in Figure XX.
+in Figure XX\ :sup:``[c] <#cmnt3>`_`\ .
 
 Configuration Options
 
@@ -536,13 +541,13 @@ the file. The first one is faster, but does not deal with situation when
 the file is overwritten by an identical copy. The second one can be
 slower especially for big files, but can tell that two files are
 identical even if they have different modification times. To allow
-efficient recomputation NiPyPE has to store outputs of all Nodes. This
+efficient recomputation NiPyPe has to store outputs of all Nodes. This
 can generate a significant amount of data for typical neuroimaging
 studies. However, not all outputs of every Node are used as inputs to
 other Nodes or relevant to the final results. Users can decide to remove
 those outputs (and save some disk space) by setting the
 remove\_unecessary\_outputs to True. These and other configuration
-options provide a mechanism to streamline the use of NiPyPE for
+options provide a mechanism to streamline the use of NiPyPe for
 different applications.
 
 Deployment
@@ -918,12 +923,6 @@ neuroimaging community.
 
 Figures
 
-|image0|architecture overview
-
-|image1|simplified class hierarchy
-
-|image2|iterables vs mapnode
-
 --------------
 
 `[1] <#ftnt_ref1>`_ http://www.vistrails.org/
@@ -957,32 +956,32 @@ but this would help.
 
 `[b] <#cmnt_ref2>`_krzysztof.gorgolewski:
 
-What figure dis you have in mind here?
+Is this something different than iterables\_vs\_mapnode?
 
---------------
+`[c] <#cmnt_ref3>`_krzysztof.gorgolewski:
 
-satrajit.ghosh:
+Isn't it a bit of an overkill to show all different types of graphs?
+Maybe we should point just to one of the workflow graphs from Result
+section?
 
-i was thinking of a simple doctest code
-
-`[c] <#cmnt_ref3>`_helenlramsden:
+`[d] <#cmnt_ref4>`_helenlramsden:
 
 until
 
-`[d] <#cmnt_ref4>`_davclark:
+`[e] <#cmnt_ref5>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[e] <#cmnt_ref5>`_cindeem:
+`[f] <#cmnt_ref6>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[f] <#cmnt_ref6>`_davclark:
+`[g] <#cmnt_ref7>`_davclark:
 
 I mention this in my high level notes
 
-`[g] <#cmnt_ref7>`_satrajit.ghosh:
+`[h] <#cmnt_ref8>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -998,10 +997,6 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
-
-Is this something different than iterables\_vs\_mapnode?
-
 `[i] <#cmnt_ref9>`_cindeem:
 
 While this provides some amount of continuity, understanding different
@@ -1013,18 +1008,12 @@ and algorithms.
 
 spoken English, use 'due to'
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
-
-Isn't it a bit of an overkill to show all different types of graphs?
-Maybe we should point just to one of the workflow graphs from Result
-section?
-
-`[l] <#cmnt_ref12>`_cindeem:
+`[k] <#cmnt_ref11>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[m] <#cmnt_ref13>`_cindeem:
+`[l] <#cmnt_ref12>`_cindeem:
 
 Node and MapNode objects provide interfaces with additional properties
 (e.g., hash checking of inputs, caching of results, ability to iterate
@@ -1035,16 +1024,26 @@ These mechanisms allow not only for provinence tracking, but aid in
 efficient pipeline execution. They provide the framework necessary to
 create a data analysis Workflow.
 
-`[n] <#cmnt_ref14>`_duncancarmichael:
+`[m] <#cmnt_ref13>`_duncancarmichael:
 
 extensive?
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
+
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+
+What figure dis you have in mind here?
+
+--------------
+
+satrajit.ghosh:
+
+i was thinking of a simple doctest code
 
 `[p] <#cmnt_ref16>`_cindeem:
 
@@ -1140,6 +1139,6 @@ cindeem:
 1) interfaces wrap around external tools providing a unified way for
 setting inputs, executing, and retrieving outputs.
 
-.. |image0| image:: images/image02.png
-.. |image1| image:: images/image01.png
-.. |image2| image:: images/image00.png
+.. |image0| image:: images/image00.png
+.. |image1| image:: images/image02.png
+.. |image2| image:: images/image01.png
