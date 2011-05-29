@@ -754,15 +754,14 @@ study\ :sup:``[d] <#cmnt4>`_`\
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. in other words provenance
-#. a nipype script is a description allowing you to fully recreate the
-   processing pipeline
+#. a nipype script allows to fully recreate the processing pipeline
 
 A framework for shared storage of information and evolution of analysis
 methods and approaches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. workflows are reusable and redistributable
-#. researchers can use public version control systems such as github to
+#. researchers can use public version control portals such as github to
    develop pipelines
 
 Results
