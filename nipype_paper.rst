@@ -637,8 +637,66 @@ we demonstrate these solutions.
 Results v2
 ----------
 
-uniform access to neuroimaging analysis software and usage information
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Uniform way of running software and accessing usage information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To access an interface user has to first import it from an appropriate
+Python package (each neuroimaging software distribution such as FSL,
+SPM, Camino etc. has a corresponding Python package in the
+nipype.interfaces namesapce):
+
+>>> from nipype.interfaces.camino import DTIFit
+
+To learn how to use a given Interface user can call help() method in an
+interactive console:
+>>> DTIFit.help()
+Inputs
+------
+Mandatory:
+ in\_file: voxel-order data filename
+ scheme\_file: Camino scheme file (b values / vectors, see
+camino.fsl2scheme)
+Optional:
+ args: Additional parameters to the command
+ environ: Environment variables (default={})
+ ignore\_exception: Print an error message instead of throwing an
+exception in case the interface fails to run (default=False)
+ non\_linear: Use non-linear fitting instead of the default linear
+regression to the log measurements.
+ out\_file: None
+Outputs
+-------
+tensor\_fitted: path/name of 4D volume in voxel order
+
+Output printed by this method is standardized for all Interfaces. It is
+automatically generated based on inputs and outputs definition and
+includes information about reaquired inputs, types, and default value.
+Alternatively an extended information is available in the form of
+auto-generated HTML documentation (available locally and
+online):|image3|
+
+This includes example usage. All inputs are set through the inputs
+field:
+
+>>> fit.inputs.scheme\_file = 'A.scheme'
+>>> fit.inputs.in\_file = 'tensor\_fitted\_data.Bfloat'
+
+When trying to set an invalid input type (for example non existing file,
+or a number instead of a string NiPyPe framework will send an error
+message. Checking validity of the pipeline at early stages prevents from
+running pipelines that are bound to fail and thus saves time. To run an
+interface user needs to call run() method:
+
+>>> fit.run()
+
+At this stage the framework checks if all the mandatory inputs are set
+and sends an error otherwise.
+
+This way of running and accessing help information is the same for all
+software supported by NiPyPe - whether it is a command line program or a
+MATLAB or Python script. The framework deals with translating inputs
+into appropriate form and calling the right tools in the right way
+presenting user with a uniform interface.
 
 a framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -882,6 +940,7 @@ Execution Performance
 ~~~~~~~~~~~~~~~~~~~~~
 
 Discussion
+----------
 
 Outline:
 
@@ -895,6 +954,7 @@ Outline:
 Content:
 
 Python
+~~~~~~
 
 One of the core development decisions was selecting a programming
 language. We have decided to use Python for several reasons. It was an
@@ -913,6 +973,7 @@ neuroscientific community and slowly is gaining popularity (Bednar,
 2009; Goodman & Brette, 2009).
 
 Flexibility vs Standardization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Despite trying to provide common way of calling and using diverse set of
 software we have decided not to impose declarative description of
@@ -940,6 +1001,7 @@ descriptions. In fact this is being already done for modules provided by
 Slicer 3D.
 
 Openness and provenance tracking
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Openness lies at heart of NiPyPe in both design and development process.
 Source code is freely distributed under BSD license allowing anyone to
@@ -968,6 +1030,7 @@ standardized XML format (Mackenzie-Graham, Van Horn, Woods, Crawford, &
 Toga, 2008) is planned in future releases.
 
 Comparisons and pipeline optimization studies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Increased diversity of data processing software made systematic
 comparison of performance and accuracy difficult. Despite the fact that
@@ -983,6 +1046,7 @@ finding optimal per subject preprocessing pipeline (Churchill et al.,
 efficient data analysis.
 
 Summary
+~~~~~~~
 
 We present a novel extensible framework for creating interfaces and
 pipelines for neuroimaging data processing. Community based open in
@@ -994,6 +1058,10 @@ pipelines created using NiPyPE stimulates collaboration in the broader
 neuroimaging community.
 
 Figures
+
+.. figure:: images/image01.png
+   :align: center
+   :alt: 
 
 --------------
 
@@ -1214,5 +1282,6 @@ cindeem:
 setting inputs, executing, and retrieving outputs.
 
 .. |image0| image:: images/image00.png
-.. |image1| image:: images/image02.png
-.. |image2| image:: images/image01.png
+.. |image1| image:: images/image03.png
+.. |image2| image:: images/image02.png
+.. |image3| image:: images/image01.png
