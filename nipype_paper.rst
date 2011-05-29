@@ -698,22 +698,72 @@ MATLAB or Python script. The framework deals with translating inputs
 into appropriate form and calling the right tools in the right way
 presenting user with a uniform interface.
 
-a framework for comparative algorithm development and dissemination
+A framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-an environment for methodological continuity and paced training of new
+A uniform interface for a wide range of processing methods not only
+helps to create new pipelines but also allows to compare algorithms
+designed to deal with the same problem. Development of a new method when
+there are others already available should be driven by clear
+improvement. This can be only measured by comparison on real or
+simulated data. Unfortunately a thorough comparison is usually time
+consuming, because of the need to deal with technicalities of different
+software packages. NiPyPe helps with this by standardizing the access to
+the software. Additionally thanks to the iterables mechanism user can
+easily extend the comparison into many more dimensions testing different
+values of parameters.
+
+As an example of such use we have compared isotropic voxelwise
+isotropic, voxelwise anisotropic and surface based smoothing all for two
+levels of FWHM - 4 and 8mm. First one is the standard convolution with
+gaussian kernel as implemented in SPM. Second one involves smoothing
+only voxels of similar intensity in attempt to retain structure. This
+was implemented in SUSAN from FSL (S.M. Smith, 1992). Third method
+involves reconstructing surface of the cortex and smoothing along it
+(Hagler Jr., Saygin, & Martin I. Sereno, 2006). This avoids bleeding of
+signal over sulci.
+
+Establishing parameters from data and smoothing using SUSAN is a
+Workflow build into NiPyPe. It can be created using
+create\_susan\_smooth() function. It has similar inputs and outputs as
+SPM Smooth Interface.
+
+Smoothing on surface involves doing a full cortical reconstruction from
+T1 volume using FreeSurfer (Fischl, M I Sereno, & Dale, 1999) followed
+by coregistering functional images to the reconstructed surface using
+BBRegister. Finally surface smoothing algorithm from FreeSurfer is
+called.
+
+Statistical maps along with the pipeline used to generate them can be
+found in Figure TODO. Full code used to generate this data can be found
+in the supplementary material.
+
+An environment for methodological continuity and paced training of new
 personnel in laboratories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-computationally efficient execution of neuroimaging analysis
+#. unified way of calling and accessing help makes learning new methods
+   easier
+#. learning from workflows developed by others
+
+Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-a complete recording of the methods used in a study
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A complete recording of the methods used in a
+study\ :sup:``[d] <#cmnt4>`_`\ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-a framework for shared storage of information and evolution of analysis
+#. in other words provenance
+#. a nipype script is a description allowing you to fully recreate the
+   processing pipeline
+
+A framework for shared storage of information and evolution of analysis
 methods and approaches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. workflows are reusable and redistributable
+#. researchers can use public version control systems such as github to
+   develop pipelines
 
 Results
 
@@ -1106,24 +1156,31 @@ Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[d] <#cmnt_ref4>`_helenlramsden:
+`[d] <#cmnt_ref4>`_krzysztof.gorgolewski:
+
+I am a bit afraid to make provenance tracking a big point. UCLA
+implementation has the following advantages: it's independent from LONI
+Pipeline, its standardized using an XML Schema, it includes architecture
+and version tracking.
+
+`[e] <#cmnt_ref5>`_helenlramsden:
 
 until
 
-`[e] <#cmnt_ref5>`_davclark:
+`[f] <#cmnt_ref6>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[f] <#cmnt_ref6>`_cindeem:
+`[g] <#cmnt_ref7>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[g] <#cmnt_ref7>`_davclark:
+`[h] <#cmnt_ref8>`_davclark:
 
 I mention this in my high level notes
 
-`[h] <#cmnt_ref8>`_satrajit.ghosh:
+`[i] <#cmnt_ref9>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1139,23 +1196,23 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[i] <#cmnt_ref9>`_cindeem:
+`[j] <#cmnt_ref10>`_cindeem:
 
 While this provides some amount of continuity, understanding different
 aspects of neuroimaging has a steep learning curve, made steeper by
 incorporating the time needed to learn the different package interfaces
 and algorithms.
 
-`[j] <#cmnt_ref10>`_helenlramsden:
+`[k] <#cmnt_ref11>`_helenlramsden:
 
 spoken English, use 'due to'
 
-`[k] <#cmnt_ref11>`_cindeem:
+`[l] <#cmnt_ref12>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[l] <#cmnt_ref12>`_cindeem:
+`[m] <#cmnt_ref13>`_cindeem:
 
 Node and MapNode objects provide interfaces with additional properties
 (e.g., hash checking of inputs, caching of results, ability to iterate
@@ -1166,16 +1223,9 @@ These mechanisms allow not only for provinence tracking, but aid in
 efficient pipeline execution. They provide the framework necessary to
 create a data analysis Workflow.
 
-`[m] <#cmnt_ref13>`_duncancarmichael:
+`[n] <#cmnt_ref14>`_duncancarmichael:
 
 extensive?
-
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
-
-I am a bit afraid to make provenance tracking a big point. UCLA
-implementation has the following advantages: it's independent from LONI
-Pipeline, its standardized using an XML Schema, it includes architecture
-and version tracking.
 
 `[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
