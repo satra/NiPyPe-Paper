@@ -1,6 +1,12 @@
+NiPyPe: Towards extensible, flexible and lightweight neuroimaging data
+processing framework
+===========================================================================================
+
 Abstract
+--------
 
 Introduction
+------------
 
 Over the past twenty years, advances in non-invasive in vivo
 neuroimaging have resulted in an explosion of studies investigating
@@ -18,6 +24,7 @@ complicates analysis methods and makes data exploration and inference
 challenging and comparative analysis of new algorithms difficult.
 
 Current problems
+~~~~~~~~~~~~~~~~
 
 Several technical, practical and social issues hinder replicable,
 efficient and optimal use of neuroimaging analysis approaches.
@@ -114,6 +121,7 @@ the diversity of software solutions in neuroimaging field results in a
 steep learning curve and high training costs.
 
 Current solutions
+~~~~~~~~~~~~~~~~~
 
 One attempt to address some of these issues has resulted in the SPM
 batch execution system. Unfortunately it supports only SPM modules and
@@ -162,6 +170,7 @@ allowing rapid adaptation to the varied needs of the neuroimaging
 community.
 
 Methods
+-------
 
 NiPyPE consists of three components (see Figure architecture\_overview):
 1) interfaces or wrappers around external tools that provide unified way
@@ -173,9 +182,17 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-|image0|Figure architecture\_overview.
+|image0|Figure architecture\_overview. Architecture overview of the
+NiPyPe framework. Interfaces are wrapped with Nodes or MapNodes and
+connected together within a Workflows. Workflows themselves can act as a
+Node inside another Workflows supporting encapsulation desing pattern.
+Dependency graph is transformed before executing by the engine
+component. Execution is performed by one of the plugins. Currently
+NiPyPe supports serial and parallel (both local multithreading and
+cluster) execution.
 
 Interfaces
+~~~~~~~~~~
 
 Interfaces form the core of NiPyPE. As stated earlier, the goal of
 “Interfaces” is to provide a uniform mechanism for accessing analysis
@@ -230,16 +247,23 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-|image1|Figure simplified\_class\_hierarchy.
+|image1|Figure simplified\_class\_hierarchy. Simplified class hierarchy
+of Interfaces. Our framework tries to reduce code redundancy and thus
+make adding new interfaces easier and quicker. For example all
+functionality related to execution of command line applications is
+grouped in one class. New classes can be added on top of that. For
+example FSL Interfaces are essentially command lines with some extra
+common properties (such as setting the type of the output file by an
+environment variable).
 
-We use Enthought Traits (REF) to create a formal definition for
-Interface inputs and outputs, to define input constraints (e.g., type,
-dependency, whether mandatory) and to provide validation (e.g., file
-existence). This allows malformed or underspecified inputs to be
-detected prior to executing the underlying program. The input definition
-also allows specifying relations between inputs. Often, some input
-options should not be set together (mutual exclusion) while other inputs
-need to be set as a group (mutual inclusion). An example input
+We use Enthought Traits\ :sup:``[3] <#ftnt3>`_`\  to create a formal
+definition for Interface inputs and outputs, to define input constraints
+(e.g., type, dependency, whether mandatory) and to provide validation
+(e.g., file existence). This allows malformed or underspecified inputs
+to be detected prior to executing the underlying program. The input
+definition also allows specifying relations between inputs. Often, some
+input options should not be set together (mutual exclusion) while other
+inputs need to be set as a group (mutual inclusion). An example input
 specification for the ‘bet’ program from FSL is shown in Figure below.
 
 class BETInputSpec(FSLCommandInputSpec):\ :sup:``[a] <#cmnt1>`_`\ 
@@ -382,6 +406,7 @@ script or used interactively in a Python console (see Figure below).
 >>> result = realigner.run()
 
 Nodes, MapNodes, and Workflows
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NiPyPE provides a framework for connecting Interfaces to create a data
 analysis Workflow. In order for Interfaces to be used in a Workflow they
@@ -432,6 +457,7 @@ exchange of Workflows between researchers stimulates efficient use of
 methods and experimentation.
 
 Iterables - Parameter space exploration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NiPyPE provides a flexibile approach to prototype and experiment with
 different processing strategies, by providing unified and uniform access
@@ -463,9 +489,18 @@ iterables operate on the subgraph of a node and creates copies of not
 only the node but also all the nodes dependent on it (see Figure
 iterables\_vs\_mapnode).
 
-|image2|Figure iterables\_vs\_mapnode.
+|image2|Figure iterables\_vs\_mapnode. Branching the dependency tree
+using iterables and MapNodes. If we take the processing pipeline A and
+set iterables parameter of DataGrabber to list of two subjects NiPyPe
+will effectivelly execute graph B. Identical processing will be applied
+to evey subject from the list. Iterables can be used in one graph on
+many levels - for example setting iterables on Smooth FWHM to a list of
+4 and 8 mm will result in graph C. MapNode also branches the execution
+tree but in contrast to iterables it merges it straight away efectivelly
+performing a MapReduce operation (D).
 
 Parallel Distribution and Execution Plug-ins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NiPyPE supports executing Workflows locally (in series or parallel) or
 on load-balanced grid-computing clusters (e.g., SGE, Torque or even via
@@ -501,6 +536,7 @@ workstation to executing it on a bigger cohort on a cluster is therefore
 seamless.
 
 The Function Interface
+~~~~~~~~~~~~~~~~~~~~~~
 
 One of the Interfaces implemented in NiPyPe requires special attention:
 The Function Interface. Its constructor takes as arguments Python
@@ -515,6 +551,7 @@ which is especially useful for ad-hoc solutions (e.g., calling an
 external program that has not yet been wrapped as an Interface).
 
 Workflow Visualisation
+~~~~~~~~~~~~~~~~~~~~~~
 
 To be able to efficiently manage and debug Workflow one has to have
 access to a graphical representation. Using graphviz (Ref), NiPyPE
@@ -528,6 +565,7 @@ Graphics (PNG). An example for each of these graphical outputs is shown
 in Figure XX\ :sup:``[c] <#cmnt3>`_`\ .
 
 Configuration Options
+~~~~~~~~~~~~~~~~~~~~~
 
 Certain options concerning verbosity of output and execution efficiency
 can be controlled through configuration files or variables. These
@@ -551,6 +589,7 @@ options provide a mechanism to streamline the use of NiPyPe for
 different applications.
 
 Deployment
+~~~~~~~~~~
 
 NiPyPE supports Linux and Mac OS X operating systems. We currently
 provide three ways of deploying it on a new machine: manual installation
@@ -566,6 +605,7 @@ dependencies and automatic updates NeuroDebian provides some of the
 software packages supported by NiPyPE.
 
 Development
+~~~~~~~~~~~
 
 NiPyPE is trying to address the problem of interacting with ever
 changing universe of neuroimaging software in a sustainable manner.
@@ -573,7 +613,7 @@ Therefore the way its development is managed is part of the solution.
 NiPyPE is distributed under Berkeley Software Distribution license which
 allows free copying, modification and distribution and, in fact, NiPyPE
 meets all the requirements of open source definition (see Open Source
-Initiative\ :sup:``[3] <#ftnt3>`_`\ ). Development is also carried out
+Initiative\ :sup:``[4] <#ftnt4>`_`\ ). Development is also carried out
 openly through distributed version control (via GitHub) in an online
 community. Most current version of the source code with complete history
 is accessible to everyone. Discussions between developers and design
@@ -595,6 +635,7 @@ evolution of analysis methods and approaches. In the following section,
 we demonstrate these solutions.
 
 Results
+-------
 
 Outline:
 
@@ -641,6 +682,7 @@ Outline:
 Content:
 
 Building a workflow from scratch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the following section, to showcase NiPyPe, we will describe how to
 create and extend a typical fMRI processing pipeline. We will begin with
@@ -706,6 +748,7 @@ Supplementary material) is ready to run. This can be done by calling
 run() method of the master Workflow.
 
 Adding artefact detection
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The example pipeline so far uses only SPM components and with the
 exception of DataGrabber and DataSink it could have been executed using
@@ -721,6 +764,7 @@ include new regressors in the design matrix. Workflow with added
 artefact detection can be seen in Figure TODO.
 
 Adding brain mask estimation from structural image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Without specifying a mask explicitly SPM will estimate one from EPI
 sequence. However, this is not the best signal to estimate border
@@ -738,6 +782,7 @@ artefact detection only to relevant areas) and Level1Design. The
 improved Workflow can be seen in Figure TODO.
 
 Thresholding and visualising statistical maps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Another step that is missing from the example workflow is thresholding
 of the statistical maps estimated by the EstimateContrast Node. For
@@ -750,6 +795,7 @@ sent to DataSink. Resulting overlay bitmaps and extended workflow can be
 seen on Figure TODO.
 
 Comparison of different smoothing methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 One of the goals of NiPyPe is make comparison between different
 parameters and algorithms easier. For example the Full Width Half
@@ -789,6 +835,7 @@ Statistical maps along with the pipeline used to generate them can be
 found in Figure TODO.
 
 More complex workflows
+~~~~~~~~~~~~~~~~~~~~~~
 
 The example workflow outlined above was kept oversimplified for
 demonstration purposes. NiPyPe, however, scales well for more
@@ -808,6 +855,9 @@ coefficient were recorded in local database.
 Despite of the complexity of this analysis thanks to support for
 encapsulating workflows we were able to divide it into independent,
 reusable, and manageable parts.
+
+Execution Performance
+~~~~~~~~~~~~~~~~~~~~~
 
 Discussion
 
@@ -929,7 +979,9 @@ Figures
 
 `[2] <#ftnt_ref2>`_`http://www.clusterresources.com/products/torque-resource-manager.php <http://www.clusterresources.com/products/torque-resource-manager.php>`_
 
-`[3] <#ftnt_ref3>`_http://www.opensource.org/docs/osd
+`[3] <#ftnt_ref3>`_`http://code.enthought.com/projects/traits/ <http://code.enthought.com/projects/traits/>`_
+
+`[4] <#ftnt_ref4>`_http://www.opensource.org/docs/osd
 
 `[a] <#cmnt_ref1>`_krzysztof.gorgolewski:
 
