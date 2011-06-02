@@ -699,6 +699,72 @@ MATLAB or Python script. The framework deals with translating inputs
 into appropriate form and calling the right tools in the right way
 presenting user with a uniform interface.
 
+Building a workflow from scratch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the following section, to showcase NiPyPe, we will describe how to
+create and extend a typical fMRI processing pipeline. We will begin with
+a basic processing layout and follow with extending it by
+adding/exchanging different components.
+
+Most fMRI pipeline can be divided into two sections – preprocessing and
+modelling. First one deals with cleaning data from confounds and noise
+and the second one fits a model based on the experimental design.
+Preprocessing stage in our first iteration of a pipeline will consist of
+only two steps: realignment and smoothing. In NiPyPe Every processing
+step consist of an Interface (which defines how to execute corresponding
+software) encapsulated in a Node (which defines for example a unique
+name). For realignment (motion correction achieved by coregistering all
+volumes to the mean) and smoothing (convolution with 3D Gaussian kernel)
+we will use SPM implementation. Definition of appropriate nodes can be
+found in Listing 1 (TODO). Inputs (such as register\_to\_mean from
+listing 1) of nodes are accessible through the inputs property. Upon
+setting any input its type is verified to avoid errors during the
+execution.
+
+To connect two nodes a Workflow has to be created. connect() method of
+Workflow allows to specify which outputs of which Nodes should be
+connected to which inputs of which Nodes (see Listing 2). By connecting
+realigned\_files output of realign to in\_files input of Smooth we have
+created a simple preprocessing workflow (see Figure TODO).
+
+Creating a modelling workflow which will define the design, estimate
+model and contrasts follows the same suite. We will again use SPM
+implementations. NiPyPe, however, adds extra abstraction layer to model
+definition which allows using the same definition for many model
+estimation implemantations (for example one from FSL or nippy).
+Therefore we will need four nodes: SpecifyModel (NiPyPe specific
+abstraction layer), Level1Design (SPM design definition), ModelEstimate,
+and ContrastEstimate. The connected modelling workflow can be seen on
+Figure TODO. Model specification supports block, event and sparse
+designs. Contrasts provided to ContrastEstimate are defined using the
+same names of regressors as defined in the SpecifyModel.
+
+Having preprocessing and modelling workflows we need to connect them
+together add data grabbing facility and save results. For this we will
+create a master workflow which will host preprocessing and model
+Workflows as well as DataGrabber and DataSink Nodes. NiPyPe allows
+connecting Nodes between workflows. We will use this feature to connect
+realignment\_parameters and smoothed\_files to modelling workflow.
+
+DataGrabber allows to define flexible search patterns which can be
+parameterized by user defined inputs (such as subject ID, session etc.).
+This allows to adapt to a wide range of file layouts. In our case we
+will parameterize it with subject ID. In this way we will be able to run
+it for different subjects. We can automate this by iterating over a list
+of subject Ids, by setting an iterables property on the subject\_id
+input of DataGrabber. Its output will be connected to realignment node
+from preprocessing workflow.
+
+DataSink on the other side provides means to storing selected results to
+a specified location. It supports automatic creation of folder stricter
+and regular expression based substitutions. In this example we will
+store T maps.
+
+A pipeline defined this way (see Figure TODO, for full code see
+Supplementary material) is ready to run. This can be done by calling
+run() method of the master Workflow.
+
 A framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -807,72 +873,6 @@ Outline:
 3. Example of a more complicated workflow – reliability study.
 
 Content:
-
-Building a workflow from scratch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In the following section, to showcase NiPyPe, we will describe how to
-create and extend a typical fMRI processing pipeline. We will begin with
-a basic processing layout and follow with extending it by
-adding/exchanging different components.
-
-Most fMRI pipeline can be divided into two sections – preprocessing and
-modelling. First one deals with cleaning data from confounds and noise
-and the second one fits a model based on the experimental design.
-Preprocessing stage in our first iteration of a pipeline will consist of
-only two steps: realignment and smoothing. In NiPyPe Every processing
-step consist of an Interface (which defines how to execute corresponding
-software) encapsulated in a Node (which defines for example a unique
-name). For realignment (motion correction achieved by coregistering all
-volumes to the mean) and smoothing (convolution with 3D Gaussian kernel)
-we will use SPM implementation. Definition of appropriate nodes can be
-found in Listing 1 (TODO). Inputs (such as register\_to\_mean from
-listing 1) of nodes are accessible through the inputs property. Upon
-setting any input its type is verified to avoid errors during the
-execution.
-
-To connect two nodes a Workflow has to be created. connect() method of
-Workflow allows to specify which outputs of which Nodes should be
-connected to which inputs of which Nodes (see Listing 2). By connecting
-realigned\_files output of realign to in\_files input of Smooth we have
-created a simple preprocessing workflow (see Figure TODO).
-
-Creating a modelling workflow which will define the design, estimate
-model and contrasts follows the same suite. We will again use SPM
-implementations. NiPyPe, however, adds extra abstraction layer to model
-definition which allows using the same definition for many model
-estimation implemantations (for example one from FSL or nippy).
-Therefore we will need four nodes: SpecifyModel (NiPyPe specific
-abstraction layer), Level1Design (SPM design definition), ModelEstimate,
-and ContrastEstimate. The connected modelling workflow can be seen on
-Figure TODO. Model specification supports block, event and sparse
-designs. Contrasts provided to ContrastEstimate are defined using the
-same names of regressors as defined in the SpecifyModel.
-
-Having preprocessing and modelling workflows we need to connect them
-together add data grabbing facility and save results. For this we will
-create a master workflow which will host preprocessing and model
-Workflows as well as DataGrabber and DataSink Nodes. NiPyPe allows
-connecting Nodes between workflows. We will use this feature to connect
-realignment\_parameters and smoothed\_files to modelling workflow.
-
-DataGrabber allows to define flexible search patterns which can be
-parameterized by user defined inputs (such as subject ID, session etc.).
-This allows to adapt to a wide range of file layouts. In our case we
-will parameterize it with subject ID. In this way we will be able to run
-it for different subjects. We can automate this by iterating over a list
-of subject Ids, by setting an iterables property on the subject\_id
-input of DataGrabber. Its output will be connected to realignment node
-from preprocessing workflow.
-
-DataSink on the other side provides means to storing selected results to
-a specified location. It supports automatic creation of folder stricter
-and regular expression based substitutions. In this example we will
-store T maps.
-
-A pipeline defined this way (see Figure TODO, for full code see
-Supplementary material) is ready to run. This can be done by calling
-run() method of the master Workflow.
 
 Adding artefact detection
 ~~~~~~~~~~~~~~~~~~~~~~~~~
