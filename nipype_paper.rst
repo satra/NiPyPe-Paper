@@ -37,12 +37,13 @@ different software packages for different components of the analysis.
 However, these different software packages use different languages and
 environments for development, such as: C/C++ (FSL), MATLAB (SPM), Java
 (Camino), Python (NiPy). This has resulted in a heterogeneous set of
-software with no uniform way to use these tools. With the primary focus
-on algorithmic improvement, academic software development often lacks a
-rigorous software engineering framework that involves extensive testing
-and documentation and ensures compatibility with other tools. This often
-necessitates extensive interactions with the authors of the software to
-understand their parameters, their quirks and their usage.
+software with no uniform way to use these tools or execute them. With
+the primary focus on algorithmic improvement, academic software
+development often lacks a rigorous software engineering framework that
+involves extensive testing and documentation and ensures compatibility
+with other tools. This often necessitates extensive interactions with
+the authors of the software to understand their parameters, their quirks
+and their usage.
 
 No framework for comparative algorithm development and dissemination.
 Except for some large software development efforts (e.g., SPM, FSL,
@@ -637,8 +638,8 @@ we demonstrate these solutions.
 Results v2
 ----------
 
-Uniform way of running software and accessing usage information
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Uniform accessing to tools, their usage, and execution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To access an interface user has to first import it from an appropriate
 Python package (each neuroimaging software distribution such as FSL,
@@ -713,6 +714,9 @@ the software. Additionally thanks to the iterables mechanism user can
 easily extend the comparison into many more dimensions testing different
 values of parameters.
 
+local comparison, but also comparison in the context of an application
+(e.g., fmri analysis)
+
 As an example of such use we have compared isotropic voxelwise
 isotropic, voxelwise anisotropic and surface based smoothing all for two
 levels of FWHM - 4 and 8mm. First one is the standard convolution with
@@ -738,6 +742,9 @@ Statistical maps along with the pipeline used to generate them can be
 found in Figure TODO. Full code used to generate this data can be found
 in the supplementary material.
 
+(TODO) dissemination - example ArtifactDetection; from MATLAB to nipype;
+once limited to a lab; now a nipype interface
+
 An environment for methodological continuity and paced training of new
 personnel in laboratories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -745,24 +752,15 @@ personnel in laboratories
 #. unified way of calling and accessing help makes learning new methods
    easier
 #. learning from workflows developed by others
+#. sharing workflows within a lab (helps when there is a big turnover in
+   staff members)
 
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A complete recording of the methods used in a
-study\ :sup:``[d] <#cmnt4>`_`\ 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+multicore systems, hpc clusters
 
-#. in other words provenance
-#. a nipype script allows to fully recreate the processing pipeline
-
-A framework for shared storage of information and evolution of analysis
-methods and approaches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. workflows are reusable and redistributable
-#. researchers can use public version control portals such as github to
-   develop pipelines
+insert paragraph and execution details from ipython poster
 
 Results
 
@@ -1093,6 +1091,20 @@ correction and regression has been researched coming with a method of
 finding optimal per subject preprocessing pipeline (Churchill et al.,
 2011). NiPyPe can make such investigation easier resulting in more
 efficient data analysis.
+
+A complete recording of the methods used in a
+study\ :sup:``[d] <#cmnt4>`_`\ 
+
+#. in other words provenance
+#. a nipype script allows to fully recreate the processing pipeline
+
+A framework for shared storage of information and evolution of analysis
+methods and approaches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. workflows are reusable and redistributable
+#. researchers can use public version control portals such as github to
+   develop pipelines
 
 Summary
 ~~~~~~~
