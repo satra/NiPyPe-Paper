@@ -824,7 +824,7 @@ personnel in laboratories
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-multicore systems, hpc clusters
+(TODO) multicore systems, hpc clusters
 
 insert paragraph and execution details from ipython poster
 
