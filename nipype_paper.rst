@@ -697,8 +697,8 @@ and sends an error otherwise.
 This way of running and accessing help information is the same for all
 software supported by NiPyPe - whether it is a command line program or a
 MATLAB or Python script. The framework deals with translating inputs
-into appropriate form and calling the right tools in the right way
-presenting user with a uniform interface.
+into appropriate form and calling the right tools in the right way,
+presenting the user with a uniform interface.
 
 Building a workflow from scratch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -723,7 +723,7 @@ listing 1) of nodes are accessible through the inputs property. Upon
 setting any input its type is verified to avoid errors during the
 execution.
 
-To connect two nodes a Workflow has to be created. connect() method of
+To connect two nodes a Workflow has to be created. connect() method of a
 Workflow allows to specify which outputs of which Nodes should be
 connected to which inputs of which Nodes (see Listing 2). By connecting
 realigned\_files output of realign to in\_files input of Smooth we have
@@ -736,16 +736,16 @@ definition which allows using the same definition for many model
 estimation implemantations (for example one from FSL or nippy).
 Therefore we will need four nodes: SpecifyModel (NiPyPe specific
 abstraction layer), Level1Design (SPM design definition), ModelEstimate,
-and ContrastEstimate. The connected modelling workflow can be seen on
+and ContrastEstimate. The connected modelling Workflow can be seen on
 Figure TODO. Model specification supports block, event and sparse
 designs. Contrasts provided to ContrastEstimate are defined using the
 same names of regressors as defined in the SpecifyModel.
 
 Having preprocessing and modelling workflows we need to connect them
-together add data grabbing facility and save results. For this we will
-create a master workflow which will host preprocessing and model
+together, add data grabbing facility and save the results. For this we
+will create a master Workflow which will host preprocessing and model
 Workflows as well as DataGrabber and DataSink Nodes. NiPyPe allows
-connecting Nodes between workflows. We will use this feature to connect
+connecting Nodes between Workflows. We will use this feature to connect
 realignment\_parameters and smoothed\_files to modelling workflow.
 
 DataGrabber allows to define flexible search patterns which can be
