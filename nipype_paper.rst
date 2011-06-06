@@ -472,17 +472,16 @@ iterables.
 
 When an iterable is set on a Node input, the Node and its subgraph are
 executed for each value of the iterable input (see Figure
-XXX\ :sup:``[b] <#cmnt2>`_`\  for a schematized representation of the
-impact of iterables). Iterables can also be set on multiple inputs of a
-Node (e.g., somenode.iterables = [(‘input1’, [1,2,3]), (‘input2’, [‘a’,
-‘b’])]). In such cases, every combination of those values is used as a
-parameter set (the prior example would result in the following parameter
-sets: (1, ‘a’), (1, ‘b’), (2, ‘a’), etc.,.). This feature is especially
-useful to investigate interactions between parameters of intermediate
-stages with respect to the final results of a workflow. A common
-use-case of iterables is to execute the same Workflow for many subjects
-in an fMRI experiment and to simultaneously look at the impact of
-parameter variations on the results of the Workflow.
+iterables\_vs\_mapnode). Iterables can also be set on multiple inputs of
+a Node (e.g., somenode.iterables = [(‘input1’, [1,2,3]), (‘input2’,
+[‘a’, ‘b’])]). In such cases, every combination of those values is used
+as a parameter set (the prior example would result in the following
+parameter sets: (1, ‘a’), (1, ‘b’), (2, ‘a’), etc.,.). This feature is
+especially useful to investigate interactions between parameters of
+intermediate stages with respect to the final results of a workflow. A
+common use-case of iterables is to execute the same Workflow for many
+subjects in an fMRI experiment and to simultaneously look at the impact
+of parameter variations on the results of the Workflow.
 
 It is important to note that unlike MapNode, which creates copies of the
 underlying interface for every element of an input of type list,
@@ -562,8 +561,7 @@ not expand inner Workflows, flat – expands inner workflows, exec –
 expands workflows and iterables, and hierarchical – expands workflows
 but maintains their hierarchy. Graphs can be saved in a variety of file
 formats including Scalable Vector Graphics (SVG) and Portable Network
-Graphics (PNG). An example for each of these graphical outputs is shown
-in Figure XX\ :sup:``[c] <#cmnt3>`_`\ .
+Graphics (PNG). See Figure
 
 Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~
@@ -974,7 +972,7 @@ finding optimal per subject preprocessing pipeline (Churchill et al.,
 efficient data analysis.
 
 A complete recording of the methods used in a
-study\ :sup:``[d] <#cmnt4>`_`\ 
+study\ :sup:``[b] <#cmnt2>`_`\ 
 
 #. in other words provenance
 #. a nipype script allows to fully recreate the processing pipeline
@@ -993,13 +991,11 @@ Summary
 We present a novel extensible framework for creating interfaces and
 pipelines for neuroimaging data processing. Community based open in
 nature development provides flexibility required in scientific use.
-Prototyping, algorighm comparison and parameter space exploration are
+Prototyping, algorithm comparison and parameter space exploration are
 some of the core design features. Our framework also improves
 reproducibility by providing provenance tracking. Exchangibility of
 pipelines created using NiPyPE stimulates collaboration in the broader
 neuroimaging community.
-
-Figures
 
 Supplementary Material
 
@@ -1191,39 +1187,29 @@ but this would help.
 
 `[b] <#cmnt_ref2>`_krzysztof.gorgolewski:
 
-Is this something different than iterables\_vs\_mapnode?
-
-`[c] <#cmnt_ref3>`_krzysztof.gorgolewski:
-
-Isn't it a bit of an overkill to show all different types of graphs?
-Maybe we should point just to one of the workflow graphs from Result
-section?
-
-`[d] <#cmnt_ref4>`_krzysztof.gorgolewski:
-
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[e] <#cmnt_ref5>`_helenlramsden:
+`[c] <#cmnt_ref3>`_helenlramsden:
 
 until
 
-`[f] <#cmnt_ref6>`_davclark:
+`[d] <#cmnt_ref4>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[g] <#cmnt_ref7>`_cindeem:
+`[e] <#cmnt_ref5>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[h] <#cmnt_ref8>`_davclark:
+`[f] <#cmnt_ref6>`_davclark:
 
 I mention this in my high level notes
 
-`[i] <#cmnt_ref9>`_satrajit.ghosh:
+`[g] <#cmnt_ref7>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1239,16 +1225,26 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[j] <#cmnt_ref10>`_cindeem:
+`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
+
+Is this something different than iterables\_vs\_mapnode?
+
+`[i] <#cmnt_ref9>`_cindeem:
 
 While this provides some amount of continuity, understanding different
 aspects of neuroimaging has a steep learning curve, made steeper by
 incorporating the time needed to learn the different package interfaces
 and algorithms.
 
-`[k] <#cmnt_ref11>`_helenlramsden:
+`[j] <#cmnt_ref10>`_helenlramsden:
 
 spoken English, use 'due to'
+
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+
+Isn't it a bit of an overkill to show all different types of graphs?
+Maybe we should point just to one of the workflow graphs from Result
+section?
 
 `[l] <#cmnt_ref12>`_cindeem:
 
