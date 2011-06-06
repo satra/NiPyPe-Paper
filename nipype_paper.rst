@@ -781,8 +781,8 @@ the software. Additionally thanks to the iterables mechanism user can
 easily extend the comparison into many more dimensions testing different
 values of parameters.
 
-local comparison, but also comparison in the context of an application
-(e.g., fMRI analysis)
+TODO local comparison, but also comparison in the context of an
+application (e.g., fMRI analysis)
 
 As an example of such use we have compared isotropic voxelwise
 isotropic, voxelwise anisotropic and surface based smoothing all for two
@@ -824,7 +824,7 @@ A good example of such scenario is ArtifactDetection toolbox (ref TODO).
 This piece of software uses EPI timeseries and realignment parameters to
 find timepoints (volumes) that are most likely artefacts and should be
 removed (by including them as confound regressors in the design matrix).
-The tool started its life as a AMTLAB script used locally. Initially it
+The tool started its life as a MATLAB script used locally. Initially it
 was only compatible with SPM. After writing a NiPyPe interface it can
 work with FSL and many other software packages not limiting its users
 just to SPM.
