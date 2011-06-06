@@ -674,8 +674,7 @@ Output printed by this method is standardized for all Interfaces. It is
 automatically generated based on inputs and outputs definition and
 includes information about reaquired inputs, types, and default value.
 Alternatively an extended information is available in the form of
-auto-generated HTML documentation (available locally and
-online):|image3|
+auto-generated HTML documentation (available locally and online):
 
 This includes example usage. All inputs are set through the inputs
 field:
@@ -781,10 +780,12 @@ the software. Additionally thanks to the iterables mechanism user can
 easily extend the comparison into many more dimensions testing different
 values of parameters.
 
-TODO local comparison, but also comparison in the context of an
-application (e.g., fMRI analysis)
+Comparison between methods can be done locally - by looking at their
+direct outputs or in context of particular application. In the later
+case one can look into how different algorithms used at early stages of
+processing influence the final output.
 
-As an example of such use we have compared isotropic voxelwise
+As an example of such use, we have compared isotropic voxelwise
 isotropic, voxelwise anisotropic and surface based smoothing all for two
 levels of FWHM - 4 and 8mm. First one is the standard convolution with
 Gaussian kernel as implemented in SPM. Second one involves smoothing
@@ -805,9 +806,9 @@ by coregistering functional images to the reconstructed surface using
 BBRegister. Finally surface smoothing algorithm from FreeSurfer is
 called.
 
-Statistical maps along with the pipeline used to generate them can be
-found in Figure TODO. Full code used to generate this data can be found
-in the supplementary material.
+Smoothed EPI volumes and statistical maps, along with the pipeline used
+to generate them can be found in Figure TODO. Full code used to generate
+this data can be found in the supplementary material.
 
 Algorithm comparison is not the only way NiPyPe can be useful for
 neuroimaging methods researcher. In every methods author interest is to
@@ -1393,4 +1394,3 @@ setting inputs, executing, and retrieving outputs.
 .. |image0| image:: images/image00.png
 .. |image1| image:: images/image02.png
 .. |image2| image:: images/image01.png
-.. |image3| image:: images/image03.png
