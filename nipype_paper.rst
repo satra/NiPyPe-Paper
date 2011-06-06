@@ -86,11 +86,14 @@ population (e.g., neurotypical, presurgical, etc). Researchers usually
 experiment with different methods and their parameters to create a
 workflow suitable for their application. A computationally efficient
 execution allows for multiple rapid-iterations to optimize this tuning
-process. Support for optimization of local execution (running
-independent processes in parallel, rerunning only those steps that have
-been influenced by the changes in parameters or dependencies since the
-last run) and exploration of parameter space could ease this prototyping
-stage of workflow development.
+process. Support for optimized local execution (running independent
+processes in parallel, rerunning only those steps that have been
+influenced by the changes in parameters or dependencies since the last
+run) and exploration of parameter space could ease this prototyping
+stage of workflow development. Furthermore, very few of the available
+neuroimaging tools take advantage of the growing number of parallel
+hardware configurations (multicore, clusters, clouds and
+supercomputers).
 
 Methods sections in published articles are inadequate for reproducing
 results.
@@ -561,7 +564,7 @@ not expand inner Workflows, flat – expands inner workflows, exec –
 expands workflows and iterables, and hierarchical – expands workflows
 but maintains their hierarchy. Graphs can be saved in a variety of file
 formats including Scalable Vector Graphics (SVG) and Portable Network
-Graphics (PNG). See Figure
+Graphics (PNG) (see Figure XXX for an examples)
 
 Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~
@@ -633,8 +636,8 @@ study; and 6) a framework for shared storage of information and
 evolution of analysis methods and approaches. In the following section,
 we demonstrate these solutions.
 
-Results v2
-----------
+Results
+-------
 
 Uniform accessing to tools, their usage, and execution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -861,42 +864,59 @@ having to understand how to set them up and properly call.
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(TODO) multicore systems, hpc clusters
-
-insert paragraph and execution details from ipython poster
+The NiPyPE package provides a seamless and flexible environment for
+executing workflows in parallel on a variety of environments from local
+multi-core workstations to high-performance clusters. In the SPM
+workflow for single subject functional data analysis shown below, only a
+few components can be parallelized. However, running this workflow
+across several subjects provides room for embarrassingly parallel
+execution. Running this workflow for 69 subjects on a cluster with 40
+cores takes 1 hour and 40 minutes relative to the 32 minutes for a
+single subject. The difference from the expected runtime of 32 minutes
+stems from disk i/o, network and processing resource bottlenecks.
 
 Discussion
 ----------
 
-Outline:
+Current neuroimaging software offer users an incredible opportunity to
+analyze their data in different ways, with different underlying
+assumptions. However, this heterogeneous collection of specialized
+applications creates several problems: 1) No uniform access to
+neuroimaging analysis software and usage information; 2) No framework
+for comparative algorithm development and dissemination; 3) Personnel
+turnover in laboratories often limit methodological continuity and
+training new personnel takes time; 4) Neuroimaging software packages do
+not address computational efficiency; 5) Methods sections in published
+articles are inadequate for reproducing results; and 6) In-depth
+knowledge of neuroimaging analysis algorithms is limited to few
+individuals.
 
-#. Why Python?
-#. Scripts vs XML
-#. Future directions
-#. Open Science
-#. Provenance
-#. What features of LONI should we implement in the future?
+We addressed these issues by creating NiPyPE, an open-source,
+community-developed initiative under the umbrella of NiPy. NiPyPE,
+solves these issues by providing a uniform interface to existing
+neuroimaging software and by facilitating interaction between these
+packages within workflows. NiPyPE provides an environment that
+encourages interactive exploration of algorithms from different packages
+(e.g., SPM, FSL), eases the design of workflows within and between
+packages, and reduces the learning curve necessary to use different
+packages. NiPyPE is addressing limitations of existing pipeline systems
+and creating a collaborative platform for neuroimaging software
+development in Python, a high-level scientific computing language.
 
-Content:
-
-Python
-~~~~~~
-
-One of the core development decisions was selecting a programming
-language. We have decided to use Python for several reasons. It was an
-imperative that the language we will use should support scientific
-computing and Python meets those criteria thanks to packages such as
-SciPy and NumPy (Millman & Aivazis, 2011; Pérez, Granger, & Hunter,
-2010) . What is more it also supports reading and writing common in
-neuroscience file formats such as NIFTI, ANALYZE and DICOM (through
-nibabel library). From design point of view it was important that Python
-supports rapid prototyping and is easy to adopt (which is important for
-community based projects). Another crucial aspect was freedom of
-availability and openness. Other popular within scientists and engineers
-platforms such as MATLAB are commercial in nature and therefore restrict
-theirs user base. Finally Python has been already embraced by
-neuroscientific community and slowly is gaining popularity (Bednar,
-2009; Goodman & Brette, 2009).
+We use Python for several reasons. Python has extensive scientific
+computing and visualization support through packages such as SciPy,
+NumPy, Matplotlib and Mayavi (Millman & Aivazis, 2011; Pérez, Granger, &
+Hunter, 2010) . The Nibabel package provides support for reading and
+writing common neuroimaging file formats (e.g., NIFTI, ANALYZE and
+DICOM). Being a high-level language, Python supports rapid prototyping,
+is easy to learn and adopt and is available across all major operating
+systems. But the Python community also embraces openness in design and
+availability of software and is evidenced by the growing list of python
+software. Python has already been embraced by the neuroscientific
+community and is rapidly gaining popularity (Bednar, 2009; Goodman &
+Brette, 2009). NiPyPE, based on Python, thus has immediate access to
+this extensive community and its software, technological resources and
+support structure.
 
 Flexibility vs Standardization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
