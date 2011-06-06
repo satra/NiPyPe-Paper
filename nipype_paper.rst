@@ -781,12 +781,12 @@ easily extend the comparison into many more dimensions testing different
 values of parameters.
 
 local comparison, but also comparison in the context of an application
-(e.g., fmri analysis)
+(e.g., fMRI analysis)
 
 As an example of such use we have compared isotropic voxelwise
 isotropic, voxelwise anisotropic and surface based smoothing all for two
 levels of FWHM - 4 and 8mm. First one is the standard convolution with
-gaussian kernel as implemented in SPM. Second one involves smoothing
+Gaussian kernel as implemented in SPM. Second one involves smoothing
 only voxels of similar intensity in attempt to retain structure. This
 was implemented in SUSAN from FSL (S.M. Smith, 1992). Third method
 involves reconstructing surface of the cortex and smoothing along it
@@ -808,18 +808,57 @@ Statistical maps along with the pipeline used to generate them can be
 found in Figure TODO. Full code used to generate this data can be found
 in the supplementary material.
 
-(TODO) dissemination - example ArtifactDetection; from MATLAB to nipype;
-once limited to a lab; now a nipype interface
+Algorithm comparison is not the only way NiPyPe can be useful for
+neuroimaging methods researcher. In every methods author interest is to
+make his or hers work most accessible. This usually means providing
+ready to use implementations. However, because the field is so diverse,
+software developers have to provide several packages (SPM toolbox,
+command line tool, c++ library etc.) to cover the whole user base.
+NiPyPe helps with this task. By creating one Interface developer exposes
+the tool to greater range of users. Independent of the way the tool was
+implemented it will be able to work with any piece of software currently
+supported by NiPyPe.
+
+A good example of such scenario is ArtifactDetection toolbox (ref TODO).
+This piece of software uses EPI timeseries and realignment parameters to
+find timepoints (volumes) that are most likely artefacts and should be
+removed (by including them as confound regressors in the design matrix).
+The tool started its life as a AMTLAB script used locally. Initially it
+was only compatible with SPM. After writing a NiPyPe interface it can
+work with FSL and many other software packages not limiting its users
+just to SPM.
 
 An environment for methodological continuity and paced training of new
 personnel in laboratories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. unified way of calling and accessing help makes learning new methods
-   easier
-#. learning from workflows developed by others
-#. sharing workflows within a lab (helps when there is a big turnover in
-   staff members)
+When in a lab with some experience in neuroimaging studies a new
+analysis is performed it is almost always the case that some parts of
+the data processing will be the same as in on of the previous studies
+performed in the same centre. Nipype Workflows can be very useful in
+dividing processing pipelines into reusable building blocks. This not
+only improves the speed of building new pipelines but also reduces the
+number of potential errors, because a well tested piece of code is being
+reused (instead of reimplemented every time). Reusing workflows is
+especially important for long running studies when all data has to be
+analyzed using the same methods.
+
+A similar scheme also helps with sharing Workflows across studies
+running simultaneously in the lab. Nipype provides amedium for
+exchanging knowledge and expertise between researchers focused on
+methods in neuroimaging and those interested in applications. For
+example preprocessing Workflows used for all the studies in a given lab
+can be fine tuned by staff members with computer science inclination.
+
+Thanks to uniform nature of Interfaces and ease of use of Workflows
+Nipype helps with training new staff. Encapsulation provided by
+Workflows allows users to gradually increase the level of details when
+learning how to perform neuroimaging analysis. For example user can
+start with a “black box” Workflow that does analysis from A-Z, and
+gradually learn what it subcomponents (and their subcomponents) do.
+Playing with Interfaces in an interactive console is a great way to
+learn how different algorithms work with different parameters without
+having to understand how to set them up and properly call.
 
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -828,7 +867,141 @@ Computationally efficient execution of neuroimaging analysis
 
 insert paragraph and execution details from ipython poster
 
-Results
+Discussion
+----------
+
+Outline:
+
+#. Why Python?
+#. Scripts vs XML
+#. Future directions
+#. Open Science
+#. Provenance
+#. What features of LONI should we implement in the future?
+
+Content:
+
+Python
+~~~~~~
+
+One of the core development decisions was selecting a programming
+language. We have decided to use Python for several reasons. It was an
+imperative that the language we will use should support scientific
+computing and Python meets those criteria thanks to packages such as
+SciPy and NumPy (Millman & Aivazis, 2011; Pérez, Granger, & Hunter,
+2010) . What is more it also supports reading and writing common in
+neuroscience file formats such as NIFTI, ANALYZE and DICOM (through
+nibabel library). From design point of view it was important that Python
+supports rapid prototyping and is easy to adopt (which is important for
+community based projects). Another crucial aspect was freedom of
+availability and openness. Other popular within scientists and engineers
+platforms such as MATLAB are commercial in nature and therefore restrict
+theirs user base. Finally Python has been already embraced by
+neuroscientific community and slowly is gaining popularity (Bednar,
+2009; Goodman & Brette, 2009).
+
+Flexibility vs Standardization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Despite trying to provide common way of calling and using diverse set of
+software we have decided not to impose declarative description of
+Interfaces. Solutions such as LONI Pipeline decided to follow a contrary
+path by using XML. Our decision was motivated by flexibility. Within
+neuroimaging community software is not only limited to well behaved
+command line tools. We wanted to be able to support scripting language
+software requiring an interpreter (such as SPM with MATLAB).
+Additionally non declarative transformations of inputs and outputs have
+been necessary for many Interfaces. At the same time through a hierarchy
+of classes and helper methods we provide mechanisms that reduce time of
+wrapping new commands that do not require such transformations. In this
+way we achieve the best of both worlds.
+
+Despite de differences between declarative (XML) and non-declarative
+(methods, classes) approach to wrapping software interoperability should
+be easily achievable. It is foreseeable to write and automated XML
+interface description generator based on NiPyPe Interface classes. Such
+solution would probably have to call python and use NiPyPe as
+intermediate stage in communication, but at the same it would allow
+systems such as LONI Pipeline to support less standard software
+solutions (such as SPM). Transformation in the other direction could
+also be possible. Interface classes could be generated based on XML
+descriptions. In fact this is being already done for modules provided by
+Slicer 3D.
+
+Openness and provenance tracking
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Openness lies at heart of NiPyPe in both design and development process.
+Source code is freely distributed under BSD license allowing anyone to
+fork the project at any given time. There are no restrictions for usage
+and redistribution. NiPyPe conforms to the Open Software Definition of
+the Open Source Initiative.
+
+Development process is fully transparent. Proposed changes and
+discussions between developers are accessible by anyone on the Internet.
+This stimulates community to get involved in the development which
+results in contributions from users from all around the world. Diverse
+and geographically distributed user and developer base makes NiPyPe a
+flexible project that takes into account needs of many scientists.
+
+Improving openness and transparency of research is also a goal of
+NiPyPe. A workflow definition is in principle sufficient to replicate
+the analysis. Since it was used to actually analyze the date it is more
+detailed and accurate than description in a paper. Thus by accompanying
+publication with formal definition of processing pipeline (such as a
+NiPyPe script) increases reproducibility an transparency or research.
+
+This said NiPyPe can improve in the field of provenance tracking by
+including information of the release version of the software and
+architecture used for each step. Also creating provenance reports in a
+standardized XML format (Mackenzie-Graham, Van Horn, Woods, Crawford, &
+Toga, 2008) is planned in future releases.
+
+Comparisons and pipeline optimization studies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Increased diversity of data processing software made systematic
+comparison of performance and accuracy difficult. Despite the fact that
+some research has been done in this field, for example comparing
+coregistration methods (Klein et al., 2009; 2010), we hope that NiPyPe
+will make such comparisons easier and therefore more prevalent.
+
+Another way of evaluating software is to investigate the optimal
+combination of preprocessing steps. Recently relation between motion
+correction and regression has been researched coming with a method of
+finding optimal per subject preprocessing pipeline (Churchill et al.,
+2011). NiPyPe can make such investigation easier resulting in more
+efficient data analysis.
+
+A complete recording of the methods used in a
+study\ :sup:``[d] <#cmnt4>`_`\ 
+
+#. in other words provenance
+#. a nipype script allows to fully recreate the processing pipeline
+
+A framework for shared storage of information and evolution of analysis
+methods and approaches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. workflows are reusable and redistributable
+#. researchers can use public version control portals such as github to
+   develop pipelines
+
+Summary
+~~~~~~~
+
+We present a novel extensible framework for creating interfaces and
+pipelines for neuroimaging data processing. Community based open in
+nature development provides flexibility required in scientific use.
+Prototyping, algorighm comparison and parameter space exploration are
+some of the core design features. Our framework also improves
+reproducibility by providing provenance tracking. Exchangibility of
+pipelines created using NiPyPE stimulates collaboration in the broader
+neuroimaging community.
+
+Figures
+
+Supplementary Material
 
 Outline:
 
@@ -982,147 +1155,6 @@ coefficient were recorded in local database.
 Despite of the complexity of this analysis thanks to support for
 encapsulating workflows we were able to divide it into independent,
 reusable, and manageable parts.
-
-Execution Performance
-~~~~~~~~~~~~~~~~~~~~~
-
-Discussion
-----------
-
-Outline:
-
-#. Why Python?
-#. Scripts vs XML
-#. Future directions
-#. Open Science
-#. Provenance
-#. What features of LONI should we implement in the future?
-
-Content:
-
-Python
-~~~~~~
-
-One of the core development decisions was selecting a programming
-language. We have decided to use Python for several reasons. It was an
-imperative that the language we will use should support scientific
-computing and Python meets those criteria thanks to packages such as
-SciPy and NumPy (Millman & Aivazis, 2011; Pérez, Granger, & Hunter,
-2010) . What is more it also supports reading and writing common in
-neuroscience file formats such as NIFTI, ANALYZE and DICOM (through
-nibabel library). From design point of view it was important that Python
-supports rapid prototyping and is easy to adopt (which is important for
-community based projects). Another crucial aspect was freedom of
-availability and openness. Other popular within scientists and engineers
-platforms such as MATLAB are commercial in nature and therefore restrict
-theirs user base. Finally Python has been already embraced by
-neuroscientific community and slowly is gaining popularity (Bednar,
-2009; Goodman & Brette, 2009).
-
-Flexibility vs Standardization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Despite trying to provide common way of calling and using diverse set of
-software we have decided not to impose declarative description of
-Interfaces. Solutions such as LONI Pipeline decided to follow a contrary
-path by using XML. Our decision was motivated by flexibility. Within
-neuroimaging community software is not only limited to well behaved
-command line tools. We wanted to be able to support scripting language
-software requiring an interpreter (such as SPM with MATLAB).
-Additionally non declarative transformations of inputs and outputs have
-been necessary for many Interfaces. At the same time through a hierarchy
-of classes and helper methods we provide mechanisms that reduce time of
-wrapping new commands that do not require such transformations. In this
-way we achieve the best of both worlds.
-
-Despite de differences between declarative (XML) and non-declarative
-(methods, classes) approach to wrapping software interoperability should
-be easily achievable. It is foreseeable to write and automated XML
-interface description generator based on NiPyPe Interface classes. Such
-solution would probably have to call python and use NiPyPe as
-intermediate stage in communication, but at the same it would allow
-systems such as LONI Pipeline to support less standard software
-solutions (such as SPM). Transformation in the other direction could
-also be possible. Interface classes could be generated based on XML
-descriptions. In fact this is being already done for modules provided by
-Slicer 3D.
-
-Openness and provenance tracking
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Openness lies at heart of NiPyPe in both design and development process.
-Source code is freely distributed under BSD license allowing anyone to
-fork the project at any given time. There are no restrictions for usage
-and redistribution. NiPyPe conforms to the Open Software Definition of
-the Open Source Initiative.
-
-Development process is fully transparent. Proposed changes and
-discussions between developers are accessible by anyone on the Internet.
-This stimulates community to get involved in the development which
-results in contributions from users from all around the world. Diverse
-and geographically distributed user and developer base makes NiPyPe a
-flexible project that takes into account needs of many scientists.
-
-Improving openness and transparency of research is also a goal of
-NiPyPe. A workflow definition is in principle sufficient to replicate
-the analysis. Since it was used to actually analyze the date it is more
-detailed and accurate than description in a paper. Thus by accompanying
-publication with formal definition of processing pipeline (such as a
-NiPyPe script) increases reproducibility an transparency or research.
-
-This said NiPyPe can improve in the field of provenance tracking by
-including information of the release version of the software and
-architecture used for each step. Also creating provenance reports in a
-standardized XML format (Mackenzie-Graham, Van Horn, Woods, Crawford, &
-Toga, 2008) is planned in future releases.
-
-Comparisons and pipeline optimization studies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Increased diversity of data processing software made systematic
-comparison of performance and accuracy difficult. Despite the fact that
-some research has been done in this field, for example comparing
-coregistration methods (Klein et al., 2009; 2010), we hope that NiPyPe
-will make such comparisons easier and therefore more prevalent.
-
-Another way of evaluating software is to investigate the optimal
-combination of preprocessing steps. Recently relation between motion
-correction and regression has been researched coming with a method of
-finding optimal per subject preprocessing pipeline (Churchill et al.,
-2011). NiPyPe can make such investigation easier resulting in more
-efficient data analysis.
-
-A complete recording of the methods used in a
-study\ :sup:``[d] <#cmnt4>`_`\ 
-
-#. in other words provenance
-#. a nipype script allows to fully recreate the processing pipeline
-
-A framework for shared storage of information and evolution of analysis
-methods and approaches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. workflows are reusable and redistributable
-#. researchers can use public version control portals such as github to
-   develop pipelines
-
-Summary
-~~~~~~~
-
-We present a novel extensible framework for creating interfaces and
-pipelines for neuroimaging data processing. Community based open in
-nature development provides flexibility required in scientific use.
-Prototyping, algorighm comparison and parameter space exploration are
-some of the core design features. Our framework also improves
-reproducibility by providing provenance tracking. Exchangibility of
-pipelines created using NiPyPE stimulates collaboration in the broader
-neuroimaging community.
-
-Figures
-
-.. figure:: images/image01.png
-   :align: center
-   :alt: 
 
 --------------
 
@@ -1343,6 +1375,6 @@ cindeem:
 setting inputs, executing, and retrieving outputs.
 
 .. |image0| image:: images/image00.png
-.. |image1| image:: images/image03.png
-.. |image2| image:: images/image02.png
-.. |image3| image:: images/image01.png
+.. |image1| image:: images/image02.png
+.. |image2| image:: images/image01.png
+.. |image3| image:: images/image03.png
