@@ -674,7 +674,8 @@ Output printed by this method is standardized for all Interfaces. It is
 automatically generated based on inputs and outputs definition and
 includes information about reaquired inputs, types, and default value.
 Alternatively an extended information is available in the form of
-auto-generated HTML documentation (available locally and online):
+auto-generated HTML documentation (available locally and
+online):|image3|
 
 This includes example usage. All inputs are set through the inputs
 field:
@@ -717,16 +718,33 @@ software) encapsulated in a Node (which defines for example a unique
 name). For realignment (motion correction achieved by coregistering all
 volumes to the mean) and smoothing (convolution with 3D Gaussian kernel)
 we will use SPM implementation. Definition of appropriate nodes can be
-found in Listing 1 (TODO). Inputs (such as register\_to\_mean from
-listing 1) of nodes are accessible through the inputs property. Upon
-setting any input its type is verified to avoid errors during the
-execution.
+found in Listing defining\_nodes. Inputs (such as register\_to\_mean
+from listing defining\_nodes) of nodes are accessible through the inputs
+property. Upon setting any input its type is verified to avoid errors
+during the execution.
+
+realign = pe.Node(interface=spm.Realign(), name="realign")
+
+realign.inputs.register\_to\_mean = True
+
+smooth = pe.Node(interface=spm.Smooth(), name="smooth")
+
+smooth.inputs.fwhm = 4
+
+Listing defining\_nodes
 
 To connect two nodes a Workflow has to be created. connect() method of a
 Workflow allows to specify which outputs of which Nodes should be
-connected to which inputs of which Nodes (see Listing 2). By connecting
-realigned\_files output of realign to in\_files input of Smooth we have
-created a simple preprocessing workflow (see Figure TODO).
+connected to which inputs of which Nodes (see Listing
+defining\_connections). By connecting realigned\_files output of realign
+to in\_files input of Smooth we have created a simple preprocessing
+workflow (see Figure workflow\_from\_scratch).
+
+preprocessing = pe.Workflow(name="preprocessing")
+
+preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
+
+Listing defining\_connections
 
 Creating a modelling workflow which will define the design, estimate
 model and contrasts follows the same suite. We will again use SPM
@@ -736,9 +754,10 @@ estimation implemantations (for example one from FSL or nippy).
 Therefore we will need four nodes: SpecifyModel (NiPyPe specific
 abstraction layer), Level1Design (SPM design definition), ModelEstimate,
 and ContrastEstimate. The connected modelling Workflow can be seen on
-Figure TODO. Model specification supports block, event and sparse
-designs. Contrasts provided to ContrastEstimate are defined using the
-same names of regressors as defined in the SpecifyModel.
+Figure workflow\_from\_scratch. Model specification supports block,
+event and sparse designs. Contrasts provided to ContrastEstimate are
+defined using the same names of regressors as defined in the
+SpecifyModel.
 
 Having preprocessing and modelling workflows we need to connect them
 together, add data grabbing facility and save the results. For this we
@@ -761,9 +780,14 @@ a specified location. It supports automatic creation of folder stricter
 and regular expression based substitutions. In this example we will
 store T maps.
 
-A pipeline defined this way (see Figure TODO, for full code see
-Supplementary material) is ready to run. This can be done by calling
-run() method of the master Workflow.
+A pipeline defined this way (see Figure workflow\_from\_scratch, for
+full code see Supplementary material) is ready to run. This can be done
+by calling run() method of the master Workflow.
+
+.. figure:: images/image01.png
+   :align: center
+   :alt: 
+Figure workflow\_from\_scratch
 
 A framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1019,6 +1043,128 @@ pipelines created using NiPyPE stimulates collaboration in the broader
 neuroimaging community.
 
 Supplementary Material
+
+workflow\_from\_scratch.py
+
+import nipype.interfaces.io as nio # Data i/o
+
+import nipype.interfaces.spm as spm # spm
+
+import nipype.pipeline.engine as pe # pypeline engine
+
+import nipype.algorithms.modelgen as model # model specification
+
+from nipype.interfaces.base import Bunch
+
+import os # system functions
+
+realign = pe.Node(interface=spm.Realign(), name="realign")
+
+realign.inputs.register\_to\_mean = True
+
+smooth = pe.Node(interface=spm.Smooth(), name="smooth")
+
+smooth.inputs.fwhm = 4
+
+preprocessing = pe.Workflow(name="preprocessing")
+
+preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
+
+specify\_model = pe.Node(interface=model.SpecifyModel(),
+name="specify\_model")
+
+specify\_model.inputs.input\_units = 'secs'
+
+specify\_model.inputs.time\_repetition = 3.
+
+specify\_model.inputs.high\_pass\_filter\_cutoff = 120
+
+specify\_model.inputs.subject\_info =
+[Bunch(conditions=['Task-Odd','Task-Even'],onsets=[range(15,240,60),range(45,240,60)],durations=[[15],
+[15]])]\*4
+
+level1design = pe.Node(interface=spm.Level1Design(), name=
+"level1design")
+
+level1design.inputs.bases = {'hrf':{'derivs': [0,0]}}
+
+level1design.inputs.timing\_units = 'secs'
+
+level1design.inputs.interscan\_interval =
+specify\_model.inputs.time\_repetition
+
+level1estimate = pe.Node(interface=spm.EstimateModel(),
+name="level1estimate")
+
+level1estimate.inputs.estimation\_method = {'Classical' : 1}
+
+contrastestimate = pe.Node(interface = spm.EstimateContrast(),
+name="contrastestimate")
+
+cont1 = ('Task>Baseline','T', ['Task-Odd','Task-Even'],[0.5,0.5])
+
+cont2 = ('Task-Odd>Task-Even','T', ['Task-Odd','Task-Even'],[1,-1])
+
+contrastestimate.inputs.contrasts = [cont1, cont2]
+
+modelling = pe.Workflow(name="modelling")
+
+modelling.connect(specify\_model, 'session\_info', level1design,
+'session\_info')
+
+modelling.connect(level1design, 'spm\_mat\_file', level1estimate,
+'spm\_mat\_file')
+
+modelling.connect(level1estimate,'spm\_mat\_file',
+contrastestimate,'spm\_mat\_file')
+
+modelling.connect(level1estimate,'beta\_images',
+contrastestimate,'beta\_images')
+
+modelling.connect(level1estimate,'residual\_image',
+contrastestimate,'residual\_image')
+
+main\_workflow = pe.Workflow(name="main\_workflow")
+
+main\_workflow.base\_dir = "workflow\_from\_scratch"
+
+main\_workflow.connect(preprocessing, "realign.realignment\_parameters",
+
+modelling, "specify\_model.realignment\_parameters")
+
+main\_workflow.connect(preprocessing, "smooth.smoothed\_files",
+
+modelling, "specify\_model.functional\_runs")
+
+datasource = pe.Node(interface=nio.DataGrabber(infields=['subject\_id'],
+
+outfields=['func']),
+
+name = 'datasource')
+
+datasource.inputs.base\_directory = os.path.abspath('data')
+
+datasource.inputs.template = '%s/%s.nii'
+
+datasource.inputs.template\_args = dict(func=[['subject\_id',
+['f3','f5','f7','f10']]])
+
+datasource.inputs.subject\_id = 's1'
+
+main\_workflow.connect(datasource, 'func', preprocessing,
+'realign.in\_files')
+
+datasink = pe.Node(interface=nio.DataSink(), name="datasink")
+
+datasink.inputs.base\_directory =
+os.path.abspath('workflow\_from\_scratch/output')
+
+main\_workflow.connect(modelling, 'contrastestimate.spmT\_images',
+datasink, 'contrasts.@T')
+
+main\_workflow.run()
+
+main\_workflow.write\_graph()
 
 Outline:
 
@@ -1392,5 +1538,6 @@ cindeem:
 setting inputs, executing, and retrieving outputs.
 
 .. |image0| image:: images/image00.png
-.. |image1| image:: images/image02.png
-.. |image2| image:: images/image01.png
+.. |image1| image:: images/image03.png
+.. |image2| image:: images/image02.png
+.. |image3| image:: images/image04.png
