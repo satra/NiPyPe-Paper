@@ -784,7 +784,7 @@ A pipeline defined this way (see Figure workflow\_from\_scratch, for
 full code see Supplementary material) is ready to run. This can be done
 by calling run() method of the master Workflow.
 
-.. figure:: images/image01.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 Figure workflow\_from\_scratch
@@ -831,8 +831,9 @@ BBRegister. Finally surface smoothing algorithm from FreeSurfer is
 called.
 
 Smoothed EPI volumes and statistical maps, along with the pipeline used
-to generate them can be found in Figure TODO. Full code used to generate
-this data can be found in the supplementary material.
+to generate them can be found in Figure smoothing\_comparison\_workflow.
+Full code used to generate this data can be found in the supplementary
+material.
 
 Algorithm comparison is not the only way NiPyPe can be useful for
 neuroimaging methods researcher. In every methods author interest is to
@@ -853,6 +854,11 @@ The tool started its life as a MATLAB script used locally. Initially it
 was only compatible with SPM. After writing a NiPyPe interface it can
 work with FSL and many other software packages not limiting its users
 just to SPM.
+
+.. figure:: images/image01.png
+   :align: center
+   :alt: 
+Figure smoothing\_comparison\_workflow
 
 An environment for methodological continuity and paced training of new
 personnel in laboratories
@@ -1538,6 +1544,6 @@ cindeem:
 setting inputs, executing, and retrieving outputs.
 
 .. |image0| image:: images/image00.png
-.. |image1| image:: images/image03.png
-.. |image2| image:: images/image02.png
-.. |image3| image:: images/image04.png
+.. |image1| image:: images/image04.png
+.. |image2| image:: images/image03.png
+.. |image3| image:: images/image05.png
