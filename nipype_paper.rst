@@ -1,3 +1,12 @@
+NiPyPE: A flexible, lightweight and extensible neuroimaging data
+processing framework
+
+Abstract
+--------
+
+Introduction
+------------
+
 Over the past twenty years, advances in non-invasive in vivo
 neuroimaging have resulted in an explosion of studies investigating
 human cognition in health and disease. Current imaging studies acquire
@@ -161,14 +170,7 @@ machines and remote execution on clusters. NiPyPE is distributed with a
 BSD License allowing anyone to make changes and redistribute it.
 Development is done openly with collaborators from many different labs,
 allowing rapid adaptation to the varied needs of the neuroimaging
-community. NiPyPe: Towards extensible, flexible and lightweight
-neuroimaging data processing framework
-
-Abstract
---------
-
-Introduction
-------------
+community.
 
 Methods
 -------
