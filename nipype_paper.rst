@@ -3,9 +3,12 @@ processing framework
 =====================================================================================
 
 Krzysztof Gorgolewski [1], Christopher Burns, Dav Cark, Cindee Madison,
-Yaroslav O. Halchenko, Michael Waskom, Satrajit Ghosh
+Yaroslav O. Halchenko, Michael Waskom, Satrajit S. Ghosh [x]
 
-1 School of informatics, University of Edinbugh
+1 School of informatics, University of Edinburgh
+
+x Research Laboratory of Electronics, Massachusetts Institute of
+Technology
 
 Abstract
 
@@ -788,7 +791,7 @@ A pipeline defined this way (see Figure workflow\_from\_scratch, for
 full code see Supplementary material) is ready to run. This can be done
 by calling run() method of the master Workflow.
 
-.. figure:: images/image01.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 Figure workflow\_from\_scratch
@@ -842,12 +845,12 @@ to demonstrate NiPyPE capabilities a comparison between smoothing
 methods is outside of the scope of this paper and will most likely
 require more subjects and quantitative metrics.
 
-.. figure:: images/image06.png
+.. figure:: images/image00.png
    :align: center
    :alt: 
 Figure smoothing\_comparison\_workflow
 
-.. figure:: images/image05.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 Figure smoothing\_comparison\_results. Influence of different smoothing
@@ -1188,49 +1191,268 @@ main\_workflow.run()
 
 main\_workflow.write\_graph()
 
-Outline:
+smothing\_comparison.py
 
-#. Building a workflow from scratch
+import nipype.interfaces.io as nio # Data i/o
 
-#. Iteration 1
+import nipype.interfaces.spm as spm # spm
 
-#. Preprocessing
+import nipype.interfaces.freesurfer as fs # freesurfer
 
-#. Realignment
-#. Smoothing
+import nipype.interfaces.nipy as nipy
 
-2. Modelling
+import nipype.interfaces.utility as util
 
-#. Modelspec
-#. Level1design
-#. Estimate model
-#. Estimate contrast
+import nipype.pipeline.engine as pe # pypeline engine
 
-3. Connecting everything together
+import nipype.algorithms.modelgen as model # model specification
 
-#. DataGrabber
-#. DataSink
+import nipype.workflows.fsl as fsl\_wf
 
-2. Iteration 2
+from nipype.interfaces.base import Bunch
 
-4. Add artefact detection
+import os # system functions
 
-3. Iteration 3
+preprocessing = pe.Workflow(name="preprocessing")
 
-#. Add BET mask
+iter\_fwhm = pe.Node(interface=util.IdentityInterface(fields=["fwhm"]),
 
-4. Iteration 4
+name="iter\_fwhm")
 
-#. Add thresholding and data visualisation
+iter\_fwhm.iterables = [('fwhm', [4, 8])]
 
-2. Comparisons
+iter\_smoothing\_method =
+pe.Node(interface=util.IdentityInterface(fields=["smoothing\_method"]),
 
-5. Two smoothing levels
-6. Surface smooth, SUSAN, and 3D isotropic.
+name="iter\_smoothing\_method")
 
-3. Example of a more complicated workflow – reliability study.
+iter\_smoothing\_method.iterables =
+[('smoothing\_method',['isotropic\_voxel',
 
-Content:
+'anisotropic\_voxel',
+
+'isotropic\_surface'])]
+
+realign = pe.Node(interface=spm.Realign(), name="realign")
+
+realign.inputs.register\_to\_mean = True
+
+isotropic\_voxel\_smooth = pe.Node(interface=spm.Smooth(),
+name="isotropic\_voxel\_smooth")
+
+preprocessing.connect(realign, "realigned\_files",
+isotropic\_voxel\_smooth, "in\_files")
+
+preprocessing.connect(iter\_fwhm, "fwhm", isotropic\_voxel\_smooth,
+"fwhm")
+
+compute\_mask = pe.Node(interface=nipy.ComputeMask(),
+name="compute\_mask")
+
+preprocessing.connect(realign, "mean\_image", compute\_mask,
+"mean\_volume")
+
+anisotropic\_voxel\_smooth =
+fsl\_wf.create\_susan\_smooth(name="anisotropic\_voxel\_smooth",
+
+separate\_masks=False)
+
+anisotropic\_voxel\_smooth.inputs.smooth.output\_type = 'NIFTI'
+
+preprocessing.connect(realign, "realigned\_files",
+anisotropic\_voxel\_smooth, "inputnode.in\_files")
+
+preprocessing.connect(iter\_fwhm, "fwhm", anisotropic\_voxel\_smooth,
+"inputnode.fwhm")
+
+preprocessing.connect(compute\_mask, "brain\_mask",
+anisotropic\_voxel\_smooth, 'inputnode.mask\_file')
+
+recon\_all = pe.Node(interface=fs.ReconAll(), name = "recon\_all")
+
+surfregister = pe.Node(interface=fs.BBRegister(),name='surfregister')
+
+surfregister.inputs.init = 'fsl'
+
+surfregister.inputs.contrast\_type = 't2'
+
+preprocessing.connect(realign, 'mean\_image', surfregister,
+'source\_file')
+
+preprocessing.connect(recon\_all, 'subject\_id', surfregister,
+'subject\_id')
+
+preprocessing.connect(recon\_all, 'subjects\_dir', surfregister,
+'subjects\_dir')
+
+isotropic\_surface\_smooth =
+pe.MapNode(interface=fs.Smooth(proj\_frac\_avg=(0,1,0.1)),
+
+iterfield=['in\_file'],
+
+name="isotropic\_surface\_smooth")
+
+preprocessing.connect(surfregister, 'out\_reg\_file',
+isotropic\_surface\_smooth, 'reg\_file')
+
+preprocessing.connect(realign, "realigned\_files",
+isotropic\_surface\_smooth, "in\_file")
+
+preprocessing.connect(iter\_fwhm, "fwhm", isotropic\_surface\_smooth,
+"surface\_fwhm")
+
+preprocessing.connect(iter\_fwhm, "fwhm", isotropic\_surface\_smooth,
+"vol\_fwhm")
+
+preprocessing.connect(recon\_all, 'subjects\_dir',
+isotropic\_surface\_smooth, 'subjects\_dir')
+
+merge\_smoothed\_files = pe.Node(interface=util.Merge(3),
+
+name='merge\_smoothed\_files')
+
+preprocessing.connect(isotropic\_voxel\_smooth, 'smoothed\_files',
+merge\_smoothed\_files, 'in1')
+
+preprocessing.connect(anisotropic\_voxel\_smooth,
+'outputnode.smoothed\_files', merge\_smoothed\_files, 'in2')
+
+preprocessing.connect(isotropic\_surface\_smooth, 'smoothed\_file',
+merge\_smoothed\_files, 'in3')
+
+select\_smoothed\_files = pe.Node(interface=util.Select(),
+name="select\_smoothed\_files")
+
+preprocessing.connect(merge\_smoothed\_files, 'out',
+select\_smoothed\_files, 'inlist')
+
+def chooseindex(roi):
+
+return {'isotropic\_voxel':range(0,4), 'anisotropic\_voxel':range(4,8),
+'isotropic\_surface':range(8,12)}[roi]
+
+preprocessing.connect(iter\_smoothing\_method, ("smoothing\_method",
+chooseindex), select\_smoothed\_files, 'index')
+
+rename = pe.MapNode(util.Rename(format\_string="%(orig)s"),
+name="rename", iterfield=['in\_file'])
+
+rename.inputs.parse\_string = "(?P<orig>.\*)"
+
+preprocessing.connect(select\_smoothed\_files, 'out', rename,
+'in\_file')
+
+specify\_model = pe.Node(interface=model.SpecifyModel(),
+name="specify\_model")
+
+specify\_model.inputs.input\_units = 'secs'
+
+specify\_model.inputs.time\_repetition = 3.
+
+specify\_model.inputs.high\_pass\_filter\_cutoff = 120
+
+specify\_model.inputs.subject\_info =
+[Bunch(conditions=['Task-Odd','Task-Even'],
+
+onsets=[range(15,240,60),range(45,240,60)],
+
+durations=[[15], [15]])]\*4
+
+level1design = pe.Node(interface=spm.Level1Design(), name=
+"level1design")
+
+level1design.inputs.bases = {'hrf':{'derivs': [0,0]}}
+
+level1design.inputs.timing\_units = 'secs'
+
+level1design.inputs.interscan\_interval =
+specify\_model.inputs.time\_repetition
+
+level1estimate = pe.Node(interface=spm.EstimateModel(),
+name="level1estimate")
+
+level1estimate.inputs.estimation\_method = {'Classical' : 1}
+
+contrastestimate = pe.Node(interface = spm.EstimateContrast(),
+name="contrastestimate")
+
+contrastestimate.inputs.contrasts = [('Task>Baseline','T',
+['Task-Odd','Task-Even'],[0.5,0.5])]
+
+modelling = pe.Workflow(name="modelling")
+
+modelling.connect(specify\_model, 'session\_info', level1design,
+'session\_info')
+
+modelling.connect(level1design, 'spm\_mat\_file', level1estimate,
+'spm\_mat\_file')
+
+modelling.connect(level1estimate,'spm\_mat\_file',
+contrastestimate,'spm\_mat\_file')
+
+modelling.connect(level1estimate,'beta\_images',
+contrastestimate,'beta\_images')
+
+modelling.connect(level1estimate,'residual\_image',
+contrastestimate,'residual\_image')
+
+main\_workflow = pe.Workflow(name="main\_workflow")
+
+main\_workflow.base\_dir = "smoothing\_comparison\_workflow"
+
+main\_workflow.connect(preprocessing, "realign.realignment\_parameters",
+
+modelling, "specify\_model.realignment\_parameters")
+
+main\_workflow.connect(preprocessing, "select\_smoothed\_files.out",
+
+modelling, "specify\_model.functional\_runs")
+
+main\_workflow.connect(preprocessing, "compute\_mask.brain\_mask",
+
+modelling, "level1design.mask\_image")
+
+datasource = pe.Node(interface=nio.DataGrabber(infields=['subject\_id'],
+
+outfields=['func', 'struct']),
+
+name = 'datasource')
+
+datasource.inputs.base\_directory = os.path.abspath('data')
+
+datasource.inputs.template = '%s/%s.nii'
+
+datasource.inputs.template\_args = info = dict(func=[['subject\_id',
+['f3','f5','f7','f10']]],
+
+struct=[['subject\_id','struct']])
+
+datasource.inputs.subject\_id = 's1'
+
+main\_workflow.connect(datasource, 'func', preprocessing,
+'realign.in\_files')
+
+main\_workflow.connect(datasource, 'struct', preprocessing,
+'recon\_all.T1\_files')
+
+datasink = pe.Node(interface=nio.DataSink(), name="datasink")
+
+datasink.inputs.base\_directory =
+os.path.abspath('smoothing\_comparison\_workflow/output')
+
+datasink.inputs.regexp\_substitutions = [("\_rename[0-9]", "")]
+
+main\_workflow.connect(modelling, 'contrastestimate.spmT\_images',
+datasink, 'contrasts')
+
+main\_workflow.connect(preprocessing, 'rename.out\_file', datasink,
+'smoothed\_epi')
+
+main\_workflow.run()
+
+main\_workflow.write\_graph()
+
+To be removed ->
 
 Adding artefact detection
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1559,7 +1781,7 @@ cindeem:
 1) interfaces wrap around external tools providing a unified way for
 setting inputs, executing, and retrieving outputs.
 
-.. |image0| image:: images/image00.png
-.. |image1| image:: images/image03.png
-.. |image2| image:: images/image02.png
-.. |image3| image:: images/image04.png
+.. |image0| image:: images/image01.png
+.. |image1| image:: images/image04.png
+.. |image2| image:: images/image03.png
+.. |image3| image:: images/image05.png
