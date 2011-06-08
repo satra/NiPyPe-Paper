@@ -788,7 +788,7 @@ A pipeline defined this way (see Figure workflow\_from\_scratch, for
 full code see Supplementary material) is ready to run. This can be done
 by calling run() method of the master Workflow.
 
-.. figure:: images/image02.png
+.. figure:: images/image01.png
    :align: center
    :alt: 
 Figure workflow\_from\_scratch
@@ -835,14 +835,26 @@ BBRegister. Finally surface smoothing algorithm from FreeSurfer is
 called.
 
 Smoothed EPI volumes and statistical maps, along with the pipeline used
-to generate them can be found in Figure smoothing\_comparison\_workflow.
-Full code used to generate this data can be found in the supplementary
-material.
+to generate them can be found in Figure smoothing\_comparison\_workflow
+and smoothing\_comparison\_results. Full code used to generate this data
+can be found in the supplementary material. This comparison serves only
+to demonstrate NiPyPE capabilities a comparison between smoothing
+methods is outside of the scope of this paper and will most likely
+require more subjects and quantitative metrics.
 
 .. figure:: images/image06.png
    :align: center
    :alt: 
-Figure smoothing\_comparison\_results.
+Figure smoothing\_comparison\_workflow
+
+.. figure:: images/image05.png
+   :align: center
+   :alt: 
+Figure smoothing\_comparison\_results. Influence of different smoothing
+methods and their parameters. Upper half shows direct influence of
+smoothing on the EPI sequence (slice 16, volume 0, run 2). Lower half
+shows indirect influence of smoothing on the T maps (same slice) of the
+main contrast.
 
 Algorithm comparison is not the only way NiPyPE can be useful for
 neuroimaging methods researcher. In every methods author interest is to
@@ -863,11 +875,6 @@ The tool started its life as a MATLAB script used locally. Initially it
 was only compatible with SPM. After writing a NiPyPE interface it can
 work with FSL and many other software packages not limiting its users
 just to SPM.
-
-.. figure:: images/image01.png
-   :align: center
-   :alt: 
-Figure smoothing\_comparison\_workflow
 
 An environment for methodological continuity and paced training of new
 personnel in laboratories
@@ -1553,6 +1560,6 @@ cindeem:
 setting inputs, executing, and retrieving outputs.
 
 .. |image0| image:: images/image00.png
-.. |image1| image:: images/image04.png
-.. |image2| image:: images/image03.png
-.. |image3| image:: images/image05.png
+.. |image1| image:: images/image03.png
+.. |image2| image:: images/image02.png
+.. |image3| image:: images/image04.png
