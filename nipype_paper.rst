@@ -839,6 +839,11 @@ to generate them can be found in Figure smoothing\_comparison\_workflow.
 Full code used to generate this data can be found in the supplementary
 material.
 
+.. figure:: images/image06.png
+   :align: center
+   :alt: 
+Figure smoothing\_comparison\_results.
+
 Algorithm comparison is not the only way NiPyPE can be useful for
 neuroimaging methods researcher. In every methods author interest is to
 make his or hers work most accessible. This usually means providing
