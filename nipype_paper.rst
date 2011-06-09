@@ -875,7 +875,7 @@ executed during the second run. this is due to the inputs hashing
 mechanism. Since the inputs are the same nothing needs to be executed
 again. If, however, a highpass filter parameter of specify\_model would
 have been change some of the nodes (but not all) would have to rerun.
-NiPyPe automatically esta
+NiPyPe automatically establish which nodes require rerunning.
 
 .. figure:: images/image02.png
    :align: center
@@ -912,8 +912,8 @@ involves reconstructing surface of the cortex and smoothing along it
 (Hagler Jr., Saygin, & Martin I. Sereno, 2006). This avoids bleeding of
 signal over sulci.
 
-Establishing parameters from data and smoothing using SUSAN is a
-Workflow build into NiPyPe. It can be created using
+Establishing parameters from data and smoothing using SUSAN is already
+build into NiPyPe as a Workflow. It can be created using
 create\_susan\_smooth() function. It has similar inputs and outputs as
 SPM Smooth Interface.
 
@@ -923,13 +923,14 @@ by coregistering functional images to the reconstructed surface using
 BBRegister. Finally surface smoothing algorithm from FreeSurfer is
 called.
 
-Smoothed EPI volumes and statistical maps, along with the pipeline used
-to generate them can be found in Figure smoothing\_comparison\_workflow
-and smoothing\_comparison\_results. Full code used to generate this data
-can be found in the supplementary material. This comparison serves only
-to demonstrate NiPyPe capabilities a comparison between smoothing
-methods is outside of the scope of this paper and will most likely
-require more subjects and quantitative metrics.
+Smoothed EPI volumes (direct/local influeance) and statistical maps
+(indirect/global influence), along with the pipeline used to generate
+them can be found in Figure smoothing\_comparison\_workflow and
+smoothing\_comparison\_results. Full code used to generate this data can
+be found in the supplementary material. This comparison serves only to
+demonstrate NiPyPe capabilities a comparison between smoothing methods
+is outside of the scope of this paper and will most likely require more
+subjects and quantitative metrics.
 
 .. figure:: images/image00.png
    :align: center
@@ -945,7 +946,7 @@ smoothing on the EPI sequence (slice 16, volume 0, run 2). Lower half
 shows indirect influence of smoothing on the T maps (same slice) of the
 main contrast.
 
-Algorithm comparison is not the only way NiPyPe can be useful for
+Algorithm comparison is not the only way NiPyPe can be useful for a
 neuroimaging methods researcher. In every methods author interest is to
 make his or hers work most accessible. This usually means providing
 ready to use implementations. However, because the field is so diverse,
@@ -981,7 +982,7 @@ especially important for long running studies when all data has to be
 analyzed using the same methods.
 
 A similar scheme also helps with sharing Workflows across studies
-running simultaneously in the lab. NiPyPe provides amedium for
+running simultaneously in the lab. NiPyPe provides a medium for
 exchanging knowledge and expertise between researchers focused on
 methods in neuroimaging and those interested in applications. For
 example preprocessing Workflows used for all the studies in a given lab
@@ -993,9 +994,9 @@ Workflows allows users to gradually increase the level of details when
 learning how to perform neuroimaging analysis. For example user can
 start with a “black box” Workflow that does analysis from A-Z, and
 gradually learn what it subcomponents (and their subcomponents) do.
-Playing with Interfaces in an interactive console is a great way to
+Playing with Interfaces in an interactive console is also a great way to
 learn how different algorithms work with different parameters without
-having to understand how to set them up and properly call.
+having to understand how to set them up and execute them.
 
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1097,13 +1098,11 @@ systematic comparison of performance and accuracy of underlying
 algorithms essential. However, a platform for comparing algorithms,
 either by themselves or in the context of an analysis workflow, or
 determining optimal workflows in a given application context, does not
-exist.
-
-(e.g., Klein et al., 2009; 2010), a
-
-For example, traditional approaches applied to adult neuroimaging data
-may not be suitable for processing developmental data from children
+exist. For example, traditional approaches applied to adult neuroimaging
+data may not be suitable for processing developmental data from children
 imaged with custom coils.
+
+(e.g., Klein et al., 2009; 2010)
 
 Another way of evaluating software is to investigate the optimal
 combination of preprocessing steps. Recently relation between motion
