@@ -394,8 +394,8 @@ reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
 
 desc="bias field and neck cleanup")
 
-Currently NiPyPe (version 0.4) ships with XXX interfaces (see Table
-supported\_software.). Adding new Interfaces is simply a matter of
+Currently NiPyPe (version 0.4) ships with wide range of interfaces (see
+Table supported\_software.). Adding new Interfaces is simply a matter of
 writing a Python class definition as was shown in Figure XX. When a
 formal specification of inputs and outputs are provided by the
 underlying software, NiPyPe can support these programs automatically.
@@ -565,7 +565,7 @@ will effectivelly execute graph B. Identical processing will be applied
 to evey subject from the list. Iterables can be used in one graph on
 many levels - for example setting iterables on Smooth FWHM to a list of
 4 and 8 mm will result in graph C. MapNode also branches the execution
-tree but in contrast to iterables it merges it straight away efectivelly
+tree but in contrast to iterables it merges it straight away effectively
 performing a MapReduce operation (D).
 
 Parallel Distribution and Execution Plug-ins
