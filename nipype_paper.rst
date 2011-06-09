@@ -1,4 +1,4 @@
-NiPyPE: A flexible, lightweight and extensible neuroimaging data
+NiPyPe: A flexible, lightweight and extensible neuroimaging data
 processing framework
 =====================================================================================
 
@@ -28,7 +28,7 @@ parameters, process the raw data. However, data collected for a single
 study can be diverse (highly multi-dimensional) and large, and
 algorithms suited for one dataset may not be optimal for another. This
 complicates analysis methods and makes data exploration and inference
-challenging and comparative analysis of new algorithms difficult.
+challenging, and comparative analysis of new algorithms difficult.
 
 Current problems
 ~~~~~~~~~~~~~~~~
@@ -37,20 +37,18 @@ Several technical, practical and social issues hinder replicable,
 efficient and optimal use of neuroimaging analysis approaches.
 
 No uniform access to neuroimaging analysis software and usage
-information.
-
-For current multimodal datasets, researchers typically resort to using
-different software packages for different components of the analysis.
-However, these different software packages use different languages and
-environments for development, such as: C/C++ (FSL), MATLAB (SPM), Java
-(Camino), Python (NiPy). This has resulted in a heterogeneous set of
-software with no uniform way to use these tools or execute them. With
-the primary focus on algorithmic improvement, academic software
-development often lacks a rigorous software engineering framework that
-involves extensive testing and documentation and ensures compatibility
-with other tools. This often necessitates extensive interactions with
-the authors of the software to understand their parameters, their quirks
-and their usage.
+information. For current multimodal datasets, researchers typically
+resort to using different software packages for different components of
+the analysis. However, these different software packages use different
+languages and environments for development, such as: C/C++ (FSL), MATLAB
+(SPM), Java (Camino), Python (NiPy). This has resulted in a
+heterogeneous set of software with no uniform way to use these tools or
+execute them. With the primary focus on algorithmic improvement,
+academic software development often lacks a rigorous software
+engineering framework that involves extensive testing and documentation
+and ensures compatibility with other tools. This often necessitates
+extensive interactions with the authors of the software to understand
+their parameters, their quirks and their usage.
 
 No framework for comparative algorithm development and dissemination.
 Except for some large software development efforts (e.g., SPM, FSL,
@@ -64,24 +62,22 @@ software (e.g., normalization software used for the architectonic
 atlases - CHECK).
 
 Personnel turnover in laboratories often limit methodological continuity
-and training new personnel takes time.
-
-In most cognitive neuroscience laboratories, the aims are to understand
-some aspect of cognition. Although, a majority of such laboratories
-gather and analyze neuroimaging data, very few of them have the
-personnel with the technical expertise to understand methodological
-development and modify laboratory procedures to adopt new tools.
-Typically, processing steps are created and crystallized till a lab
-member with appropriate skills can modify the procedures. Typical
-training takes place through self-teaching by following online tutorials
-or taking organized courses or most often by learning from existing
-members of the lab. While this provides some amount of continuity,
-understanding different aspects of neuroimaging is a steep learning
-curve. This is even greater in the context of all the different
-algorithms and software packages available for analysis.
+and training new personnel takes time. In most cognitive neuroscience
+laboratories, the aims are to understand some aspect of cognition.
+Although, a majority of such laboratories gather and analyze
+neuroimaging data, very few of them have the personnel with the
+technical expertise to understand methodological development and modify
+laboratory procedures to adopt new tools. Typically, processing steps
+are created and crystallized till a lab member with appropriate skills
+can modify the procedures. Typical training takes place through
+self-teaching by following online tutorials or taking organized courses
+or most often by learning from existing members of the lab. While this
+provides some amount of continuity, understanding different aspects of
+neuroimaging is a steep learning curve. This is even greater in the
+context of all the different algorithms and software packages available
+for analysis.
 
 Neuroimaging software packages do not address computational efficiency.
-
 The primary focus of neuroimaging analysis algorithms is to solve
 problems (e.g., registration, statistical estimation, tractography).
 While some developers focus on algorithmic or numerical efficiency, most
@@ -103,10 +99,8 @@ hardware configurations (multicore, clusters, clouds and
 supercomputers).
 
 Methods sections in published articles are inadequate for reproducing
-results.
-
-A typical neuroimaging analysis process involves several different
-algorithms with different parameter choices. However, very few
+results. A typical neuroimaging analysis process involves several
+different algorithms with different parameter choices. However, very few
 publications contain necessary information (e.g., data, scripts,
 computer code) to reproduce results (however, see current manuscript
 submission policies for Science and PNAS). Accurately reproducing the
@@ -118,21 +112,18 @@ still common to see the use of SPM’s normalization even though the
 authors themselves point to more accurate options for normalization.
 
 In-depth knowledge of neuroimaging analysis algorithms is limited to few
-individuals.
-
-While several analysis packages implement all “procedures” necessary to
-perform a particular analyses (e.g., doing a group fMRI study), the
-details of the implementation are, however, different. For example, SPM
-uses isotropic smoothing and FSL performs anisotropic smoothing based on
-the distribution of local voxel intensities. While a potential user (a
-cognitive neuroscientist) would like to freely combine processing steps
-from different packages to obtain an optimal workflow, such operational
-details are often not available within a laboratory knowledgebase. Thus,
-the diversity of software solutions in neuroimaging field results in a
-steep learning curve and high training costs.
+individuals. While several analysis packages implement all “procedures”
+necessary to perform a particular analyses (e.g., doing a group fMRI
+study), the details of the implementation are, however, different. For
+example, SPM uses isotropic smoothing and FSL performs anisotropic
+smoothing based on the distribution of local voxel intensities. While a
+potential user (a cognitive neuroscientist) would like to freely combine
+processing steps from different packages to obtain an optimal workflow,
+such operational details are often not available within a laboratory
+knowledgebase. Thus, the diversity of software solutions in neuroimaging
+field results in a steep learning curve and high training costs.
 
 Current solutions
-~~~~~~~~~~~~~~~~~
 
 One attempt to address some of these issues has resulted in the SPM
 batch execution system. Unfortunately it supports only SPM modules and
@@ -164,17 +155,17 @@ licensing it is not straightforward to modify and redistribute the
 modifications.
 
 To address issues with existing workflow systems and the ones described
-earlier, we present NiPyPE (Neuroimaging in Python: Pipelines and
+earlier, we present NiPyPe (Neuroimaging in Python: Pipelines and
 Interfaces), an open source, community-developed, Python-based software
 package that easily interfaces with existing software for efficient
 analysis of neuroimaging data and rapid comparative development of
-algorithms. NiPyPE uses a flexible, efficient and well designed
+algorithms. NiPyPe uses a flexible, efficient and well designed
 programming language – Python – as its foundation. Processing modules
 and their inputs and outputs are described in an object-oriented manner
 providing the flexibility to interface with any type of software (not
 just well behaved command lines). The workflow execution engine has a
 plug-in architecture and supports both local execution on multicore
-machines and remote execution on clusters. NiPyPE is distributed with a
+machines and remote execution on clusters. NiPyPe is distributed with a
 BSD License allowing anyone to make changes and redistribute it.
 Development is done openly with collaborators from many different labs,
 allowing rapid adaptation to the varied needs of the neuroimaging
@@ -183,7 +174,7 @@ community.
 Methods
 -------
 
-NiPyPE consists of three components (see Figure architecture\_overview):
+NiPyPe consists of three components (see Figure architecture\_overview):
 1) interfaces or wrappers around external tools that provide unified way
 for setting inputs, executing and retrieving outputs; 2) a workflow
 engine that allows creating analysis pipelines by connecting inputs and
@@ -193,25 +184,29 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-|image0|Figure architecture\_overview. Architecture overview of the
-NiPyPE framework. Interfaces are wrapped with Nodes or MapNodes and
-connected together within a Workflows. Workflows themselves can act as a
-Node inside another Workflows supporting encapsulation desing pattern.
+.. figure:: images/image01.png
+   :align: center
+   :alt: 
+
+Figure architecture\_overview. Architecture overview of the NiPyPe
+framework. Interfaces are wrapped with Nodes or MapNodes and connected
+together within a Workflows. Workflows themselves can act as a Node
+inside another Workflows supporting encapsulation desing pattern.
 Dependency graph is transformed before executing by the engine
 component. Execution is performed by one of the plugins. Currently
-NiPyPE supports serial and parallel (both local multithreading and
+NiPyPe supports serial and parallel (both local multithreading and
 cluster) execution.
 
 Interfaces
 ~~~~~~~~~~
 
-Interfaces form the core of NiPyPE. As stated earlier, the goal of
+Interfaces form the core of NiPyPe. As stated earlier, the goal of
 “Interfaces” is to provide a uniform mechanism for accessing analysis
 tools from neuroimaging software packages (e.g., FreeSurfer, FSL, SPM).
 For example, there is a Realign Interface that exposes the SPM
 realignment routine, while the MCFLIRT Interface exposes the FSL
 realignment routine. In addition, one can also implement an algorithm in
-Python within NiPyPE and expose it as an Interface. Interfaces are
+Python within NiPyPe and expose it as an Interface. Interfaces are
 flexible and can accommodate the heterogeneous software that needs to be
 supported, while providing unified and uniform access to these tools for
 the user. Since, there is no need for the underlying software to be
@@ -232,7 +227,7 @@ Interfaces that call command line programs are derived from the
 CommandLine class, which provides methods to translate Interface inputs
 into command line parameters and for calling the command).
 
-from NiPyPE.interfaces.base import (
+from NiPyPe.interfaces.base import (
  TraitedSpec,
  CommandLineInputSpec,
  CommandLine,
@@ -258,13 +253,16 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-|image1|Figure simplified\_class\_hierarchy. Simplified class hierarchy
-of Interfaces. Our framework tries to reduce code redundancy and thus
-make adding new interfaces easier and quicker. For example all
-functionality related to execution of command line applications is
-grouped in one class. New classes can be added on top of that. For
-example FSL Interfaces are essentially command lines with some extra
-common properties (such as setting the type of the output file by an
+.. figure:: images/image04.png
+   :align: center
+   :alt: 
+Figure simplified\_class\_hierarchy. Simplified class hierarchy of
+Interfaces. Our framework tries to reduce code redundancy and thus make
+adding new interfaces easier and quicker. For example all functionality
+related to execution of command line applications is grouped in one
+class. New classes can be added on top of that. For example FSL
+Interfaces are essentially command lines with some extra common
+properties (such as setting the type of the output file by an
 environment variable).
 
 We use Enthought Traits\ :sup:``[3] <#ftnt3>`_`\  to create a formal
@@ -396,19 +394,19 @@ reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
 
 desc="bias field and neck cleanup")
 
-Currently NiPyPE (version 0.4) ships with XXX interfaces (for full list
+Currently NiPyPe (version 0.4) ships with XXX interfaces (for full list
 of supported software
-see` <http://nipy.org/nipype/interfaces/index.html>`_`http://nipy.org/NiPyPE/interfaces <http://nipy.org/nipype/interfaces/index.html>`_).
+see` <http://nipy.org/nipype/interfaces/index.html>`_`http://nipy.org/NiPyPe/interfaces <http://nipy.org/nipype/interfaces/index.html>`_).
 Adding new Interfaces is simply a matter of writing a Python class
 definition as was shown in Figure XX. When a formal specification of
-inputs and outputs are provided by the underlying software, NiPyPE can
+inputs and outputs are provided by the underlying software, NiPyPe can
 support these programs automatically. For example, the Slicer command
-line execution modules come with an XML specification that allows NiPyPE
+line execution modules come with an XML specification that allows NiPyPe
 to wrap them without creating individual interfaces. Interfaces can be
 used directly as a Python object and incorporated into any custom Python
 script or used interactively in a Python console (see Figure below).
 
->>> import NiPyPE.interfaces.spm as spm
+>>> import NiPyPe.interfaces.spm as spm
 >>> from glob import glob
 >>> allepi = glob('epi\*.nii') # this will return an unsorted list
 >>> allepi.sort()
@@ -419,7 +417,7 @@ script or used interactively in a Python console (see Figure below).
 Nodes, MapNodes, and Workflows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-NiPyPE provides a framework for connecting Interfaces to create a data
+NiPyPe provides a framework for connecting Interfaces to create a data
 analysis Workflow. In order for Interfaces to be used in a Workflow they
 need to be encapsulated in either Node or MapNode objects. These objects
 provide Interfaces with additional properties (e.g., hash checking of
@@ -470,7 +468,7 @@ methods and experimentation.
 Iterables - Parameter space exploration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-NiPyPE provides a flexibile approach to prototype and experiment with
+NiPyPe provides a flexibile approach to prototype and experiment with
 different processing strategies, by providing unified and uniform access
 to variety of software packages (Interfaces) and creating data flows
 (Workflows). However, for various neuroimaging tasks, there is often a
@@ -499,9 +497,9 @@ iterables operate on the subgraph of a node and creates copies of not
 only the node but also all the nodes dependent on it (see Figure
 iterables\_vs\_mapnode).
 
-|image2|Figure iterables\_vs\_mapnode. Branching the dependency tree
+|image0|Figure iterables\_vs\_mapnode. Branching the dependency tree
 using iterables and MapNodes. If we take the processing pipeline A and
-set iterables parameter of DataGrabber to list of two subjects NiPyPE
+set iterables parameter of DataGrabber to list of two subjects NiPyPe
 will effectivelly execute graph B. Identical processing will be applied
 to evey subject from the list. Iterables can be used in one graph on
 many levels - for example setting iterables on Smooth FWHM to a list of
@@ -512,7 +510,7 @@ performing a MapReduce operation (D).
 Parallel Distribution and Execution Plug-ins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-NiPyPE supports executing Workflows locally (in series or parallel) or
+NiPyPe supports executing Workflows locally (in series or parallel) or
 on load-balanced grid-computing clusters (e.g., SGE, Torque or even via
 SSH) through an extensible plug-in interface. No change is needed to the
 Workflow to switch between these execution modes. One simply calls the
@@ -520,19 +518,19 @@ Workflow’s run function with a different plug-in and its arguments. Very
 often different components of a Workflow can be executed in parallel and
 even more so when the same Workflow is being repeated on multiple
 parameters (e.g., subjects). Adding support for additional cluster
-management systems does not require changes in NiPyPE, but simply
+management systems does not require changes in NiPyPe, but simply
 writing a plug-in extension conforming to the plug-in API.
 
 The Workflow engine sends an execution graph to the plug-in. Executing
 the Workflow in series is then simply a matter of performing a
 topological sort on the graph and running each node in the sorted order.
-However, NiPyPE also provides additional plugins using Python’s
+However, NiPyPe also provides additional plugins using Python’s
 multi-processing module, IPython (includes ssh-based, SGE, LSF, PBS,
 among others) and native interfaces to SGE/PBS clusters. For all of
 these, the graph structure defines the dependencies as well as which
 nodes can be executed in parallel at any given stage of execution.
 
-One of the biggest advantages of NiPyPE’s execution system is that
+One of the biggest advantages of NiPyPe’s execution system is that
 parallel execution using local multi processing plug-in does not require
 any additional software (such as cluster managers like SGE) and
 therefore makes prototyping on a local multi-core workstations easy.
@@ -548,7 +546,7 @@ seamless.
 The Function Interface
 ~~~~~~~~~~~~~~~~~~~~~~
 
-One of the Interfaces implemented in NiPyPE requires special attention:
+One of the Interfaces implemented in NiPyPe requires special attention:
 The Function Interface. Its constructor takes as arguments Python
 function pointer or code, list of inputs and list of outputs. This
 allows running any Python code as part of a Workflow. When combined with
@@ -564,7 +562,7 @@ Workflow Visualisation
 ~~~~~~~~~~~~~~~~~~~~~~
 
 To be able to efficiently manage and debug Workflow one has to have
-access to a graphical representation. Using graphviz (Ref), NiPyPE
+access to a graphical representation. Using graphviz (Ref), NiPyPe
 generates static graphs representing Nodes and connections between them.
 In the current version four types of graphs are supported: orig – does
 not expand inner Workflows, flat – expands inner workflows, exec –
@@ -588,19 +586,19 @@ the file. The first one is faster, but does not deal with situation when
 the file is overwritten by an identical copy. The second one can be
 slower especially for big files, but can tell that two files are
 identical even if they have different modification times. To allow
-efficient recomputation NiPyPE has to store outputs of all Nodes. This
+efficient recomputation NiPyPe has to store outputs of all Nodes. This
 can generate a significant amount of data for typical neuroimaging
 studies. However, not all outputs of every Node are used as inputs to
 other Nodes or relevant to the final results. Users can decide to remove
 those outputs (and save some disk space) by setting the
 remove\_unecessary\_outputs to True. These and other configuration
-options provide a mechanism to streamline the use of NiPyPE for
+options provide a mechanism to streamline the use of NiPyPe for
 different applications.
 
 Deployment
 ~~~~~~~~~~
 
-NiPyPE supports Linux and Mac OS X operating systems. We currently
+NiPyPe supports Linux and Mac OS X operating systems. We currently
 provide three ways of deploying it on a new machine: manual installation
 from sources, PyPi repository, and NeuroDebian repository (Hanke et al.
 2010). Manual installation involves downloading a source code archive
@@ -611,16 +609,16 @@ information and automatically installing required packages. NeuroDebian
 is a similar solution but based on Debian/Ubuntu Linux distributions
 (therefore it does not work on Mac OS X). In addition to resolving
 dependencies and automatic updates NeuroDebian provides some of the
-software packages supported by NiPyPE.
+software packages supported by NiPyPe.
 
 Development
 ~~~~~~~~~~~
 
-NiPyPE is trying to address the problem of interacting with ever
+NiPyPe is trying to address the problem of interacting with ever
 changing universe of neuroimaging software in a sustainable manner.
 Therefore the way its development is managed is part of the solution.
-NiPyPE is distributed under Berkeley Software Distribution license which
-allows free copying, modification and distribution and, in fact, NiPyPE
+NiPyPe is distributed under Berkeley Software Distribution license which
+allows free copying, modification and distribution and, in fact, NiPyPe
 meets all the requirements of open source definition (see Open Source
 Initiative\ :sup:``[4] <#ftnt4>`_`\ ). Development is also carried out
 openly through distributed version control (via GitHub) in an online
@@ -633,7 +631,7 @@ and time).
 
 These features described in the prior paragraphs allow rapid development
 and deployment of analysis procedures in laboratories and addresses all
-of the issues described earlier. In particular, NiPyPE provides: 1)
+of the issues described earlier. In particular, NiPyPe provides: 1)
 uniform access to neuroimaging analysis software and usage information;
 2) a framework for comparative algorithm development and dissemination;
 3) an environment for methodological continuity and paced training of
@@ -652,9 +650,9 @@ Uniform accessing to tools, their usage, and execution
 To access an interface user has to first import it from an appropriate
 Python package (each neuroimaging software distribution such as FSL,
 SPM, Camino etc. has a corresponding Python package in the
-NiPyPE.interfaces namesapce):
+NiPyPe.interfaces namesapce):
 
->>> from NiPyPE.interfaces.camino import DTIFit
+>>> from NiPyPe.interfaces.camino import DTIFit
 
 To learn how to use a given Interface user can call help() method in an
 interactive console:
@@ -682,7 +680,7 @@ automatically generated based on inputs and outputs definition and
 includes information about reaquired inputs, types, and default value.
 Alternatively an extended information is available in the form of
 auto-generated HTML documentation (available locally and
-online):|image3|
+online):|image1|
 
 This includes example usage. All inputs are set through the inputs
 field:
@@ -691,7 +689,7 @@ field:
 >>> fit.inputs.in\_file = 'tensor\_fitted\_data.Bfloat'
 
 When trying to set an invalid input type (for example non existing file,
-or a number instead of a string NiPyPE framework will send an error
+or a number instead of a string NiPyPe framework will send an error
 message. Checking validity of the pipeline at early stages prevents from
 running pipelines that are bound to fail and thus saves time. To run an
 interface user needs to call run() method:
@@ -702,7 +700,7 @@ At this stage the framework checks if all the mandatory inputs are set
 and sends an error otherwise.
 
 This way of running and accessing help information is the same for all
-software supported by NiPyPE - whether it is a command line program or a
+software supported by NiPyPe - whether it is a command line program or a
 MATLAB or Python script. The framework deals with translating inputs
 into appropriate form and calling the right tools in the right way,
 presenting the user with a uniform interface.
@@ -710,7 +708,7 @@ presenting the user with a uniform interface.
 Building a workflow from scratch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the following section, to showcase NiPyPE, we will describe how to
+In the following section, to showcase NiPyPe, we will describe how to
 create and extend a typical fMRI processing pipeline. We will begin with
 a basic processing layout and follow with extending it by
 adding/exchanging different components.
@@ -719,7 +717,7 @@ Most fMRI pipeline can be divided into two sections – preprocessing and
 modelling. First one deals with cleaning data from confounds and noise
 and the second one fits a model based on the experimental design.
 Preprocessing stage in our first iteration of a pipeline will consist of
-only two steps: realignment and smoothing. In NiPyPE Every processing
+only two steps: realignment and smoothing. In NiPyPe Every processing
 step consist of an Interface (which defines how to execute corresponding
 software) encapsulated in a Node (which defines for example a unique
 name). For realignment (motion correction achieved by coregistering all
@@ -755,10 +753,10 @@ Listing defining\_connections
 
 Creating a modelling workflow which will define the design, estimate
 model and contrasts follows the same suite. We will again use SPM
-implementations. NiPyPE, however, adds extra abstraction layer to model
+implementations. NiPyPe, however, adds extra abstraction layer to model
 definition which allows using the same definition for many model
 estimation implemantations (for example one from FSL or nippy).
-Therefore we will need four nodes: SpecifyModel (NiPyPE specific
+Therefore we will need four nodes: SpecifyModel (NiPyPe specific
 abstraction layer), Level1Design (SPM design definition), ModelEstimate,
 and ContrastEstimate. The connected modelling Workflow can be seen on
 Figure workflow\_from\_scratch. Model specification supports block,
@@ -769,7 +767,7 @@ SpecifyModel.
 Having preprocessing and modelling workflows we need to connect them
 together, add data grabbing facility and save the results. For this we
 will create a master Workflow which will host preprocessing and model
-Workflows as well as DataGrabber and DataSink Nodes. NiPyPE allows
+Workflows as well as DataGrabber and DataSink Nodes. NiPyPe allows
 connecting Nodes between Workflows. We will use this feature to connect
 realignment\_parameters and smoothed\_files to modelling workflow.
 
@@ -806,7 +804,7 @@ there are others already available should be driven by clear
 improvement. This can be only measured by comparison on real or
 simulated data. Unfortunately a thorough comparison is usually time
 consuming, because of the need to deal with technicalities of different
-software packages. NiPyPE helps with this by standardizing the access to
+software packages. NiPyPe helps with this by standardizing the access to
 the software. Additionally thanks to the iterables mechanism user can
 easily extend the comparison into many more dimensions testing different
 values of parameters.
@@ -827,7 +825,7 @@ involves reconstructing surface of the cortex and smoothing along it
 signal over sulci.
 
 Establishing parameters from data and smoothing using SUSAN is a
-Workflow build into NiPyPE. It can be created using
+Workflow build into NiPyPe. It can be created using
 create\_susan\_smooth() function. It has similar inputs and outputs as
 SPM Smooth Interface.
 
@@ -841,7 +839,7 @@ Smoothed EPI volumes and statistical maps, along with the pipeline used
 to generate them can be found in Figure smoothing\_comparison\_workflow
 and smoothing\_comparison\_results. Full code used to generate this data
 can be found in the supplementary material. This comparison serves only
-to demonstrate NiPyPE capabilities a comparison between smoothing
+to demonstrate NiPyPe capabilities a comparison between smoothing
 methods is outside of the scope of this paper and will most likely
 require more subjects and quantitative metrics.
 
@@ -859,23 +857,23 @@ smoothing on the EPI sequence (slice 16, volume 0, run 2). Lower half
 shows indirect influence of smoothing on the T maps (same slice) of the
 main contrast.
 
-Algorithm comparison is not the only way NiPyPE can be useful for
+Algorithm comparison is not the only way NiPyPe can be useful for
 neuroimaging methods researcher. In every methods author interest is to
 make his or hers work most accessible. This usually means providing
 ready to use implementations. However, because the field is so diverse,
 software developers have to provide several packages (SPM toolbox,
 command line tool, c++ library etc.) to cover the whole user base.
-NiPyPE helps with this task. By creating one Interface developer exposes
+NiPyPe helps with this task. By creating one Interface developer exposes
 the tool to greater range of users. Independent of the way the tool was
 implemented it will be able to work with any piece of software currently
-supported by NiPyPE.
+supported by NiPyPe.
 
 A good example of such scenario is ArtifactDetection toolbox (ref TODO).
 This piece of software uses EPI timeseries and realignment parameters to
 find timepoints (volumes) that are most likely artefacts and should be
 removed (by including them as confound regressors in the design matrix).
 The tool started its life as a MATLAB script used locally. Initially it
-was only compatible with SPM. After writing a NiPyPE interface it can
+was only compatible with SPM. After writing a NiPyPe interface it can
 work with FSL and many other software packages not limiting its users
 just to SPM.
 
@@ -886,7 +884,7 @@ personnel in laboratories
 When in a lab with some experience in neuroimaging studies a new
 analysis is performed it is almost always the case that some parts of
 the data processing will be the same as in on of the previous studies
-performed in the same centre. NiPyPE Workflows can be very useful in
+performed in the same centre. NiPyPe Workflows can be very useful in
 dividing processing pipelines into reusable building blocks. This not
 only improves the speed of building new pipelines but also reduces the
 number of potential errors, because a well tested piece of code is being
@@ -895,14 +893,14 @@ especially important for long running studies when all data has to be
 analyzed using the same methods.
 
 A similar scheme also helps with sharing Workflows across studies
-running simultaneously in the lab. NiPyPE provides amedium for
+running simultaneously in the lab. NiPyPe provides amedium for
 exchanging knowledge and expertise between researchers focused on
 methods in neuroimaging and those interested in applications. For
 example preprocessing Workflows used for all the studies in a given lab
 can be fine tuned by staff members with computer science inclination.
 
 Thanks to uniform nature of Interfaces and ease of use of Workflows
-NiPyPE helps with training new staff. Encapsulation provided by
+NiPyPe helps with training new staff. Encapsulation provided by
 Workflows allows users to gradually increase the level of details when
 learning how to perform neuroimaging analysis. For example user can
 start with a “black box” Workflow that does analysis from A-Z, and
@@ -914,7 +912,7 @@ having to understand how to set them up and properly call.
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The NiPyPE package provides a seamless and flexible environment for
+The NiPyPe package provides a seamless and flexible environment for
 executing workflows in parallel on a variety of environments from local
 multi-core workstations to high-performance clusters. In the SPM
 workflow for single subject functional data analysis shown below, only a
@@ -941,15 +939,15 @@ articles are inadequate for reproducing results; and 6) In-depth
 knowledge of neuroimaging analysis algorithms is limited to few
 individuals.
 
-We addressed these issues by creating NiPyPE, an open-source,
-community-developed initiative under the umbrella of NiPy. NiPyPE,
+We addressed these issues by creating NiPyPe, an open-source,
+community-developed initiative under the umbrella of NiPy. NiPyPe,
 solves these issues by providing a uniform interface to existing
 neuroimaging software and by facilitating interaction between these
-packages within workflows. NiPyPE provides an environment that
+packages within workflows. NiPyPe provides an environment that
 encourages interactive exploration of algorithms from different packages
 (e.g., SPM, FSL), eases the design of workflows within and between
 packages, and reduces the learning curve necessary to use different
-packages. NiPyPE is addressing limitations of existing pipeline systems
+packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
@@ -964,62 +962,41 @@ systems. But the Python community also embraces openness in design and
 availability of software and is evidenced by the growing list of python
 software. Python has already been embraced by the neuroscientific
 community and is rapidly gaining popularity (Bednar, 2009; Goodman &
-Brette, 2009). NiPyPE, based on Python, thus has immediate access to
+Brette, 2009). NiPyPe, based on Python, thus has immediate access to
 this extensive community and its software, technological resources and
 support structure.
 
-Flexibility vs Standardization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+NiPyPe provides a formal and flexible framework to accommodate the
+diversity of imaging software. Within neuroimaging community, not all
+software are limited to well behaved command line tools. Furthermore, a
+number of these tools do not have well defined inputs, outputs or usage
+help. Currently we use Enthought Traits to define inputs and outputs of
+interfaces. However, such definitions can be easily translated into
+instances of an XML schema. On the other hand, when a tool provides a
+formal description of their inputs and outputs (e.g., Slicer 3D;
+slicer.org), it is possible to take these definitions and easily
+generate interface classes.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Despite trying to provide common way of calling and using diverse set of
-software we have decided not to impose declarative description of
-Interfaces. Solutions such as LONI Pipeline decided to follow a contrary
-path by using XML. Our decision was motivated by flexibility. Within
-neuroimaging community software is not only limited to well behaved
-command line tools. We wanted to be able to support scripting language
-software requiring an interpreter (such as SPM with MATLAB).
-Additionally non declarative transformations of inputs and outputs have
-been necessary for many Interfaces. At the same time through a hierarchy
-of classes and helper methods we provide mechanisms that reduce time of
-wrapping new commands that do not require such transformations. In this
-way we achieve the best of both worlds.
+NiPyPe development welcomes input and contributions from the community.
+The source code is freely distributed under a BSD license allowing
+anyone any use of the software and NiPyPe conforms to the Open Software
+Definition of the Open Source Initiative. Design decisions are typically
+discussed on the open mailing lists.
 
-Despite de differences between declarative (XML) and non-declarative
-(methods, classes) approach to wrapping software interoperability should
-be easily achievable. It is foreseeable to write and automated XML
-interface description generator based on NiPyPE Interface classes. Such
-solution would probably have to call python and use NiPyPE as
-intermediate stage in communication, but at the same it would allow
-systems such as LONI Pipeline to support less standard software
-solutions (such as SPM). Transformation in the other direction could
-also be possible. Interface classes could be generated based on XML
-descriptions. In fact this is being already done for modules provided by
-Slicer 3D.
-
-Openness and provenance tracking
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Openness lies at heart of NiPyPE in both design and development process.
-Source code is freely distributed under BSD license allowing anyone to
-fork the project at any given time. There are no restrictions for usage
-and redistribution. NiPyPE conforms to the Open Software Definition of
-the Open Source Initiative.
-
-Development process is fully transparent. Proposed changes and
-discussions between developers are accessible by anyone on the Internet.
-This stimulates community to get involved in the development which
-results in contributions from users from all around the world. Diverse
-and geographically distributed user and developer base makes NiPyPE a
-flexible project that takes into account needs of many scientists.
+Development process is fully transparent and encourages contributions
+from users from all around the world. Diverse and geographically
+distributed user and developer base makes NiPyPe a flexible project that
+takes into account needs of many scientists.
 
 Improving openness and transparency of research is also a goal of
-NiPyPE. A workflow definition is in principle sufficient to replicate
+NiPyPe. A workflow definition is in principle sufficient to replicate
 the analysis. Since it was used to actually analyze the date it is more
 detailed and accurate than description in a paper. Thus by accompanying
 publication with formal definition of processing pipeline (such as a
-NiPyPE script) increases reproducibility an transparency or research.
+NiPyPe script) increases reproducibility an transparency or research.
 
-This said NiPyPE can improve in the field of provenance tracking by
+This said NiPyPe can improve in the field of provenance tracking by
 including information of the release version of the software and
 architecture used for each step. Also creating provenance reports in a
 standardized XML format (Mackenzie-Graham, Van Horn, Woods, Crawford, &
@@ -1031,21 +1008,21 @@ Comparisons and pipeline optimization studies
 Increased diversity of data processing software made systematic
 comparison of performance and accuracy difficult. Despite the fact that
 some research has been done in this field, for example comparing
-coregistration methods (Klein et al., 2009; 2010), we hope that NiPyPE
+coregistration methods (Klein et al., 2009; 2010), we hope that NiPyPe
 will make such comparisons easier and therefore more prevalent.
 
 Another way of evaluating software is to investigate the optimal
 combination of preprocessing steps. Recently relation between motion
 correction and regression has been researched coming with a method of
 finding optimal per subject preprocessing pipeline (Churchill et al.,
-2011). NiPyPE can make such investigation easier resulting in more
+2011). NiPyPe can make such investigation easier resulting in more
 efficient data analysis.
 
 A complete recording of the methods used in a
 study\ :sup:``[b] <#cmnt2>`_`\ 
 
 #. in other words provenance
-#. a NiPyPE script allows to fully recreate the processing pipeline
+#. a NiPyPe script allows to fully recreate the processing pipeline
 
 A framework for shared storage of information and evolution of analysis
 methods and approaches
@@ -1064,22 +1041,22 @@ nature development provides flexibility required in scientific use.
 Prototyping, algorithm comparison and parameter space exploration are
 some of the core design features. Our framework also improves
 reproducibility by providing provenance tracking. Exchangibility of
-pipelines created using NiPyPE stimulates collaboration in the broader
+pipelines created using NiPyPe stimulates collaboration in the broader
 neuroimaging community.
 
 Supplementary Material
 
 workflow\_from\_scratch.py
 
-import NiPyPE.interfaces.io as nio # Data i/o
+import NiPyPe.interfaces.io as nio # Data i/o
 
-import NiPyPE.interfaces.spm as spm # spm
+import NiPyPe.interfaces.spm as spm # spm
 
-import NiPyPE.pipeline.engine as pe # pypeline engine
+import NiPyPe.pipeline.engine as pe # pypeline engine
 
-import NiPyPE.algorithms.modelgen as model # model specification
+import NiPyPe.algorithms.modelgen as model # model specification
 
-from NiPyPE.interfaces.base import Bunch
+from NiPyPe.interfaces.base import Bunch
 
 import os # system functions
 
@@ -1462,7 +1439,7 @@ exception of DataGrabber and DataSink it could have been executed using
 SPM batch manager. We can extend it by adding non SPM components. Apart
 from motion correction and smoothing one can try to detect volumes
 confounded by acquisition or motion artefacts and add them to the design
-matrix as confound regressors. NiPyPE has a build in implementation of
+matrix as confound regressors. NiPyPe has a build in implementation of
 Artifact Detection Tool (TODO reference) which using motion parameters
 and global signal estimates which volumes should be omitted in the
 analysis. ArtifactDetect Node takes two inputs: realigned volumes and
@@ -1504,14 +1481,14 @@ seen on Figure TODO.
 Comparison of different smoothing methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One of the goals of NiPyPE is make comparison between different
+One of the goals of NiPyPe is make comparison between different
 parameters and algorithms easier. For example the Full Width Half
 Maximum (FWHM) of the smoothing kernel is usually set to an arbitrary
 value. Because smoothing take place in the middle of the pipeline (after
 realignment but before model estimation) it can influence all the steps
 following it. It would be therefore useful to branch the processing just
 before Smooth Node and run it and all its direct and indirect children
-with different FWHM. NiPyPE support this scenario through iterables. In
+with different FWHM. NiPyPe support this scenario through iterables. In
 the same matter as with subject IDs user can iterate over a set of
 FWHMs, effectively cloning relevant branches. A comparison between 4mm
 and 8mm FWHM with corresponding workflow is presented in Figure TODO.
@@ -1528,7 +1505,7 @@ Saygin, & Martin I. Sereno, 2006). This avoids bleeding of signal over
 sulci.
 
 Establishing parameters from data and smoothing using SUSAN is a
-Workflow build into NiPyPE. It can be created using
+Workflow build into NiPyPe. It can be created using
 create\_susan\_smooth() function. It has similar inputs and outputs as
 SPM Smooth Interface.
 
@@ -1545,9 +1522,9 @@ More complex workflows
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The example workflow outlined above was kept oversimplified for
-demonstration purposes. NiPyPE, however, scales well for more
+demonstration purposes. NiPyPe, however, scales well for more
 complicated designs. As a proof we have analyzed real world fMRI
-reliability study using NiPyPE. Processing has iterated over subjects,
+reliability study using NiPyPe. Processing has iterated over subjects,
 tasks (motor, 3 x language, and line bisection), sessions, thresholding
 methods (topological FDR with Gamma-Gaussian Mixture Model or FWE
 cluster forming threshold), and Regions of Interest (full brain or
@@ -1781,7 +1758,5 @@ cindeem:
 1) interfaces wrap around external tools providing a unified way for
 setting inputs, executing, and retrieving outputs.
 
-.. |image0| image:: images/image01.png
-.. |image1| image:: images/image04.png
-.. |image2| image:: images/image03.png
-.. |image3| image:: images/image05.png
+.. |image0| image:: images/image03.png
+.. |image1| image:: images/image05.png
