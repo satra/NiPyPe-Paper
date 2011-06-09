@@ -2,21 +2,22 @@ NiPyPe: A flexible, lightweight and extensible neuroimaging data
 processing framework
 =====================================================================================
 
-Krzysztof Gorgolewski [1], Christopher Burns, Cindee Madison, Dav Cark,
-Yaroslav O. Halchenko, Michael Waskom, Satrajit S. Ghosh [x]
+Krzysztof Gorgolewski1, Christopher Burns, Cindee Madison, Dav Clark,
+Yaroslav O. Halchenko, Michael Waskom, Satrajit S. Ghoshx
 
 1 School of informatics, University of Edinburgh
 
 x Research Laboratory of Electronics, Massachusetts Institute of
 Technology
 
-Corresponding author:
+Corresponding author: chris.gorgolewski@gmail.com
 
 Running title:
 
 Abstract
 
-Keywords:
+Keywords: neuroimaging, data processing, workflow, pipeline, provenance,
+python
 
 --------------
 
@@ -483,7 +484,15 @@ www.cabiatl.com/mricro/mricron/dcm2nii.html
 
 AFNI
 
-afni.nimh.nih.gov/afni/
+afni.nimh.nih.gov/afni
+
+XNAT
+
+www.xnat.org
+
+SQLite
+
+www.sqlite.org
 
 Table supported\_software. List of software packages fully or partially
 supported by NiPyPe. For more details
@@ -681,8 +690,7 @@ Deployment
 
 NiPyPe supports Linux and Mac OS X operating systems. We currently
 provide three ways of deploying it on a new machine: manual installation
-from sources
-(`http://nipy.sourceforge.net/nipype/ <http://nipy.sourceforge.net/nipype/>`_),
+from sources (`http://nipy.org/nipype/ <http://nipy.org/nipype/>`_),
 PyPi repository
 (`http://pypi.python.org/pypi/nipype/ <http://pypi.python.org/pypi/nipype/>`_),
 and NeuroDebian repository `( <>`_`http://neuro.debian.net <>`_ - Hanke
@@ -915,13 +923,11 @@ signal over sulci.
 Establishing parameters from data and smoothing using SUSAN is already
 build into NiPyPe as a Workflow. It can be created using
 create\_susan\_smooth() function. It has similar inputs and outputs as
-SPM Smooth Interface.
-
-Smoothing on surface involves doing a full cortical reconstruction from
-T1 volume using FreeSurfer (Fischl, M I Sereno, & Dale, 1999) followed
-by coregistering functional images to the reconstructed surface using
-BBRegister. Finally surface smoothing algorithm from FreeSurfer is
-called.
+SPM Smooth Interface. Smoothing on surface involves doing a full
+cortical reconstruction from T1 volume using FreeSurfer (Fischl, M I
+Sereno, & Dale, 1999) followed by coregistering functional images to the
+reconstructed surface using BBRegister. Finally surface smoothing
+algorithm from FreeSurfer is called.
 
 Smoothed EPI volumes (direct/local influeance) and statistical maps
 (indirect/global influence), along with the pipeline used to generate
@@ -1100,15 +1106,17 @@ However, a platform for comparing algorithms, either by themselves or in
 the context of an analysis workflow, or determining optimal workflows in
 a given application context (e.g., Churchill et al., 2011), does not
 exist. Furthermore, in this context of changing hardware and software,
-traditional approaches may not be suitable in all contexts for
-processing developmental data from children imaged with custom coils.
-NiPyPe can make such investigations easier (as demonstrated via the
-smoothing example above), resulting in more efficient data analysis.
+traditional analysis approaches may not be suitable in all contexts
+(e.g., data from 32-channel coils which show a very different
+sensitivity profile, or data from children). NiPyPe can make such
+evaluations, design of optimal workflows and investigations easier (as
+demonstrated via the smoothing example above), resulting in more
+efficient data analysis for the community.
 
 Summary
 ~~~~~~~
 
-We present an extensible framework for creating interfaces and workflows
+We present an extensible framework for creating Interfaces and Workflows
 for neuroimaging data processing. Community based open in nature
 development provides flexibility required in scientific use.
 Prototyping, algorithm comparison and parameter space exploration are
