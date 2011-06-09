@@ -394,25 +394,86 @@ reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
 
 desc="bias field and neck cleanup")
 
-Currently NiPyPe (version 0.4) ships with XXX interfaces (for full list
-of supported software
-see` <http://nipy.org/nipype/interfaces/index.html>`_`http://nipy.org/NiPyPe/interfaces <http://nipy.org/nipype/interfaces/index.html>`_).
-Adding new Interfaces is simply a matter of writing a Python class
-definition as was shown in Figure XX. When a formal specification of
-inputs and outputs are provided by the underlying software, NiPyPe can
-support these programs automatically. For example, the Slicer command
-line execution modules come with an XML specification that allows NiPyPe
-to wrap them without creating individual interfaces. Interfaces can be
-used directly as a Python object and incorporated into any custom Python
-script or used interactively in a Python console (see Figure below).
+Currently NiPyPe (version 0.4) ships with XXX interfaces (see Table
+supported\_software.). Adding new Interfaces is simply a matter of
+writing a Python class definition as was shown in Figure XX. When a
+formal specification of inputs and outputs are provided by the
+underlying software, NiPyPe can support these programs automatically.
+For example, the Slicer command line execution modules come with an XML
+specification that allows NiPyPe to wrap them without creating
+individual interfaces. Interfaces can be used directly as a Python
+object and incorporated into any custom Python script or used
+interactively in a Python console (see Figure below).
 
->>> import NiPyPe.interfaces.spm as spm
+>>> import nipype.interfaces.spm as spm
 >>> from glob import glob
 >>> allepi = glob('epi\*.nii') # this will return an unsorted list
 >>> allepi.sort()
 >>> realigner = spm.Realign()
 >>> realigner.inputs.in\_files = allepi
 >>> result = realigner.run()
+
+Name
+
+Version
+
+URL
+
+FSL
+
+www.fmrib.ox.ac.uk/fsl
+
+SPM
+
+www.fil.ion.ucl.ac.uk/spm
+
+Camino
+
+www.cs.ucl.ac.uk/research/medic/camino
+
+NiPy
+
+nipy.sourceforge.net/nipy
+
+ConnecomeViewerToolkit
+
+www.connectomeviewer.org
+
+NiTime
+
+nipy.sourceforge.net/nitime
+
+Diffusion Toolkit
+
+www.trackvis.org/dtk
+
+Camino-TrackVis
+
+www.nitrc.org/projects/camino-trackvis
+
+FreeSurfer
+
+surfer.nmr.mgh.harvard.edu
+
+Slicer
+
+www.slicer.org/
+
+BRAINS
+
+www.psychiatry.uiowa.edu/mhcrc/IPLpages/BRAINS.htm
+
+dcm2nii
+
+www.cabiatl.com/mricro/mricron/dcm2nii.html
+
+AFNI
+
+afni.nimh.nih.gov/afni/
+
+Table supported\_software. List of software packages fully or partially
+supported by NiPyPe. For more details
+see` <http://www.google.com/url?q=http://nipy.org/nipype/interfaces/index.html&sa=D&sntz=1&usg=AFQjCNGywWOiqWr3hlgDCcEZy7Dr102WUA>`_`http://nipy.org/NiPyPe/interfaces <http://www.google.com/url?q=http://nipy.org/nipype/interfaces/index.html&sa=D&sntz=1&usg=AFQjCNGywWOiqWr3hlgDCcEZy7Dr102WUA>`_
 
 Nodes, MapNodes, and Workflows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
