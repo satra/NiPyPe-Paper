@@ -1035,55 +1035,48 @@ help. Currently we use Enthought Traits to define inputs and outputs of
 interfaces. However, such definitions can be easily translated into
 instances of an XML schema. On the other hand, when a tool provides a
 formal description of their inputs and outputs (e.g., Slicer 3D;
-slicer.org), it is possible to take these definitions and easily
-generate interface classes.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+slicer.org), it is possible to take these definitions and automatically
+generate NiPyPe wrappers for those classes.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NiPyPe development welcomes input and contributions from the community.
 The source code is freely distributed under a BSD license allowing
 anyone any use of the software and NiPyPe conforms to the Open Software
-Definition of the Open Source Initiative. Design decisions are typically
-discussed on the open mailing lists.
-
-Development process is fully transparent and encourages contributions
-from users from all around the world. Diverse and geographically
-distributed user and developer base makes NiPyPe a flexible project that
-takes into account needs of many scientists.
+Definition of the Open Source Initiative. Development process is fully
+transparent and encourages contributions from users from all around the
+world. The diverse and geographically distributed user and developer
+base makes NiPyPe a flexible project that takes into account needs of
+many scientists.
 
 Improving openness and transparency of research is also a goal of
 NiPyPe. A workflow definition is in principle sufficient to replicate
-the analysis. Since it was used to actually analyze the date it is more
-detailed and accurate than description in a paper. Thus by accompanying
-publication with formal definition of processing pipeline (such as a
-NiPyPe script) increases reproducibility an transparency or research.
+the analysis. Since it was used to actually analyze the data it is more
+detailed and accurate than a typical methods description in a paper, but
+also has the advantage of being reused by others. By accompanying a
+publication with a formal definition of processing pipeline (such as a
+NiPyPe script) increases reproducibility and transparency of research.
+While NiPyPe captures a variety of provenance information, we hope to
+improve this aspect by generating provenance reports in a standardized
+XML format (Mackenzie-Graham, Van Horn, Woods, Crawford, & Toga, 2008).
 
-This said NiPyPe can improve in the field of provenance tracking by
-including information of the release version of the software and
-architecture used for each step. Also creating provenance reports in a
-standardized XML format (Mackenzie-Graham, Van Horn, Woods, Crawford, &
-Toga, 2008) is planned in future releases.
-
-Comparisons and pipeline optimization studies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Increased diversity of data processing software made systematic
-comparison of performance and accuracy difficult. Despite the fact that
-some research has been done in this field, for example comparing
-coregistration methods (Klein et al., 2009; 2010), we hope that NiPyPe
-will make such comparisons easier and therefore more prevalent.
+Increased diversity of data processing software has made systematic
+comparison of performance and accuracy of underlying algorithms
+difficult. Despite extensive comparative studies (e.g., Klein et al.,
+2009; 2010), a platform for comparing algorithms, either by themselves
+or in the context of an analysis workflow does not exist. Currently, it
+is also difficult to determine an optimal workflow in a given
+application context. For example, traditional approaches applied to
+adult neuroimaging data may not be suitable for processing developmental
+data from children imaged with custom coils.
 
 Another way of evaluating software is to investigate the optimal
 combination of preprocessing steps. Recently relation between motion
 correction and regression has been researched coming with a method of
 finding optimal per subject preprocessing pipeline (Churchill et al.,
-2011). NiPyPe can make such investigation easier resulting in more
-efficient data analysis.
-
-A complete recording of the methods used in a
-study\ :sup:``[b] <#cmnt2>`_`\ 
-
-#. in other words provenance
-#. a NiPyPe script allows to fully recreate the processing pipeline
+2011). NiPyPe can make such investigations easier, resulting in more
+efficient data analysis. NiPyPe will make such comparisons easier and
+therefore more prevalent, similar to the smoothing comparison example
+demonstrated above.
 
 A framework for shared storage of information and evolution of analysis
 methods and approaches
@@ -1096,14 +1089,16 @@ methods and approaches
 Summary
 ~~~~~~~
 
-We present a novel extensible framework for creating interfaces and
-pipelines for neuroimaging data processing. Community based open in
-nature development provides flexibility required in scientific use.
+We present an extensible framework for creating interfaces and workflows
+for neuroimaging data processing. Community based open in nature
+development provides flexibility required in scientific use.
 Prototyping, algorithm comparison and parameter space exploration are
 some of the core design features. Our framework also improves
 reproducibility by providing provenance tracking. Exchangibility of
 pipelines created using NiPyPe stimulates collaboration in the broader
 neuroimaging community.
+
+--------------
 
 Supplementary Material
 
@@ -1634,31 +1629,24 @@ Second Davs comment, dont let them get lost in the code, just outline
 the impt parts, use highlighting? Im not sure what the journal allows,
 but this would help.
 
-`[b] <#cmnt_ref2>`_krzysztof.gorgolewski:
-
-I am a bit afraid to make provenance tracking a big point. UCLA
-implementation has the following advantages: it's independent from LONI
-Pipeline, its standardized using an XML Schema, it includes architecture
-and version tracking.
-
-`[c] <#cmnt_ref3>`_helenlramsden:
+`[b] <#cmnt_ref2>`_helenlramsden:
 
 until
 
-`[d] <#cmnt_ref4>`_davclark:
+`[c] <#cmnt_ref3>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[e] <#cmnt_ref5>`_cindeem:
+`[d] <#cmnt_ref4>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[f] <#cmnt_ref6>`_davclark:
+`[e] <#cmnt_ref5>`_davclark:
 
 I mention this in my high level notes
 
-`[g] <#cmnt_ref7>`_satrajit.ghosh:
+`[f] <#cmnt_ref6>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1674,33 +1662,33 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
+`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[i] <#cmnt_ref9>`_cindeem:
+`[h] <#cmnt_ref8>`_cindeem:
 
 While this provides some amount of continuity, understanding different
 aspects of neuroimaging has a steep learning curve, made steeper by
 incorporating the time needed to learn the different package interfaces
 and algorithms.
 
-`[j] <#cmnt_ref10>`_helenlramsden:
+`[i] <#cmnt_ref9>`_helenlramsden:
 
 spoken English, use 'due to'
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[l] <#cmnt_ref12>`_cindeem:
+`[k] <#cmnt_ref11>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[m] <#cmnt_ref13>`_cindeem:
+`[l] <#cmnt_ref12>`_cindeem:
 
 Node and MapNode objects provide interfaces with additional properties
 (e.g., hash checking of inputs, caching of results, ability to iterate
@@ -1711,9 +1699,16 @@ These mechanisms allow not only for provinence tracking, but aid in
 efficient pipeline execution. They provide the framework necessary to
 create a data analysis Workflow.
 
-`[n] <#cmnt_ref14>`_duncancarmichael:
+`[m] <#cmnt_ref13>`_duncancarmichael:
 
 extensive?
+
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
+
+I am a bit afraid to make provenance tracking a big point. UCLA
+implementation has the following advantages: it's independent from LONI
+Pipeline, its standardized using an XML Schema, it includes architecture
+and version tracking.
 
 `[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
