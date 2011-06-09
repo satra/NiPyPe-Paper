@@ -873,8 +873,9 @@ by calling run() method of the master Workflow.
 If the run() method would be called twice none of the interface would be
 executed during the second run. this is due to the inputs hashing
 mechanism. Since the inputs are the same nothing needs to be executed
-again. However, if an extra contrast were to be added to
-contrastestimate node, it would rerun (
+again. If, however, a highpass filter parameter of specify\_model would
+have been change some of the nodes (but not all) would have to rerun.
+NiPyPe automatically esta
 
 .. figure:: images/image02.png
    :align: center
