@@ -3,9 +3,12 @@ processing framework
 =====================================================================================
 
 Krzysztof Gorgolewski1, Christopher Burns, Cindee Madison, Dav Clark,
-Yaroslav O. Halchenko, Michael Waskom, Satrajit S. Ghoshx
+Yaroslav O. Halchenko5, Michael Waskom, Satrajit S. Ghoshx
 
 1 School of informatics, University of Edinburgh
+
+5 Department of Psychological and Brain Sciences, Dartmouth College,
+Hanover, New Hampshire, USA
 
 x Research Laboratory of Electronics, Massachusetts Institute of
 Technology
@@ -883,7 +886,7 @@ executed during the second run. this is due to the inputs hashing
 mechanism. Since the inputs are the same nothing needs to be executed
 again. If, however, a highpass filter parameter of specify\_model would
 have been change some of the nodes (but not all) would have to rerun.
-NiPyPe automatically establish which nodes require rerunning.
+NiPyPe automatically determines which nodes require rerunning.
 
 .. figure:: images/image02.png
    :align: center
