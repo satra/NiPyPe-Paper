@@ -1095,21 +1095,13 @@ generating provenance reports defined by a standardized XML schema
 
 Increased diversity of neuroimaging data processing software has made
 systematic comparison of performance and accuracy of underlying
-algorithms essential. However, a platform for comparing algorithms,
-either by themselves or in the context of an analysis workflow, or
-determining optimal workflows in a given application context, does not
-exist. For example, traditional approaches applied to adult neuroimaging
-data may not be suitable for processing developmental data from children
-imaged with custom coils.
-
-(e.g., Klein et al., 2009; 2010)
-
-Another way of evaluating software is to investigate the optimal
-combination of preprocessing steps. Recently relation between motion
-correction and regression has been researched coming with a method of
-finding optimal per subject preprocessing pipeline (Churchill et al.,
-2011).
-
+algorithms essential (for examples, see Klein et al., 2009; 2010).
+However, a platform for comparing algorithms, either by themselves or in
+the context of an analysis workflow, or determining optimal workflows in
+a given application context (e.g., Churchill et al., 2011), does not
+exist. Furthermore, in this context of changing hardware and software,
+traditional approaches may not be suitable in all contexts for
+processing developmental data from children imaged with custom coils.
 NiPyPe can make such investigations easier (as demonstrated via the
 smoothing example above), resulting in more efficient data analysis.
 
