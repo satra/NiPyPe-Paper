@@ -473,7 +473,7 @@ afni.nimh.nih.gov/afni/
 
 Table supported\_software. List of software packages fully or partially
 supported by NiPyPe. For more details
-see` <http://www.google.com/url?q=http://nipy.org/nipype/interfaces/index.html&sa=D&sntz=1&usg=AFQjCNGywWOiqWr3hlgDCcEZy7Dr102WUA>`_`http://nipy.org/NiPyPe/interfaces <http://www.google.com/url?q=http://nipy.org/nipype/interfaces/index.html&sa=D&sntz=1&usg=AFQjCNGywWOiqWr3hlgDCcEZy7Dr102WUA>`_
+see` <http://www.google.com/url?q=http://nipy.org/nipype/interfaces/index.html&sa=D&sntz=1&usg=AFQjCNGywWOiqWr3hlgDCcEZy7Dr102WUA>`_`http://nipy.org/nipype/interfaces <http://www.google.com/url?q=http://nipy.org/nipype/interfaces/index.html&sa=D&sntz=1&usg=AFQjCNGywWOiqWr3hlgDCcEZy7Dr102WUA>`_
 
 Nodes, MapNodes, and Workflows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
