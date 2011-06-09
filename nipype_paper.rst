@@ -2,7 +2,7 @@ NiPyPe: A flexible, lightweight and extensible neuroimaging data
 processing framework
 =====================================================================================
 
-Krzysztof Gorgolewski [1], Christopher Burns, Dav Cark, Cindee Madison,
+Krzysztof Gorgolewski [1], Christopher Burns, Cindee Madison, Dav Cark,
 Yaroslav O. Halchenko, Michael Waskom, Satrajit S. Ghosh [x]
 
 1 School of informatics, University of Edinburgh
@@ -10,7 +10,15 @@ Yaroslav O. Halchenko, Michael Waskom, Satrajit S. Ghosh [x]
 x Research Laboratory of Electronics, Massachusetts Institute of
 Technology
 
+Corresponding author:
+
+Running title:
+
 Abstract
+
+Keywords:
+
+--------------
 
 Introduction
 ------------
@@ -171,6 +179,8 @@ Development is done openly with collaborators from many different labs,
 allowing rapid adaptation to the varied needs of the neuroimaging
 community.
 
+--------------
+
 Methods
 -------
 
@@ -217,7 +227,7 @@ of their choice.
 An Interface definition consists of: (a) input parameters, their types
 (e.g., file, floating point value, list of integers, etc.,.) and
 dependencies (e.g., does input ‘a’ require input ‘b’); (b) outputs and
-their types, (c) how to execute the underlying software (e.g., execute a
+their types, (c) how to execute the underlying software (e.g., run a
 matlab script, or call a command line program); and (d) a mapping which
 defines the outputs that are produced given a particular set of inputs.
 Using an object oriented approach, we minimize redundancy in interface
@@ -227,7 +237,7 @@ Interfaces that call command line programs are derived from the
 CommandLine class, which provides methods to translate Interface inputs
 into command line parameters and for calling the command).
 
-from NiPyPe.interfaces.base import (
+from nipype.interfaces.base import (
  TraitedSpec,
  CommandLineInputSpec,
  CommandLine,
@@ -273,7 +283,7 @@ to be detected prior to executing the underlying program. The input
 definition also allows specifying relations between inputs. Often, some
 input options should not be set together (mutual exclusion) while other
 inputs need to be set as a group (mutual inclusion). An example input
-specification for the ‘bet’ program from FSL is shown in Figure below.
+specification for the ‘bet’ program from FSL is shown in Listing bet.
 
 class BETInputSpec(FSLCommandInputSpec):\ :sup:``[a] <#cmnt1>`_`\ 
 
@@ -394,6 +404,8 @@ reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
 
 desc="bias field and neck cleanup")
 
+Listing bet.
+
 Currently NiPyPe (version 0.4) ships with wide range of interfaces (see
 Table supported\_software.). Adding new Interfaces is simply a matter of
 writing a Python class definition as was shown in Figure XX. When a
@@ -403,7 +415,7 @@ For example, the Slicer command line execution modules come with an XML
 specification that allows NiPyPe to wrap them without creating
 individual interfaces. Interfaces can be used directly as a Python
 object and incorporated into any custom Python script or used
-interactively in a Python console (see Figure below).
+interactively in a Python console (see Listing interactive\_realign).
 
 >>> import nipype.interfaces.spm as spm
 >>> from glob import glob
@@ -412,6 +424,8 @@ interactively in a Python console (see Figure below).
 >>> realigner = spm.Realign()
 >>> realigner.inputs.in\_files = allepi
 >>> result = realigner.run()
+
+Listing interactive\_realign
 
 Name
 
@@ -562,7 +576,7 @@ iterables\_vs\_mapnode).
 using iterables and MapNodes. If we take the processing pipeline A and
 set iterables parameter of DataGrabber to list of two subjects NiPyPe
 will effectivelly execute graph B. Identical processing will be applied
-to evey subject from the list. Iterables can be used in one graph on
+to every subject from the list. Iterables can be used in one graph on
 many levels - for example setting iterables on Smooth FWHM to a list of
 4 and 8 mm will result in graph C. MapNode also branches the execution
 tree but in contrast to iterables it merges it straight away effectively
@@ -604,6 +618,11 @@ developing a processing pipeline on a single subject on a local
 workstation to executing it on a bigger cohort on a cluster is therefore
 seamless.
 
+Rerunning workflows has also been optimized. The framework checks which
+inputs parameters has changed from the last run and will execute only
+the nodes for which inputs have changed. Even though those changes can
+propagate rerunning time can decrease dramatically.
+
 The Function Interface
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -630,7 +649,8 @@ not expand inner Workflows, flat – expands inner workflows, exec –
 expands workflows and iterables, and hierarchical – expands workflows
 but maintains their hierarchy. Graphs can be saved in a variety of file
 formats including Scalable Vector Graphics (SVG) and Portable Network
-Graphics (PNG) (see Figure XXX for an examples)
+Graphics (PNG) (see Figures workflow\_from\_scratch and
+smoothing\_comparison\_workflow for an examples)
 
 Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~
@@ -661,16 +681,20 @@ Deployment
 
 NiPyPe supports Linux and Mac OS X operating systems. We currently
 provide three ways of deploying it on a new machine: manual installation
-from sources, PyPi repository, and NeuroDebian repository (Hanke et al.
-2010). Manual installation involves downloading a source code archive
-and running a standard Python installation script (distutils). This way
-user has to take care of installing all of the dependencies. Installing
-from PyPI repository lifts this constraint by providing dependency
-information and automatically installing required packages. NeuroDebian
-is a similar solution but based on Debian/Ubuntu Linux distributions
-(therefore it does not work on Mac OS X). In addition to resolving
-dependencies and automatic updates NeuroDebian provides some of the
-software packages supported by NiPyPe.
+from sources
+(`http://nipy.sourceforge.net/nipype/ <http://nipy.sourceforge.net/nipype/>`_),
+PyPi repository
+(`http://pypi.python.org/pypi/nipype/ <http://pypi.python.org/pypi/nipype/>`_),
+and NeuroDebian repository (Hanke et al. 2010). Manual installation
+involves downloading a source code archive and running a standard Python
+installation script (distutils). This way user has to take care of
+installing all of the dependencies. Installing from PyPI repository
+lifts this constraint by providing dependency information and
+automatically installing required packages. NeuroDebian is a similar
+solution but based on Debian/Ubuntu Linux distributions (therefore it
+does not work on Mac OS X). In addition to resolving dependencies and
+automatic updates NeuroDebian provides some of the software packages
+supported by NiPyPe.
 
 Development
 ~~~~~~~~~~~
@@ -701,6 +725,8 @@ neuroimaging analysis; 5) a complete recording of the methods used in a
 study; and 6) a framework for shared storage of information and
 evolution of analysis methods and approaches. In the following section,
 we demonstrate these solutions.
+
+--------------
 
 Results
 -------
@@ -984,6 +1010,8 @@ cores takes 1 hour and 40 minutes relative to the 32 minutes for a
 single subject. The difference from the expected runtime of 32 minutes
 stems from disk i/o, network and processing resource bottlenecks.
 
+--------------
+
 Discussion
 ----------
 
@@ -1048,35 +1076,43 @@ world. The diverse and geographically distributed user and developer
 base makes NiPyPe a flexible project that takes into account needs of
 many scientists.
 
-Improving openness and transparency of research is also a goal of
-NiPyPe. A workflow definition is in principle sufficient to replicate
-the analysis. Since it was used to actually analyze the data it is more
-detailed and accurate than a typical methods description in a paper, but
-also has the advantage of being reused by others. By accompanying a
-publication with a formal definition of processing pipeline (such as a
-NiPyPe script) increases reproducibility and transparency of research.
-While NiPyPe captures a variety of provenance information, we hope to
-improve this aspect by generating provenance reports in a standardized
-XML format (Mackenzie-Graham, Van Horn, Woods, Crawford, & Toga, 2008).
+Improving openness and transparency of research has been a goal of
+NiPyPe since its inception. A workflow definition is in principle
+sufficient to replicate the analysis. Since it was used to actually
+analyze the data it is more detailed and accurate than a typical methods
+description in a paper, but also has the advantage of being reused by
+others. By accompanying a publication with a formal definition of
+processing pipeline (such as a NiPyPe script) increases reproducibility
+and transparency of research. While NiPyPe captures a variety of
+provenance information, we hope to improve this aspect by generating
+provenance reports in a standardized XML format (Mackenzie-Graham, Van
+Horn, Woods, Crawford, & Toga, 2008).
 
 Increased diversity of data processing software has made systematic
 comparison of performance and accuracy of underlying algorithms
-difficult. Despite extensive comparative studies (e.g., Klein et al.,
-2009; 2010), a platform for comparing algorithms, either by themselves
-or in the context of an analysis workflow does not exist. Currently, it
-is also difficult to determine an optimal workflow in a given
-application context. For example, traditional approaches applied to
-adult neuroimaging data may not be suitable for processing developmental
-data from children imaged with custom coils.
+difficult.
+
+A platform for comparing algorithms, either by themselves or in the
+context of an analysis workflow, or determining optimal workflows in a
+given application context, does not exist.
+
+(e.g., Klein et al., 2009; 2010), a
+
+For example, traditional approaches applied to adult neuroimaging data
+may not be suitable for processing developmental data from children
+imaged with custom coils.
 
 Another way of evaluating software is to investigate the optimal
 combination of preprocessing steps. Recently relation between motion
 correction and regression has been researched coming with a method of
 finding optimal per subject preprocessing pipeline (Churchill et al.,
-2011). NiPyPe can make such investigations easier, resulting in more
-efficient data analysis. NiPyPe will make such comparisons easier and
-therefore more prevalent, similar to the smoothing comparison example
-demonstrated above.
+2011).
+
+NiPyPe can make such investigations easier (as demonstrated via the
+smoothing example above), resulting in more efficient data analysis.
+
+NiPyPe interfaces and workflows capture neuroimaging analysis knowledge
+and the evolution of methods.
 
 A framework for shared storage of information and evolution of analysis
 methods and approaches
@@ -1602,7 +1638,7 @@ reusable, and manageable parts.
 
 `[2] <#ftnt_ref2>`_`http://www.clusterresources.com/products/torque-resource-manager.php <http://www.clusterresources.com/products/torque-resource-manager.php>`_
 
-`[3] <#ftnt_ref3>`_`http://code.enthought.com/projects/traits/ <http://code.enthought.com/projects/traits/>`_
+`[3] <#ftnt_ref3>`_http://code.enthought.com/projects/traits/
 
 `[4] <#ftnt_ref4>`_http://www.opensource.org/docs/osd
 
