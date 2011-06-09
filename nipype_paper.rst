@@ -1111,8 +1111,9 @@ finding optimal per subject preprocessing pipeline (Churchill et al.,
 NiPyPe can make such investigations easier (as demonstrated via the
 smoothing example above), resulting in more efficient data analysis.
 
-NiPyPe interfaces and workflows capture neuroimaging analysis knowledge
-and the evolution of methods.
+NiPyPe Interfaces and Workflows capture neuroimaging analysis knowledge
+and the evolution of methods. Workflows can be reused and shared within
+and across laboratories.
 
 A framework for shared storage of information and evolution of analysis
 methods and approaches
