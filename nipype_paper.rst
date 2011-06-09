@@ -685,16 +685,16 @@ from sources
 (`http://nipy.sourceforge.net/nipype/ <http://nipy.sourceforge.net/nipype/>`_),
 PyPi repository
 (`http://pypi.python.org/pypi/nipype/ <http://pypi.python.org/pypi/nipype/>`_),
-and NeuroDebian repository (Hanke et al. 2010). Manual installation
-involves downloading a source code archive and running a standard Python
-installation script (distutils). This way user has to take care of
-installing all of the dependencies. Installing from PyPI repository
-lifts this constraint by providing dependency information and
-automatically installing required packages. NeuroDebian is a similar
-solution but based on Debian/Ubuntu Linux distributions (therefore it
-does not work on Mac OS X). In addition to resolving dependencies and
-automatic updates NeuroDebian provides some of the software packages
-supported by NiPyPe.
+and NeuroDebian repository `( <>`_`http://neuro.debian.net <>`_ - Hanke
+et al. 2010). Manual installation involves downloading a source code
+archive and running a standard Python installation script (distutils).
+This way user has to take care of installing all of the dependencies.
+Installing from PyPI repository lifts this constraint by providing
+dependency information and automatically installing required packages.
+NeuroDebian is a similar solution but based on Debian/Ubuntu Linux
+distributions (therefore it does not work on Mac OS X). In addition to
+resolving dependencies and automatic updates NeuroDebian provides some
+of the software packages supported by NiPyPe.
 
 Development
 ~~~~~~~~~~~
@@ -764,7 +764,7 @@ tensor\_fitted: path/name of 4D volume in voxel order
 
 Output printed by this method is standardized for all Interfaces. It is
 automatically generated based on inputs and outputs definition and
-includes information about reaquired inputs, types, and default value.
+includes information about required inputs, types, and default value.
 Alternatively an extended information is available in the form of
 auto-generated HTML documentation (available locally and
 online):|image1|
@@ -810,10 +810,9 @@ software) encapsulated in a Node (which defines for example a unique
 name). For realignment (motion correction achieved by coregistering all
 volumes to the mean) and smoothing (convolution with 3D Gaussian kernel)
 we will use SPM implementation. Definition of appropriate nodes can be
-found in Listing defining\_nodes. Inputs (such as register\_to\_mean
-from listing defining\_nodes) of nodes are accessible through the inputs
-property. Upon setting any input its type is verified to avoid errors
-during the execution.
+found in Listing defining\_nodes. Inputs (such as register\_to\_mean) of
+nodes are accessible through the inputs property. Upon setting any input
+its type is verified to avoid errors during the execution.
 
 realign = pe.Node(interface=spm.Realign(), name="realign")
 
@@ -823,20 +822,15 @@ smooth = pe.Node(interface=spm.Smooth(), name="smooth")
 
 smooth.inputs.fwhm = 4
 
-Listing defining\_nodes
-
 To connect two nodes a Workflow has to be created. connect() method of a
 Workflow allows to specify which outputs of which Nodes should be
-connected to which inputs of which Nodes (see Listing
-defining\_connections). By connecting realigned\_files output of realign
-to in\_files input of Smooth we have created a simple preprocessing
-workflow (see Figure workflow\_from\_scratch).
+connected to which inputs of which Nodes. By connecting realigned\_files
+output of realign to in\_files input of Smooth we have created a simple
+preprocessing workflow (see Figure workflow\_from\_scratch).
 
 preprocessing = pe.Workflow(name="preprocessing")
 
 preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
-
-Listing defining\_connections
 
 Creating a modelling workflow which will define the design, estimate
 model and contrasts follows the same suite. We will again use SPM
@@ -875,6 +869,12 @@ store T maps.
 A pipeline defined this way (see Figure workflow\_from\_scratch, for
 full code see Supplementary material) is ready to run. This can be done
 by calling run() method of the master Workflow.
+
+If the run() method would be called twice none of the interface would be
+executed during the second run. this is due to the inputs hashing
+mechanism. Since the inputs are the same nothing needs to be executed
+again. However, if an extra contrast were to be added to
+contrastestimate node, it would rerun (
 
 .. figure:: images/image02.png
    :align: center
@@ -1083,18 +1083,20 @@ analyze the data it is more detailed and accurate than a typical methods
 description in a paper, but also has the advantage of being reused by
 others. By accompanying a publication with a formal definition of
 processing pipeline (such as a NiPyPe script) increases reproducibility
-and transparency of research. While NiPyPe captures a variety of
-provenance information, we hope to improve this aspect by generating
-provenance reports in a standardized XML format (Mackenzie-Graham, Van
-Horn, Woods, Crawford, & Toga, 2008).
+and transparency of research. The Interfaces and Workflows of NiPyPe
+capture neuroimaging analysis knowledge and the evolution of methods.
+Workflows can be reused and shared within and across laboratories. In
+addition, at the execution level, NiPyPe captures a variety of
+provenance information. However, this aspect can be improved by
+generating provenance reports defined by a standardized XML schema
+(Mackenzie-Graham, Van Horn, Woods, Crawford, & Toga, 2008).
 
-Increased diversity of data processing software has made systematic
-comparison of performance and accuracy of underlying algorithms
-difficult.
-
-A platform for comparing algorithms, either by themselves or in the
-context of an analysis workflow, or determining optimal workflows in a
-given application context, does not exist.
+Increased diversity of neuroimaging data processing software has made
+systematic comparison of performance and accuracy of underlying
+algorithms essential. However, a platform for comparing algorithms,
+either by themselves or in the context of an analysis workflow, or
+determining optimal workflows in a given application context, does not
+exist.
 
 (e.g., Klein et al., 2009; 2010), a
 
@@ -1110,18 +1112,6 @@ finding optimal per subject preprocessing pipeline (Churchill et al.,
 
 NiPyPe can make such investigations easier (as demonstrated via the
 smoothing example above), resulting in more efficient data analysis.
-
-NiPyPe Interfaces and Workflows capture neuroimaging analysis knowledge
-and the evolution of methods. Workflows can be reused and shared within
-and across laboratories.
-
-A framework for shared storage of information and evolution of analysis
-methods and approaches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. workflows are reusable and redistributable
-#. researchers can use public version control portals such as github to
-   develop pipelines
 
 Summary
 ~~~~~~~
