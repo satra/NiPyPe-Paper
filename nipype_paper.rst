@@ -73,9 +73,9 @@ cross platform tool (e.g., mricron) or simply do not distribute the
 software (e.g., normalization software used for the architectonic
 atlases - CHECK).
 
-Personnel turnover in laboratories often limit methodological continuity
-and training new personnel takes time. In most cognitive neuroscience
-laboratories, the aims are to understand some aspect of cognition.
+Personnel turnover in laboratories often limits methodological
+continuity and training new personnel takes time. Most cognitive
+neuroscience laboratories aim to understand some aspect of cognition.
 Although, a majority of such laboratories gather and analyze
 neuroimaging data, very few of them have the personnel with the
 technical expertise to understand methodological development and modify
@@ -111,8 +111,8 @@ hardware configurations (multicore, clusters, clouds and
 supercomputers).
 
 Methods sections in published articles are inadequate for reproducing
-results. A typical neuroimaging analysis process involves several
-different algorithms with different parameter choices. However, very few
+results. A typical neuroimaging analysis involves several different
+algorithms with different parameter choices. However, very few
 publications contain necessary information (e.g., data, scripts,
 computer code) to reproduce results (however, see current manuscript
 submission policies for Science and PNAS). Accurately reproducing the
