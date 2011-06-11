@@ -3,7 +3,7 @@ processing framework
 =====================================================================================
 
 Krzysztof Gorgolewski1, Christopher Burns, Cindee Madison, Dav Clark,
-Yaroslav O. Halchenko5, Michael Waskom, Satrajit S. Ghoshx
+Yaroslav O. Halchenko5, Michael L. Waskom, Satrajit S. Ghoshx
 
 1 School of informatics, University of Edinburgh
 
