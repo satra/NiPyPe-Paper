@@ -205,7 +205,7 @@ features of this software.
 Figure architecture\_overview. Architecture overview of the NiPyPe
 framework. Interfaces are wrapped with Nodes or MapNodes and connected
 together within a Workflows. Workflows themselves can act as a Node
-inside another Workflows supporting encapsulation desing pattern.
+inside another Workflows supporting encapsulation design pattern.
 Dependency graph is transformed before executing by the engine
 component. Execution is performed by one of the plugins. Currently
 NiPyPe supports serial and parallel (both local multithreading and
@@ -408,7 +408,13 @@ reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
 
 desc="bias field and neck cleanup")
 
-Listing bet.
+Listing bet. Specification of inputs for the Brain Extraction Tool
+(BET). Each field of this class is a Traits object which defines an
+input with its data type (i.e. list of integers), constraints (i.e.
+length of the list), dependencies (when for example setting one option
+is mutually exclusive with another), and additional parameters (such as
+argstr and position which describe how to convert an input into a
+command line argument).
 
 Currently NiPyPe (version 0.4) ships with wide range of interfaces (see
 Table supported\_software.). Adding new Interfaces is simply a matter of
@@ -423,13 +429,14 @@ interactively in a Python console (see Listing interactive\_realign).
 
 >>> import nipype.interfaces.spm as spm
 >>> from glob import glob
->>> allepi = glob('epi\*.nii') # this will return an unsorted list
->>> allepi.sort()
+>>> all\_epi = glob('epi\*.nii') # this will return an unsorted list
+>>> all\_epi.sort()
 >>> realigner = spm.Realign()
->>> realigner.inputs.in\_files = allepi
+>>> realigner.inputs.in\_files = all\_epi
 >>> result = realigner.run()
 
-Listing interactive\_realign
+Listing interactive\_realign. Example of interactive use of NiPyPe. A
+realign algorithm from SPM is being run on a set of NIFTI images.
 
 Name
 
@@ -777,8 +784,12 @@ Output printed by this method is standardized for all Interfaces. It is
 automatically generated based on inputs and outputs definition and
 includes information about required inputs, types, and default value.
 Alternatively an extended information is available in the form of
-auto-generated HTML documentation (available locally and
-online):|image1|
+auto-generated HTML documentation (see Figure html\_help).|image1|
+
+Figure html\_help. HTML help page for dtfit command from Camino. This
+was generated based on the Interface code: description and example was
+taken from the class docstring and inputs/outputs were list was created
+using traited input/output specification.
 
 This includes example usage. All inputs are set through the inputs
 field:
@@ -891,7 +902,12 @@ NiPyPe automatically determines which nodes require rerunning.
 .. figure:: images/image02.png
    :align: center
    :alt: 
-Figure workflow\_from\_scratch
+Figure workflow\_from\_scratch. Graph describing the processing steps
+and dependencies for the example workflow. Every output-input connection
+is represented with a separate arrow. Nodes from every subworkflow are
+grouped in boxes with labels corresponding to the name of the
+subworkflow. Such graphs can be automatically generated from a Workflow
+definition and provide a quick overview of the pipeline.
 
 A framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -944,7 +960,11 @@ subjects and quantitative metrics.
 .. figure:: images/image00.png
    :align: center
    :alt: 
-Figure smoothing\_comparison\_workflow
+Figure smoothing\_comparison\_workflow. Graph showing the workflow used
+for the smoothing methods and parameters comparison. The gray shaded
+nodes have iterables parameter set. This allows to easily iterate over
+all combinations of FWHM and smoothing algorithms used in the
+comparison.
 
 .. figure:: images/image06.png
    :align: center
