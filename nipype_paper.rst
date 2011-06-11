@@ -51,16 +51,16 @@ efficient and optimal use of neuroimaging analysis approaches.
 No uniform access to neuroimaging analysis software and usage
 information. For current multimodal datasets, researchers typically
 resort to using different software packages for different components of
-the analysis. However, these different software packages use different
-languages and environments for development, such as: C/C++ (FSL), MATLAB
-(SPM), Java (Camino), Python (NiPy)\ :sup:``[a] <#cmnt1>`_`\ . This has
-resulted in a heterogeneous set of software with no uniform way to use
-these tools or execute them. With the primary focus on algorithmic
-improvement, academic software development often lacks a rigorous
-software engineering framework that involves extensive testing and
-documentation and ensures compatibility with other tools. This often
-necessitates extensive interactions with the authors of the software to
-understand their parameters, their quirks and their usage.
+the analysis. However, these different software packages are accessed
+and interfaced with in different ways, such as: shell scripting (FSL,
+AFNI, Camino), Matlab (SPM) and Python (NiPy). This has resulted in a
+heterogeneous set of software with no uniform way to use these tools or
+execute them. With the primary focus on algorithmic improvement,
+academic software development often lacks a rigorous software
+engineering framework that involves extensive testing and documentation
+and ensures compatibility with other tools. This often necessitates
+extensive interactions with the authors of the software to understand
+their parameters, their quirks and their usage.
 
 No framework for comparative algorithm development and dissemination.
 Except for some large software development efforts (e.g., SPM, FSL,
@@ -289,7 +289,7 @@ input options should not be set together (mutual exclusion) while other
 inputs need to be set as a group (mutual inclusion). An example input
 specification for the ‘bet’ program from FSL is shown in Listing bet.
 
-class BETInputSpec(FSLCommandInputSpec):\ :sup:``[b] <#cmnt2>`_`\ 
+class BETInputSpec(FSLCommandInputSpec):\ :sup:``[a] <#cmnt1>`_`\ 
 
 """"""
 
@@ -1656,27 +1656,7 @@ reusable, and manageable parts.
 
 `[4] <#ftnt_ref4>`_http://www.opensource.org/docs/osd
 
-`[a] <#cmnt_ref1>`_yarikoptic:
-
-It doesn't matter really for a user in what language it is written. It
-is important on how to interface/use it. E.g. shell scripting (FSL,
-AFNI, Camino), Matlab (SPM), Python (NiPy).
-
---------------
-
-krzysztof.gorgolewski:
-
-Good point: "However, these different software packages are accessed and
-interfaced with in different ways, such as: shell scripting (FSL, AFNI,
-Camino), Matlab (SPM) and Python (NiPy)."?
-
---------------
-
-yarikoptic:
-
-something like that ;-)
-
-`[b] <#cmnt_ref2>`_krzysztof.gorgolewski:
+`[a] <#cmnt_ref1>`_krzysztof.gorgolewski:
 
 I could not find a shorter example of a well known program with
 dependecies in inputs. We can alternatively show only part of this.
@@ -1699,24 +1679,24 @@ Second Davs comment, dont let them get lost in the code, just outline
 the impt parts, use highlighting? Im not sure what the journal allows,
 but this would help.
 
-`[c] <#cmnt_ref3>`_helenlramsden:
+`[b] <#cmnt_ref2>`_helenlramsden:
 
 until
 
-`[d] <#cmnt_ref4>`_davclark:
+`[c] <#cmnt_ref3>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[e] <#cmnt_ref5>`_cindeem:
+`[d] <#cmnt_ref4>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[f] <#cmnt_ref6>`_davclark:
+`[e] <#cmnt_ref5>`_davclark:
 
 I mention this in my high level notes
 
-`[g] <#cmnt_ref7>`_satrajit.ghosh:
+`[f] <#cmnt_ref6>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1732,33 +1712,33 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
+`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[i] <#cmnt_ref9>`_cindeem:
+`[h] <#cmnt_ref8>`_cindeem:
 
 While this provides some amount of continuity, understanding different
 aspects of neuroimaging has a steep learning curve, made steeper by
 incorporating the time needed to learn the different package interfaces
 and algorithms.
 
-`[j] <#cmnt_ref10>`_helenlramsden:
+`[i] <#cmnt_ref9>`_helenlramsden:
 
 spoken English, use 'due to'
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[l] <#cmnt_ref12>`_cindeem:
+`[k] <#cmnt_ref11>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[m] <#cmnt_ref13>`_cindeem:
+`[l] <#cmnt_ref12>`_cindeem:
 
 Node and MapNode objects provide interfaces with additional properties
 (e.g., hash checking of inputs, caching of results, ability to iterate
@@ -1769,18 +1749,18 @@ These mechanisms allow not only for provinence tracking, but aid in
 efficient pipeline execution. They provide the framework necessary to
 create a data analysis Workflow.
 
-`[n] <#cmnt_ref14>`_duncancarmichael:
+`[m] <#cmnt_ref13>`_duncancarmichael:
 
 extensive?
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1790,12 +1770,12 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[q] <#cmnt_ref17>`_cindeem:
+`[p] <#cmnt_ref16>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
 
-`[r] <#cmnt_ref18>`_davclark:
+`[q] <#cmnt_ref17>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1806,17 +1786,37 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[s] <#cmnt_ref19>`_davclark:
+`[r] <#cmnt_ref18>`_davclark:
 
 I think this is a big deal. You kind of gloss over it.
 
-`[t] <#cmnt_ref20>`_cindeem:
+`[s] <#cmnt_ref19>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
 workflow-engine? and the idea of nodes and mapnodes are intserted
 without much explanation. Maybe also add an example of how the interface
 wraps an external package?
+
+`[t] <#cmnt_ref20>`_yarikoptic:
+
+It doesn't matter really for a user in what language it is written. It
+is important on how to interface/use it. E.g. shell scripting (FSL,
+AFNI, Camino), Matlab (SPM), Python (NiPy).
+
+--------------
+
+krzysztof.gorgolewski:
+
+Good point: "However, these different software packages are accessed and
+interfaced with in different ways, such as: shell scripting (FSL, AFNI,
+Camino), Matlab (SPM) and Python (NiPy)."?
+
+--------------
+
+yarikoptic:
+
+something like that ;-)
 
 `[u] <#cmnt_ref21>`_helenlramsden:
 
