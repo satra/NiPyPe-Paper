@@ -714,51 +714,56 @@ different applications.
 Deployment
 ~~~~~~~~~~
 
-NiPyPe supports Linux and Mac OS X operating systems. We currently
+NiPyPe supports GNU/Linux and Mac OS X operating systems. We currently
 provide three ways of deploying it on a new machine: manual installation
 from sources (`http://nipy.org/nipype/ <http://nipy.org/nipype/>`_),
 PyPi repository
 (`http://pypi.python.org/pypi/nipype/ <http://pypi.python.org/pypi/nipype/>`_),
-and NeuroDebian repository `( <>`_`http://neuro.debian.net <>`_ - Hanke
-et al. 2010). Manual installation involves downloading a source code
-archive and running a standard Python installation script (distutils).
-This way user has to take care of installing all of the dependencies.
-Installing from PyPI repository lifts this constraint by providing
-dependency information and automatically installing required packages.
-NeuroDebian is a similar solution but based on Debian/Ubuntu Linux
-distributions (therefore it does not work on Mac OS X). In addition to
-resolving dependencies and automatic updates NeuroDebian provides some
-of the software packages supported by NiPyPe.
+and from package repositories on Debian-based systems. Manual
+installation involves downloading a source code archive and running a
+standard Python installation script (distutils). This way user has to
+take care of installing all of the dependencies. Installing from PyPI
+repository lifts this constraint by providing dependency information and
+automatically installing required packages. NiPyPe is available from
+standard repositories on recent Debian and Ubuntu releases. Moreover,
+NeuroDebian (http://neuro.debian.net - Hanke et al. 2010) repository
+provides the most recent releases of NiPyPe for Debian-based systems and
+a NeuroDebian Virtual Appliance making it possible to deploy NiPyPe in a
+virtual environment on Mac OS X and Windows systems. In addition to
+providing all core dependencies and automatic updates NeuroDebian also
+provides many of the software packages supported by NiPyPe (AFNI, FSL,
+Mricron, etc), making deployment of heterogeneous NiPyPe pipelines more
+straightforward.
 
 Development
 ~~~~~~~~~~~
 
 NiPyPe is trying to address the problem of interacting with ever
 changing universe of neuroimaging software in a sustainable manner.
-Therefore the way its development is managed is part of the solution.
+Therefore the way its development is managed is a part of the solution.
 NiPyPe is distributed under Berkeley Software Distribution license which
 allows free copying, modification and distribution and, in fact, NiPyPe
 meets all the requirements of open source definition (see Open Source
-Initiative\ :sup:``[4] <#ftnt4>`_`\ ). Development is also carried out
-openly through distributed version control (via GitHub) in an online
+Initiative\ :sup:``[4] <#ftnt4>`_`\ ) and Debian Free Software
+Guidelines\ :sup:``[5] <#ftnt5>`_`\ . Development is carried out openly
+through distributed version control system (GIT via GitHub) in an online
 community. Most current version of the source code with complete history
 is accessible to everyone. Discussions between developers and design
-decisions are done using an open access mailing list. All of this
-encourages a broader community of developers to join the project and
-allows sharing of the development resources (effort, money, information
-and time).
+decisions are done on an open access mailing list. Such setup encourages
+a broader community of developers to join the project and allows sharing
+of the development resources (effort, money, information and time).
 
-These features described in the prior paragraphs allow rapid development
-and deployment of analysis procedures in laboratories and addresses all
-of the issues described earlier. In particular, NiPyPe provides: 1)
-uniform access to neuroimaging analysis software and usage information;
-2) a framework for comparative algorithm development and dissemination;
-3) an environment for methodological continuity and paced training of
-new personnel in laboratories; 4) computationally efficient execution of
-neuroimaging analysis; 5) a complete recording of the methods used in a
-study; and 6) a framework for shared storage of information and
-evolution of analysis methods and approaches. In the following section,
-we demonstrate these solutions.
+Such features of NiPyPe development organization facilitate rapid
+development and deployment of analysis procedures in laboratories and
+address all of the issues described earlier. In particular, NiPyPe
+provides: 1) uniform access to neuroimaging analysis software and usage
+information; 2) a framework for comparative algorithm development and
+dissemination; 3) an environment for methodological continuity and paced
+training of new personnel in laboratories; 4) computationally efficient
+execution of neuroimaging analysis; 5) a complete recording of the
+methods used in a study; and 6) a framework for shared storage of
+information and evolution of analysis methods and approaches. In the
+following section, we demonstrate these solutions.
 
 --------------
 
@@ -768,10 +773,10 @@ Results
 Uniform accessing to tools, their usage, and execution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To access an interface user has to first import it from an appropriate
-Python package (each neuroimaging software distribution such as FSL,
-SPM, Camino etc. has a corresponding Python package in the
-NiPyPe.interfaces namesapce):
+To access an interface for the supported software user has to first
+import it from an appropriate Python package (each neuroimaging software
+distribution such as FSL, SPM, Camino etc. has a corresponding Python
+package in the NiPyPe.interfaces namesapce):
 
 >>> from NiPyPe.interfaces.camino import DTIFit
 
@@ -1671,6 +1676,8 @@ reusable, and manageable parts.
 `[3] <#ftnt_ref3>`_http://code.enthought.com/projects/traits/
 
 `[4] <#ftnt_ref4>`_http://www.opensource.org/docs/osd
+
+`[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
 
 `[a] <#cmnt_ref1>`_krzysztof.gorgolewski:
 
