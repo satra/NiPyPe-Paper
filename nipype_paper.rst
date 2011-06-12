@@ -872,22 +872,23 @@ preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
 A modelling Workflow is constructed in an analogous manner, by first
 defining Nodes fro model design, model estimation and contrast
 estimation. We again use SPM Interfaces for this purpose. However,
-NiPyPe adds an extra abstraction layer to model specification that
-allows using the same definition for many model estimation
-implemantations (for example one from FSL or nippy). Therefore we will
-need four nodes: SpecifyModel (NiPyPe specific abstraction layer),
-Level1Design (SPM design definition), ModelEstimate, and
-ContrastEstimate. The connected modelling Workflow can be seen on Figure
-workflow\_from\_scratch. Model specification supports block, event and
-sparse designs. Contrasts provided to ContrastEstimate are defined using
-the same names of regressors as defined in the SpecifyModel.
+NiPyPe adds an extra abstraction Interface for model specification whose
+output can be used to create models in different packages (e.g., SPM,
+FSL and NiPy). The nodes of this Workflow are: SpecifyModel (NiPyPe
+model abstraction Interface), Level1Design (SPM design definition),
+ModelEstimate, and ContrastEstimate. The connected modelling Workflow
+can be seen on Figure workflow\_from\_scratch. The model specification
+Interfaces supports block, event and sparse designs. Contrast
+definitions provided to ContrastEstimate use the same condition or
+regressor names as used in the input to SpecifyModel.
 
-Having preprocessing and modelling workflows we need to connect them
-together, add data grabbing facility and save the results. For this we
-will create a master Workflow which will host preprocessing and model
-Workflows as well as DataGrabber and DataSink Nodes. NiPyPe allows
-connecting Nodes between Workflows. We will use this feature to connect
-realignment\_parameters and smoothed\_files to modelling workflow.
+We create a master Workflow that connects the preprocessing and
+modelling Workflows together, adds the ability to select data grabbing
+facility and save the results. For this we will create a master Workflow
+which will host preprocessing and model Workflows as well as DataGrabber
+and DataSink Nodes. NiPyPe allows connecting Nodes between Workflows. We
+will use this feature to connect realignment\_parameters and
+smoothed\_files to modelling workflow.
 
 DataGrabber allows to define flexible search patterns which can be
 parameterized by user defined inputs (such as subject ID, session etc.).
