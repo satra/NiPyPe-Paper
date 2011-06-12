@@ -456,8 +456,6 @@ realign algorithm from SPM is being run on a set of NIFTI images.
 
 Name
 
-Version
-
 URL
 
 FSL
