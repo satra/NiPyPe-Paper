@@ -1015,28 +1015,26 @@ An environment for methodological continuity and paced training of new
 personnel in laboratories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Typically, several neuroimaging studies in any laboratory uses similar
-data processing methods, perhaps with different parameters. NiPyPe
-Workflows can be very useful in dividing thprocessing into reusable
-building blocks. This not only improves the speed of building new
-pipelines but also reduces the number of potential errors, because a
-well tested piece of code is being reused (instead of reimplemented
-every time). Reusing workflows is especially important for long running
-studies when all data has to be analyzed using the same methods.
+Several neuroimaging studies in any laboratory typically use similar
+data processing methods with possibly different parameters. NiPyPe
+Workflows can be very useful in dividing the data processing into
+reusable building blocks. This not only improves the speed of building
+new Workflows but also reduces the number of potential errors, because a
+well tested piece of code is being reused (instead of being
+reimplemented every time). Reusing workflows is especially important for
+long running studies when all data has to be analyzed using the same
+methods.\ :sup:``[c] <#cmnt3>`_`\  Furthermore, a data independent
+Workflow definition (see Figure XX) enables sharing Workflows within and
+across research laboratories. NiPyPe provides a medium for exchanging
+knowledge and expertise between researchers focused on methods in
+neuroimaging and those interested in applications.
 
-A similar scheme also helps with sharing Workflows across studies
-running simultaneously in the lab. NiPyPe provides a medium for
-exchanging knowledge and expertise between researchers focused on
-methods in neuroimaging and those interested in applications. For
-example preprocessing Workflows used for all the studies in a given lab
-can be fine tuned by staff members with computer science inclination.
-
-Thanks to uniform nature of Interfaces and ease of use of Workflows
+The uniform access to Interfaces and the ease of use of Workflows in
 NiPyPe helps with training new staff. Encapsulation provided by
 Workflows allows users to gradually increase the level of details when
 learning how to perform neuroimaging analysis. For example user can
 start with a “black box” Workflow that does analysis from A-Z, and
-gradually learn what it subcomponents (and their subcomponents) do.
+gradually learn what the sub-components (and their sub-components) do.
 Playing with Interfaces in an interactive console is also a great way to
 learn how different algorithms work with different parameters without
 having to understand how to set them up and execute them.
@@ -1701,24 +1699,7 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-`[c] <#cmnt_ref3>`_helenlramsden:
-
-until
-
-`[d] <#cmnt_ref4>`_davclark:
-
-delete? Verbose and (to my eye) counter to the clearly evident truth
-("in fact" often cues "you might not have thought XXX")
-
-`[e] <#cmnt_ref5>`_cindeem:
-
-here you use "interfaces" so I would stick with this common term
-
-`[f] <#cmnt_ref6>`_davclark:
-
-I mention this in my high level notes
-
-`[g] <#cmnt_ref7>`_satrajit.ghosh:
+`[c] <#cmnt_ref3>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1733,6 +1714,23 @@ a different way.One should either use the same automated workflow each
 time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
+
+`[d] <#cmnt_ref4>`_helenlramsden:
+
+until
+
+`[e] <#cmnt_ref5>`_davclark:
+
+delete? Verbose and (to my eye) counter to the clearly evident truth
+("in fact" often cues "you might not have thought XXX")
+
+`[f] <#cmnt_ref6>`_cindeem:
+
+here you use "interfaces" so I would stick with this common term
+
+`[g] <#cmnt_ref7>`_davclark:
+
+I mention this in my high level notes
 
 `[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
 
