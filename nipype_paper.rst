@@ -5,17 +5,33 @@ processing framework
 Krzysztof Gorgolewski1, Christopher Burns, Cindee Madison, Dav Clark,
 Yaroslav O. Halchenko5, Michael L. Waskom, Satrajit S. Ghoshx
 
-1 School of informatics, University of Edinburgh
+1 School of Informatics, University of Edinburgh, Edinburgh, UK
 
 5 Department of Psychological and Brain Sciences, Dartmouth College,
-Hanover, New Hampshire, USA
+Hanover, NH, USA
 
 x Research Laboratory of Electronics, Massachusetts Institute of
-Technology
+Technology, Cambridge, MA, USA
 
-Corresponding author: chris.gorgolewski@gmail.com
+Corresponding author:
 
-Running title:
+Krzysztof Gorgolewski,
+
+University of Edinburgh,
+
+School of Informatics,
+
+Informatics Forum,
+
+EH8 9AB,
+
+Edinburgh,
+
+United Kingdom
+
+e-mail: chris.gorgolewski@gmail.com
+
+Running title: NiPyPe Neuroimaging Data Processing Framework
 
 Abstract
 
