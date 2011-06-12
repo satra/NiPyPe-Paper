@@ -814,10 +814,11 @@ For every Interface, input values are set through the inputs field:
 >>> fit.inputs.scheme\_file = 'A.scheme'
 >>> fit.inputs.in\_file = 'tensor\_fitted\_data.Bfloat'
 
-When trying to set an invalid input type (for example non existing file,
-or a number instead of a string) NiPyPe framework will send an error
-message. Input validity checking before actual Workflow execution saves
-time. To run an Interface user needs to call run() method:
+When trying to set an invalid input type (for example a non existing
+input file, or a number instead of a string) NiPyPe framework will send
+an error message. Input validity checking before actual Workflow
+execution saves time. To run an Interface user needs to call run()
+method:
 
 >>> fit.run()
 
