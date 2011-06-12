@@ -848,17 +848,15 @@ In this section, we describe how to create and extend a typical fMRI
 processing Workflow. A typical fMRI Workflow can be divided into two
 sections: 1) preprocessing and 2) modelling. The first one deals with
 cleaning data from confounds and noise and the second one fits a model
-based on the experimental design. Preprocessing stage in our first
-iteration of a pipeline will consist of only two steps: realignment and
-smoothing. In NiPyPe Every processing step consist of an Interface
-(which defines how to execute corresponding software) encapsulated in a
-Node (which defines for example a unique name). For realignment (motion
-correction achieved by coregistering all volumes to the mean) and
-smoothing (convolution with 3D Gaussian kernel) we will use SPM
-implementation. Definition of appropriate nodes can be found in Listing
-defining\_nodes. Inputs (such as register\_to\_mean) of nodes are
-accessible through the inputs property. Upon setting any input its type
-is verified to avoid errors during the execution.
+to the cleaned data based on the experimental design. The preprocessing
+stage in this Workflow will consist of only two steps: realignment and
+smoothing. For realignment (motion correction achieved by coregistering
+all volumes to the mean) and smoothing (convolution with 3D Gaussian
+kernel) we will use the SPM implementation. Definition of appropriate
+nodes can be found in Listing defining\_nodes. Inputs (such as
+register\_to\_mean) of nodes are accessible through the inputs property.
+Upon setting any input its type is verified to avoid errors during the
+execution.
 
 realign = pe.Node(interface=spm.Realign(), name="realign")
 
