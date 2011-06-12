@@ -992,15 +992,15 @@ shows indirect influence of smoothing on the T maps (same slice) of the
 main contrast.
 
 Algorithm comparison is not the only way NiPyPe can be useful for a
-neuroimaging methods researcher. In every methods author’s interest is
-to make his or hers work most accessible. This usually means providing
-ready to use implementations. However, because the field is so diverse,
-software developers have to provide several packages (SPM toolbox,
-command line tool, c++ library etc.) to cover the whole user base.
-NiPyPe helps with this task. By creating one Interface developer exposes
-the tool to greater range of users. Independent of the way the tool was
-implemented it will be able to work with any piece of software currently
-supported by NiPyPe.
+neuroimaging methods researcher. It is in the interest of every methods
+author to make his or hers work most accessible. This usually means
+providing ready to use implementations. However, because the field is so
+diverse, software developers have to provide several packages (SPM
+toolbox, command line tool, c++ library etc.) to cover the whole user
+base. NiPyPe helps with this task. By creating one Interface developer
+exposes the tool to greater range of users. Independent of the way the
+tool was implemented it will be able to work with any piece of software
+currently supported by NiPyPe.
 
 A good example of such scenario is ArtifactDetection toolbox (ref TODO).
 This piece of software uses EPI timeseries and realignment parameters to
@@ -1017,9 +1017,9 @@ personnel in laboratories
 
 Typically, several neuroimaging studies in any laboratory uses similar
 data processing methods, perhaps with different parameters. NiPyPe
-Workflows can be very useful in dividing processing pipelines into
-reusable building blocks. This not only improves the speed of building
-new pipelines but also reduces the number of potential errors, because a
+Workflows can be very useful in dividing thprocessing into reusable
+building blocks. This not only improves the speed of building new
+pipelines but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of reimplemented
 every time). Reusing workflows is especially important for long running
 studies when all data has to be analyzed using the same methods.
