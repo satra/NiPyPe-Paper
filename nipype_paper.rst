@@ -883,37 +883,38 @@ definitions provided to ContrastEstimate use the same condition or
 regressor names as used in the input to SpecifyModel.
 
 We create a master Workflow that connects the preprocessing and
-modelling Workflows together, adds the ability to select data grabbing
-facility and save the results. For this we will create a master Workflow
-which will host preprocessing and model Workflows as well as DataGrabber
-and DataSink Nodes. NiPyPe allows connecting Nodes between Workflows. We
-will use this feature to connect realignment\_parameters and
-smoothed\_files to modelling workflow.
+modelling Workflows together, adds the ability to select data for
+processing (using DataGrabber Interface) and a DataSink Node to save the
+outputs of the entire Workflow. NiPyPe allows connecting Nodes between
+Workflows. We will use this feature to connect realignment\_parameters
+and smoothed\_files to modelling workflow.
 
-DataGrabber allows to define flexible search patterns which can be
-parameterized by user defined inputs (such as subject ID, session etc.).
-This allows to adapt to a wide range of file layouts. In our case we
-will parameterize it with subject ID. In this way we will be able to run
-it for different subjects. We can automate this by iterating over a list
-of subject Ids, by setting an iterables property on the subject\_id
-input of DataGrabber. Its output will be connected to realignment node
-from preprocessing workflow.
+DataGrabber allows the user to define flexible search patterns which can
+be parameterized by user defined inputs (such as subject ID, session
+etc.). This Interface can adapt to a wide range of directory
+organization and file naming conventions. In our case we will
+parameterize it with subject ID. In this way we can run the same
+Workflow for different subjects. We automate this by iterating over a
+list of subject IDs, by setting the iterables property of the
+DataGrabber Node for the input subject\_id. The DataGrabber Node output
+is connected to the realign Node from preprocessing Workflow.
 
-DataSink on the other side provides means to storing selected results to
-a specified location. It supports automatic creation of folder stricter
-and regular expression based substitutions. In this example we will
-store T maps.
+DataSink on the other side provides means for storing selected results
+in a specified location. It supports automatic creation of folders,
+simple substitutions and regular expressions to alter target filenames.
+In this example we store the T maps resulting from contrast estimation.
 
-A pipeline defined this way (see Figure workflow\_from\_scratch, for
+A Workflow defined this way (see Figure workflow\_from\_scratch, for
 full code see Supplementary material) is ready to run. This can be done
 by calling run() method of the master Workflow.
 
-If the run() method would be called twice none of the interface would be
-executed during the second run. this is due to the inputs hashing
-mechanism. Since the inputs are the same nothing needs to be executed
-again. If, however, a highpass filter parameter of specify\_model would
-have been change some of the nodes (but not all) would have to rerun.
-NiPyPe automatically determines which nodes require rerunning.
+If the run() method is called twice, the Workflow input hashing
+mechanism ensures that none of the Interfaces are executed during the
+second run because of the the inputs hashing mechanism. Since the inputs
+remain the same nothing needs to be executed again. If, however, a
+highpass filter parameter of specify\_model would have been changed,
+some of the nodes (but not all) would have to rerun. NiPyPe
+automatically determines which nodes require rerunning.
 
 .. figure:: images/image02.png
    :align: center
@@ -932,7 +933,7 @@ A uniform interface for a wide range of processing methods not only
 helps to create new pipelines but also allows to compare algorithms
 designed to deal with the same problem. Development of a new method when
 there are others already available should be driven by clear
-improvement. This can be only measured by comparison on real or
+improvement. This can only be measured by comparison on real or
 simulated data. Unfortunately a thorough comparison is usually time
 consuming, because of the need to deal with technicalities of different
 software packages. NiPyPe helps with this by standardizing the access to
@@ -941,30 +942,30 @@ easily extend the comparison into many more dimensions testing different
 values of parameters.
 
 Comparison between methods can be done locally - by looking at their
-direct outputs or in context of particular application. In the later
+direct outputs or in the context of particular application. In the later
 case one can look into how different algorithms used at early stages of
 processing influence the final output.
 
-As an example of such use, we have compared isotropic voxelwise
-isotropic, voxelwise anisotropic and surface based smoothing all for two
-levels of FWHM - 4 and 8mm. First one is the standard convolution with
-Gaussian kernel as implemented in SPM. Second one involves smoothing
-only voxels of similar intensity in attempt to retain structure. This
-was implemented in SUSAN from FSL (S.M. Smith, 1992). Third method
-involves reconstructing surface of the cortex and smoothing along it
-(Hagler Jr., Saygin, & Martin I. Sereno, 2006). This avoids bleeding of
-signal over sulci.
+As an example of such use, we have compared voxelwise isotropic,
+voxelwise anisotropic and surface based smoothing all for two levels of
+FWHM - 4 and 8mm. First one is the standard convolution with Gaussian
+kernel as implemented in SPM. Second one involves smoothing only voxels
+of similar intensity in attempt to retain structure. This was
+implemented in SUSAN from FSL (S.M. Smith, 1992). Third method involves
+reconstructing surface of the cortex and smoothing along it (Hagler Jr.,
+Saygin, & Martin I. Sereno, 2006). This avoids bleeding of signal over
+sulci.
 
 Establishing parameters from data and smoothing using SUSAN is already
 build into NiPyPe as a Workflow. It can be created using
 create\_susan\_smooth() function. It has similar inputs and outputs as
-SPM Smooth Interface. Smoothing on surface involves doing a full
+SPM Smooth Interface. Smoothing on a surface involves doing a full
 cortical reconstruction from T1 volume using FreeSurfer (Fischl, M I
 Sereno, & Dale, 1999) followed by coregistering functional images to the
 reconstructed surface using BBRegister. Finally surface smoothing
 algorithm from FreeSurfer is called.
 
-Smoothed EPI volumes (direct/local influeance) and statistical maps
+Smoothed EPI volumes (direct/local influence) and statistical maps
 (indirect/global influence), along with the pipeline used to generate
 them can be found in Figure smoothing\_comparison\_workflow and
 smoothing\_comparison\_results. Full code used to generate this data can
@@ -992,8 +993,8 @@ shows indirect influence of smoothing on the T maps (same slice) of the
 main contrast.
 
 Algorithm comparison is not the only way NiPyPe can be useful for a
-neuroimaging methods researcher. In every methods author interest is to
-make his or hers work most accessible. This usually means providing
+neuroimaging methods researcher. In every methods author’s interest is
+to make his or hers work most accessible. This usually means providing
 ready to use implementations. However, because the field is so diverse,
 software developers have to provide several packages (SPM toolbox,
 command line tool, c++ library etc.) to cover the whole user base.
