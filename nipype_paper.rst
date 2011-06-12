@@ -909,12 +909,11 @@ full code see Supplementary material) is ready to run. This can be done
 by calling run() method of the master Workflow.
 
 If the run() method is called twice, the Workflow input hashing
-mechanism ensures that none of the Interfaces are executed during the
-second run because of the the inputs hashing mechanism. Since the inputs
-remain the same nothing needs to be executed again. If, however, a
-highpass filter parameter of specify\_model would have been changed,
-some of the nodes (but not all) would have to rerun. NiPyPe
-automatically determines which nodes require rerunning.
+mechanism ensures that none of the Nodes are executed during the second
+run if the inputs remain the same. If, however, a highpass filter
+parameter of specify\_model is changed, some of the Nodes (but not all)
+would have to rerun. NiPyPe automatically determines which Nodes require
+rerunning.
 
 .. figure:: images/image02.png
    :align: center
@@ -1016,16 +1015,14 @@ An environment for methodological continuity and paced training of new
 personnel in laboratories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When in a lab with some experience in neuroimaging studies a new
-analysis is performed it is almost always the case that some parts of
-the data processing will be the same as in on of the previous studies
-performed in the same centre. NiPyPe Workflows can be very useful in
-dividing processing pipelines into reusable building blocks. This not
-only improves the speed of building new pipelines but also reduces the
-number of potential errors, because a well tested piece of code is being
-reused (instead of reimplemented every time). Reusing workflows is
-especially important for long running studies when all data has to be
-analyzed using the same methods.
+Typically, several neuroimaging studies in any laboratory uses similar
+data processing methods, perhaps with different parameters. NiPyPe
+Workflows can be very useful in dividing processing pipelines into
+reusable building blocks. This not only improves the speed of building
+new pipelines but also reduces the number of potential errors, because a
+well tested piece of code is being reused (instead of reimplemented
+every time). Reusing workflows is especially important for long running
+studies when all data has to be analyzed using the same methods.
 
 A similar scheme also helps with sharing Workflows across studies
 running simultaneously in the lab. NiPyPe provides a medium for
