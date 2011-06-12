@@ -847,14 +847,10 @@ processing Workflow. A typical fMRI Workflow can be divided into two
 sections: 1) preprocessing and 2) modelling. The first one deals with
 cleaning data from confounds and noise and the second one fits a model
 to the cleaned data based on the experimental design. The preprocessing
-stage in this Workflow will consist of only two steps: realignment and
-smoothing. For realignment (motion correction achieved by coregistering
-all volumes to the mean) and smoothing (convolution with 3D Gaussian
-kernel) we will use the SPM implementation. Definition of appropriate
-nodes can be found in Listing defining\_nodes. Inputs (such as
-register\_to\_mean) of nodes are accessible through the inputs property.
-Upon setting any input its type is verified to avoid errors during the
-execution.
+stage in this Workflow will consist of only two steps: 1) motion
+correction (aligns all volumes in a functional run to the mean realigned
+volume) and 2) smoothing (convolution with a 3D Gaussian kernel). We use
+SPM Interfaces to define the processing Nodes.
 
 realign = pe.Node(interface=spm.Realign(), name="realign")
 
@@ -864,28 +860,27 @@ smooth = pe.Node(interface=spm.Smooth(), name="smooth")
 
 smooth.inputs.fwhm = 4
 
-To connect two nodes a Workflow has to be created. connect() method of a
-Workflow allows to specify which outputs of which Nodes should be
-connected to which inputs of which Nodes. By connecting realigned\_files
-output of realign to in\_files input of Smooth we have created a simple
-preprocessing workflow (see Figure workflow\_from\_scratch).
+We create a Workflow to include these two Nodes and define the data flow
+from the output of the realign Node (realigned\_files) to the input of
+the smooth Node (in\_files). This creates a simple preprocessing
+workflow (see Figure workflow\_from\_scratch).
 
 preprocessing = pe.Workflow(name="preprocessing")
 
 preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
 
-Creating a modelling workflow which will define the design, estimate
-model and contrasts follows the same suite. We will again use SPM
-implementations. NiPyPe, however, adds extra abstraction layer to model
-definition which allows using the same definition for many model
-estimation implemantations (for example one from FSL or nippy).
-Therefore we will need four nodes: SpecifyModel (NiPyPe specific
-abstraction layer), Level1Design (SPM design definition), ModelEstimate,
-and ContrastEstimate. The connected modelling Workflow can be seen on
-Figure workflow\_from\_scratch. Model specification supports block,
-event and sparse designs. Contrasts provided to ContrastEstimate are
-defined using the same names of regressors as defined in the
-SpecifyModel.
+A modelling Workflow is constructed in an analogous manner, by first
+defining Nodes fro model design, model and contrasts follows the same
+suite. We will again use SPM implementations. NiPyPe, however, adds
+extra abstraction layer to model definition which allows using the same
+definition for many model estimation implemantations (for example one
+from FSL or nippy). Therefore we will need four nodes: SpecifyModel
+(NiPyPe specific abstraction layer), Level1Design (SPM design
+definition), ModelEstimate, and ContrastEstimate. The connected
+modelling Workflow can be seen on Figure workflow\_from\_scratch. Model
+specification supports block, event and sparse designs. Contrasts
+provided to ContrastEstimate are defined using the same names of
+regressors as defined in the SpecifyModel.
 
 Having preprocessing and modelling workflows we need to connect them
 together, add data grabbing facility and save the results. For this we
