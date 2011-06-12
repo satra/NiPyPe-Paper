@@ -773,15 +773,15 @@ Results
 Uniform accessing to tools, their usage, and execution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To access an interface for the supported software user has to first
-import it from an appropriate Python package (each neuroimaging software
-distribution such as FSL, SPM, Camino etc. has a corresponding Python
-package in the NiPyPe.interfaces namesapce):
+Users access interfaces by importing them from NiPyPe modules. Each
+neuroimaging software distribution such as FSL, SPM, Camino, etc., has a
+corresponding module in the nipype.interfaces namespace.
 
 >>> from NiPyPe.interfaces.camino import DTIFit
 
-To learn how to use a given Interface user can call help() method in an
-interactive console:
+The help() function for each interface prints the inputs and the outputs
+associated with the interface.
+
 >>> DTIFit.help()
 Inputs
 ------
@@ -801,61 +801,63 @@ Outputs
 -------
 tensor\_fitted: path/name of 4D volume in voxel order
 
-Output printed by this method is standardized for all Interfaces. It is
-automatically generated based on inputs and outputs definition and
+The output of the help() function is standardized across all Interfaces.
+It is automatically generated based on input and output definitions and
 includes information about required inputs, types, and default value.
-Alternatively an extended information is available in the form of
-auto-generated HTML documentation (see Figure html\_help).|image1|
+Alternatively, extended information is available in the form of
+auto-generated HTML documentation on the NiPyPe website (see Figure
+html\_help). This extended information includes examples that
+demonstrate how the interface can be used.
 
-Figure html\_help. HTML help page for dtfit command from Camino. This
-was generated based on the Interface code: description and example was
-taken from the class docstring and inputs/outputs were list was created
-using traited input/output specification.
-
-This includes example usage. All inputs are set through the inputs
-field:
+For every Interface, input values are set through the inputs field:
 
 >>> fit.inputs.scheme\_file = 'A.scheme'
 >>> fit.inputs.in\_file = 'tensor\_fitted\_data.Bfloat'
 
 When trying to set an invalid input type (for example non existing file,
-or a number instead of a string NiPyPe framework will send an error
-message. Checking validity of the pipeline at early stages prevents from
-running pipelines that are bound to fail and thus saves time. To run an
-interface user needs to call run() method:
+or a number instead of a string) NiPyPe framework will send an error
+message. Input validity checking before actual Workflow execution saves
+time. To run an Interface user needs to call run() method:
 
 >>> fit.run()
 
-At this stage the framework checks if all the mandatory inputs are set
-and sends an error otherwise.
+At this stage the framework checks if all mandatory inputs are set and
+all input dependencies are satisfied, generating an error if either of
+these conditions are not met.
 
-This way of running and accessing help information is the same for all
-software supported by NiPyPe - whether it is a command line program or a
-MATLAB or Python script. The framework deals with translating inputs
-into appropriate form and calling the right tools in the right way,
-presenting the user with a uniform interface.
+NiPyPe standardizes running and accessing help information irrespective
+of whether the underlying software is a matlab program, a command line
+tool or script. The framework deals with translating inputs into
+appropriate form (e.g., command line arguments or matlab scripts) for
+executing the underlying tools in the right way, while presenting the
+user with a uniform interface.
+
+.. figure:: images/image05.png
+   :align: center
+   :alt: 
+Figure html\_help. HTML help page for dtfit command from Camino. This
+was generated based on the Interface code: description and example was
+taken from the class docstring and inputs/outputs were list was created
+using traited input/output specification.
 
 Building a workflow from scratch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the following section, to showcase NiPyPe, we will describe how to
-create and extend a typical fMRI processing pipeline. We will begin with
-a basic processing layout and follow with extending it by
-adding/exchanging different components.
-
-Most fMRI pipeline can be divided into two sections – preprocessing and
-modelling. First one deals with cleaning data from confounds and noise
-and the second one fits a model based on the experimental design.
-Preprocessing stage in our first iteration of a pipeline will consist of
-only two steps: realignment and smoothing. In NiPyPe Every processing
-step consist of an Interface (which defines how to execute corresponding
-software) encapsulated in a Node (which defines for example a unique
-name). For realignment (motion correction achieved by coregistering all
-volumes to the mean) and smoothing (convolution with 3D Gaussian kernel)
-we will use SPM implementation. Definition of appropriate nodes can be
-found in Listing defining\_nodes. Inputs (such as register\_to\_mean) of
-nodes are accessible through the inputs property. Upon setting any input
-its type is verified to avoid errors during the execution.
+In this section, we describe how to create and extend a typical fMRI
+processing Workflow. A typical fMRI Workflow can be divided into two
+sections: 1) preprocessing and 2) modelling. The first one deals with
+cleaning data from confounds and noise and the second one fits a model
+based on the experimental design. Preprocessing stage in our first
+iteration of a pipeline will consist of only two steps: realignment and
+smoothing. In NiPyPe Every processing step consist of an Interface
+(which defines how to execute corresponding software) encapsulated in a
+Node (which defines for example a unique name). For realignment (motion
+correction achieved by coregistering all volumes to the mean) and
+smoothing (convolution with 3D Gaussian kernel) we will use SPM
+implementation. Definition of appropriate nodes can be found in Listing
+defining\_nodes. Inputs (such as register\_to\_mean) of nodes are
+accessible through the inputs property. Upon setting any input its type
+is verified to avoid errors during the execution.
 
 realign = pe.Node(interface=spm.Realign(), name="realign")
 
@@ -1888,4 +1890,3 @@ cindeem:
 setting inputs, executing, and retrieving outputs.
 
 .. |image0| image:: images/image03.png
-.. |image1| image:: images/image05.png
