@@ -41,6 +41,8 @@ e-mail: chris.gorgolewski@gmail.com
 
 Running title: NiPyPe Neuroimaging Data Processing Framework
 
+--------------
+
 Abstract
 
 Keywords: neuroimaging, data processing, workflow, pipeline, provenance,
@@ -105,15 +107,14 @@ Although, a majority of such laboratories gather and analyze
 neuroimaging data, very few of them have the personnel with the
 technical expertise to understand methodological development and modify
 laboratory procedures to adopt new tools. Typically, processing steps
-are created and crystallized till\ :sup:``[a] <#cmnt1>`_`\  a lab member
-with appropriate skills can modify the procedures. Typical training
-takes place through self-teaching by following online tutorials, taking
-organized courses or, as is most often the case, by learning from
-existing members of the lab. While this provides some amount of
-continuity, understanding different aspects of neuroimaging is a steep
-learning curve. This is even greater in the context
-of\ :sup:``[b] <#cmnt2>`_`\  all the different algorithms and software
-packages available for analysis.\ :sup:``[c] <#cmnt3>`_`\ 
+are created and crystallized until a lab member with appropriate skills
+can modify the procedures. Typical training takes place through
+self-teaching by following online tutorials, taking organized courses
+or, as is most often the case, by learning from existing members of the
+lab. While this provides some amount of continuity, understanding
+different aspects of neuroimaging has a steep learning curve, and
+steeper when one takes into account the time and resources needed to
+learn the different package interfaces and algorithms.
 
 Neuroimaging software packages do not address computational efficiency.
 The primary focus of neuroimaging analysis algorithms is to solve
@@ -126,7 +127,7 @@ iterative process dependent on the quality of the data and participant
 population (e.g., neurotypical, presurgical, etc). Researchers usually
 experiment with different methods and their parameters to create a
 workflow suitable for their application. A computationally efficient
-execution allows\ :sup:``[d] <#cmnt4>`_`\  for multiple rapid-iterations
+execution allows\ :sup:``[a] <#cmnt1>`_`\  for multiple rapid-iterations
 to optimize this tuning process. Support for optimized local execution
 (running independent processes in parallel, rerunning only those steps
 that have been influenced by the changes in parameters or dependencies
@@ -140,18 +141,18 @@ Current solutions
 
 One attempt to address some of these issues has resulted in the SPM
 batch execution system. Unfortunately it supports only SPM modules and
-does not run in parallel. A much more
-extensible\ :sup:``[e] <#cmnt5>`_`\  and feature rich solution is the
-LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov et al., 2010; Rex, Ma,
-& A. W. Toga, 2003). It provides an easy to use graphical interface for
-choosing processing steps or nodes from a predefined library and
-defining their dependencies and parameters. It also has extensive
-support for parallel execution on an appropriately configured cluster
-(including data transfer, pausing execution, and combining local and
-remote software). Additionally, the LONI Pipeline saves information
-about executed steps (such as software origin, version and architecture)
-providing provenance information (A. J. Mackenzie-Graham, J. D. Van
-Horn, R. P. Woods, Crawford, & A. W. Toga, 2008).
+does not run in parallel. A much more extensive and feature rich
+solution is the LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov et
+al., 2010; Rex, Ma, & A. W. Toga, 2003). It provides an easy to use
+graphical interface for choosing processing steps or nodes from a
+predefined library and defining their dependencies and parameters. It
+also has extensive support for parallel execution on an appropriately
+configured cluster (including data transfer, pausing execution, and
+combining local and remote software). Additionally, the LONI Pipeline
+saves information about executed steps (such as software origin, version
+and architecture) providing provenance information (A. J.
+Mackenzie-Graham, J. D. Van Horn, R. P. Woods, Crawford, & A. W. Toga,
+2008).
 
 Processing nodes are defined in the LONI Pipeline using eXtensible
 Markup Language (XML). This one “size fits all” method makes it easy to
@@ -190,20 +191,20 @@ Methods
 -------
 
 NiPyPe consists of three components (see Figure architecture\_overview):
-1) interfaces or wrappers \ :sup:``[f] <#cmnt6>`_`\ around external
-tools that provide unified way for setting inputs, executing and
-retrieving outputs; 2) a workflow engine that allows creating analysis
-pipelines by connecting inputs and outputs of interfaces as a directed
-acyclic graph (DAG); and 3) plugins that execute workflows either
-locally or in a distributed processing environment (e.g.,
-Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the following sections,
-we describe key architectural components and features of this software.
+1) interfaces to external tools that provide a unified way for setting
+inputs, executing and retrieving outputs; 2) a workflow engine that
+allows creating analysis pipelines by connecting inputs and outputs of
+interfaces as a directed acyclic graph (DAG); and 3) plugins that
+execute workflows either locally or in a distributed processing
+environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
+following sections, we describe key architectural components and
+features of this software.
 
 .. figure:: images/image01.png
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[g] <#cmnt7>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[b] <#cmnt2>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -215,19 +216,20 @@ and cluster) execution.
 Interfaces
 ~~~~~~~~~~
 
-Interfaces\ :sup:``[h] <#cmnt8>`_`\  form the core of NiPyPe. As stated
-earlier, the goal of “Interfaces” is to provide a uniform mechanism for
-accessing analysis tools from neuroimaging software packages (e.g.,
-FreeSurfer, FSL, SPM). For example, there is a Realign Interface that
-exposes the SPM realignment routine, while the MCFLIRT Interface exposes
-the FSL realignment routine. In addition, one can also implement an
-algorithm in Python within NiPyPe and expose it as an Interface.
-Interfaces are flexible and can accommodate the heterogeneous software
-that needs to be supported, while providing unified and uniform access
-to these tools for the user. Since, there is no need for the underlying
-software to be changed (recompiled or adjusted to conform with a certain
-standard), developers can continue to create software using the computer
-language of their choice.
+Interfaces form the core of NiPyPe. The goal of Interfaces is to provide
+a uniform mechanism for accessing analysis tools from neuroimaging
+software packages (e.g., FreeSurfer, FSL, SPM). Interfaces can be used
+directly as a Python object, incorporated into custom Python scripts or
+used interactively in a Python console. For example, there is a Realign
+Interface that exposes the SPM realignment routine, while the MCFLIRT
+Interface exposes the FSL realignment routine. In addition, one can also
+implement an algorithm in Python within NiPyPe and expose it as an
+Interface. Interfaces are flexible and can accommodate the heterogeneous
+software that needs to be supported, while providing unified and uniform
+access to these tools for the user. Since, there is no need for the
+underlying software to be changed (recompiled or adjusted to conform
+with a certain standard), developers can continue to create software
+using the computer language of their choice.
 
 An Interface definition consists of: (a) input parameters, their types
 (e.g., file, floating point value, list of integers, etc.,.) and
@@ -261,7 +263,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[i] <#cmnt9>`_`\ 
+".gz")\ :sup:``[c] <#cmnt3>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -291,7 +293,7 @@ inputs need to be set as a group (mutual inclusion). An example input
 specification for the ‘bet’ (Brain Extraction Tool) program from FSL is
 shown in Listing bet.
 
-class BETInputSpec(FSLCommandInputSpec):\ :sup:``[j] <#cmnt10>`_`\ 
+class BETInputSpec(FSLCommandInputSpec):\ :sup:``[d] <#cmnt4>`_`\ 
 
 """"""
 
@@ -425,9 +427,7 @@ formal specification of inputs and outputs are provided by the
 underlying software, NiPyPe can support these programs automatically.
 For example, the Slicer command line execution modules come with an XML
 specification that allows NiPyPe to wrap them without creating
-individual interfaces. Interfaces can be used directly as a Python
-object and incorporated into any custom Python script or used
-interactively in a Python console.\ :sup:``[k] <#cmnt11>`_`\ 
+individual interfaces.
 
 Name
 
@@ -502,13 +502,14 @@ Nodes, MapNodes, and Workflows
 
 NiPyPe provides a framework for connecting Interfaces to create a data
 analysis Workflow. In order for Interfaces to be used in a Workflow they
-need to be encapsulated in either Node or MapNode objects. These objects
-provide Interfaces with additional properties (e.g., hash checking of
-inputs, caching of results, ability to iterate over inputs). Nodes and
-MapNodes execute underlying Interfaces in their own uniquely named
-directories, thus providing a mechanism to isolate and track the outputs
-resulting from executing the Interfaces.
-\ :sup:``[l] <#cmnt12>`_`\ \ :sup:``[m] <#cmnt13>`_`\ 
+need to be encapsulated in either Node or MapNode objects. Node and
+MapNode objects provide Interfaces with additional properties (e.g.,
+hash checking of inputs, caching of results, ability to iterate over
+inputs). Additionally they execute the underlying interfaces in their
+own uniquely named directories (almost like a sandbox), thus providing a
+mechanism to isolate and track the outputs resulting from executing the
+Interfaces. These mechanisms allow not only for provenance tracking, but
+aid in efficient pipeline execution.
 
 The MapNode class is special sub-class of Node that implements a
 MapReduce-like architecture (Dean and Ghemawat 2008). Encapsulating an
@@ -592,7 +593,7 @@ Interfaces supports block, event and sparse designs. Contrast
 definitions provided to ContrastEstimate use the same condition or
 regressor names as used in the input to SpecifyModel.
 
-\ :sup:``[n] <#cmnt14>`_`\ 
+\ :sup:``[e] <#cmnt5>`_`\ 
 
 We create a master Workflow that connects the preprocessing and
 modelling Workflows, adds the ability to select data for processing
@@ -810,21 +811,22 @@ meets all the requirements of open source definition (see Open Source
 Initiative\ :sup:``[4] <#ftnt4>`_`\ ) and Debian Free Software
 Guidelines\ :sup:``[5] <#ftnt5>`_`\ . Development is carried out openly
 through distributed version control system (GIT via GitHub) in an online
-community. Most current version of the source code with complete history
-is accessible to everyone. Discussions between developers and design
-decisions are done on an open access mailing list. Such setup encourages
-a broader community of developers to join the project and allows sharing
-of the development resources (effort, money, information and time).
+community. The current version of the source code together with complete
+history is accessible to everyone. Discussions between developers and
+design decisions are done on an open access mailing list. Such setup
+encourages a broader community of developers to join the project and
+allows sharing of the development resources (effort, money, information
+and time).
 
-Such features of NiPyPe development organization facilitate rapid
-development and deployment of analysis procedures in laboratories and
-address all of the issues described earlier. In particular, NiPyPe
-provides: 1) uniform access to neuroimaging analysis software and usage
-information; 2) a framework for comparative algorithm development and
-dissemination; 3) an environment for methodological continuity and paced
-training of new personnel in laboratories; and 4) computationally
-efficient execution of neuroimaging analysis. In the following section,
-we demonstrate these solutions.
+In these previous paragraphs, we presented key features of NiPyPe that
+facilitate rapid development and deployment of analysis procedures in
+laboratories, and address all of the issues described earlier. In
+particular, NiPyPe provides: 1) uniform access to neuroimaging analysis
+software and usage information; 2) a framework for comparative algorithm
+development and dissemination; 3) an environment for methodological
+continuity and paced training of new personnel in laboratories; and 4)
+computationally efficient execution of neuroimaging analysis. In the
+following section, we demonstrate these solutions.
 
 --------------
 
@@ -905,24 +907,21 @@ using traited input/output specification.
 A framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A uniform interface for a wide range of processing methods not only
-helps to create new pipelines but also allows a comparison of algorithms
-designed to deal with the same problem. Development of a new method when
-there are others already available should be driven by clear
-improvement. This can only be measured by comparison on real or
-simulated data. Unfortunately, a thorough comparison is usually
-time-consuming, because of the need to deal with technicalities of
-different software packages. NiPyPe helps with this by standardizing the
-access to the software. Additionally, thanks to
-\ :sup:``[o] <#cmnt15>`_`\ the iterables mechanism, users can easily
-extend the comparison into many more dimensions in order to test
-different values of parameters.
+Uniform semantics for interfacing with a wide range of processing
+methods not only opens the possibility for richer Workflows, but also
+allows comparing algorithms that are designed to solve the same problem
+across and within such diverse Workflows. Typically, such an exhaustive
+comparison can be time-consuming, because of the need to deal with
+interfacing different software packages. NiPyPe simplifies this process
+by standardizing the access to the software. Additionally, the iterables
+mechanism allows users to easily extend such comparisons by providing a
+simple mechanism to test different parameter sets.
 
-Comparison between methods can be done locally - by looking at their
-direct outputs or in the context of particular application. In the later
-case one can look into how different algorithms used at early stages of
-processing influence the final output.
-
+Accuracy or efficiency of algorithms can be determined in an isolated
+manner by comparing their outputs or execution time or memory
+consumption on a given set of data. However, researchers typically want
+to know how different algorithms used at earlier stages of processing
+might influence the final output or statistics they are interested in.
 As an example of such use, we have compared voxelwise isotropic,
 voxelwise anisotropic and surface based smoothing all for two levels of
 FWHM - 4 and 8mm. First one is the standard convolution with Gaussian
@@ -975,19 +974,18 @@ author to make his or hers work most accessible. This usually means
 providing ready to use implementations. However, because the field is so
 diverse, software developers have to provide several packages (SPM
 toolbox, command line tool, c++ library etc.) to cover the whole user
-base. NiPyPe helps with this task. By creating one Interface developer
-exposes the tool to greater range of users. Independent of the way the
-tool was implemented it will be able to work with any piece of software
-currently supported by NiPyPe.\ :sup:``[p] <#cmnt16>`_`\ 
+base. With NiPyPe, a developer can create one Interface and expose a new
+tool, written in any language, to a greater range of users, knowing it
+will work with the wide range of software currently supported by NiPyPe.
 
 A good example of such scenario is ArtifactDetection toolbox (ref TODO).
 This piece of software uses EPI timeseries and realignment parameters to
-find timepoints (volumes) that are most likely artefacts and should be
+find timepoints (volumes) that are most likely artifacts and should be
 removed (by including them as confound regressors in the design matrix).
-The tool started its life as a MATLAB script used locally. Initially it
-was only compatible with SPM. After writing a NiPyPe interface it can
-work with FSL and many other software packages not limiting its users
-just to SPM.
+The tool was initially implemented as a MATLAB script, compatible only
+with SPM and used locally within the lab. The current NiPyPe interface
+can work with SPM or FSL Workflows, thereby not limiting its users to
+SPM.
 
 An environment for methodological continuity and paced training of new
 personnel in laboratories
@@ -1001,7 +999,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[q] <#cmnt17>`_`\  Furthermore, a data independent
+methods.\ :sup:``[f] <#cmnt6>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -1023,14 +1021,15 @@ Computationally efficient execution of neuroimaging analysis
 The NiPyPe package provides a seamless and flexible environment for
 executing workflows in parallel on a variety of environments from local
 multi-core workstations to high-performance clusters. In the SPM
-workflow for single subject functional data analysis shown below, only a
-few components can be parallelized. However, running this workflow
-across several subjects provides room for embarrassingly parallel
-execution. Running this workflow for 69 subjects on a cluster with 40
-cores takes 1 hour and 40 minutes relative to the 32 minutes for a
-single subject. The difference from the expected runtime of 32 minutes
-stems from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[r] <#cmnt18>`_`\ 
+workflow for single subject functional data analysis shown below (where
+is this workflow), only a few components can be parallelized. However,
+running this workflow across several subjects provides room for
+embarrassingly parallel execution. Running this workflow for 69 subjects
+on a compute cluster (40 cores distributed across 6 machines) took 1
+hour and 40 minutes relative to 32 minutes for processing a single
+subject. The difference from the expected runtime of 64 minutes stems
+from disk i/o, network and processing resource
+bottlenecks.\ :sup:``[g] <#cmnt7>`_`\ 
 
 --------------
 
@@ -1140,7 +1139,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[s] <#cmnt19>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[h] <#cmnt8>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1662,42 +1661,11 @@ reusable, and manageable parts.
 
 `[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
 
-`[a] <#cmnt_ref1>`_helenlramsden:
-
-until
-
-`[b] <#cmnt_ref2>`_helenlramsden:
-
-This is compounded by?
-
-`[c] <#cmnt_ref3>`_cindeem:
-
-While this provides some amount of continuity, understanding different
-aspects of neuroimaging has a steep learning curve, made steeper by
-incorporating the time needed to learn the different package interfaces
-and algorithms.
-
-`[d] <#cmnt_ref4>`_davclark:
+`[a] <#cmnt_ref1>`_davclark:
 
 I mention this in my high level notes
 
-`[e] <#cmnt_ref5>`_duncancarmichael:
-
-extensive?
-
-`[f] <#cmnt_ref6>`_cindeem:
-
-choose one term and use, or this gets harder to follow...since we call
-them interfaces in the code, we should stick to it for now?
-
---------------
-
-cindeem:
-
-1) interfaces wrap around external tools providing a unified way for
-setting inputs, executing, and retrieving outputs.
-
-`[g] <#cmnt_ref7>`_cindeem:
+`[b] <#cmnt_ref2>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1705,11 +1673,7 @@ workflow-engine? and the idea of nodes and mapnodes are intserted
 without much explanation. Maybe also add an example of how the interface
 wraps an external package?
 
-`[h] <#cmnt_ref8>`_cindeem:
-
-here you use "interfaces" so I would stick with this common term
-
-`[i] <#cmnt_ref9>`_davclark:
+`[c] <#cmnt_ref3>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1720,7 +1684,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
+`[d] <#cmnt_ref4>`_krzysztof.gorgolewski:
 
 I could not find a shorter example of a well known program with
 dependecies in inputs. We can alternatively show only part of this.
@@ -1743,47 +1707,12 @@ Second Davs comment, dont let them get lost in the code, just outline
 the impt parts, use highlighting? Im not sure what the journal allows,
 but this would help.
 
-`[k] <#cmnt_ref11>`_cindeem:
-
-might be nice to state this in the opening paragraph....
-
-The goal of “Interfaces” is to provide a uniform mechanism for accessing
-analysis tools from neuroimaging software packages (e.g., FreeSurfer,
-FSL, SPM). Interfaces can be used directly as a Python object,
-incorporated into custom Python scripts or used interactively in a
-Python console. They are the core of the nipype pipeline.
-
-`[l] <#cmnt_ref12>`_davclark:
-
-I think this is a big deal. You kind of gloss over it.
-
-`[m] <#cmnt_ref13>`_cindeem:
-
-Node and MapNode objects provide interfaces with additional properties
-(e.g., hash checking of inputs, caching of results, ability to iterate
-over inputs). Additionally they execute the underlying interfaces in
-their own uniquely named directories, thus providing a mechanism to
-isolate and track the outputs resulting from executing the Interfaces.
-These mechanisms allow not only for provinence tracking, but aid in
-efficient pipeline execution. They provide the framework necessary to
-create a data analysis Workflow.
-
-`[n] <#cmnt_ref14>`_cindeem:
+`[e] <#cmnt_ref5>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[o] <#cmnt_ref15>`_helenlramsden:
-
-spoken English, use 'due to'
-
-`[p] <#cmnt_ref16>`_cindeem:
-
-With Nipype, the developer can create one Interface and expose this new
-tool , written in any language, to a greater range of users, knowing it
-will work with the wide range of software currently supported by Nipype.
-
-`[q] <#cmnt_ref17>`_satrajit.ghosh:
+`[f] <#cmnt_ref6>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1799,38 +1728,38 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[r] <#cmnt_ref18>`_cindeem:
+`[g] <#cmnt_ref7>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
 
-`[s] <#cmnt_ref19>`_satrajit.ghosh:
+`[h] <#cmnt_ref8>`_satrajit.ghosh:
 
 need to create this page
 
-`[t] <#cmnt_ref20>`_davclark:
+`[i] <#cmnt_ref9>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
+`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[v] <#cmnt_ref22>`_krzysztof.gorgolewski:
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[w] <#cmnt_ref23>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[x] <#cmnt_ref24>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1840,7 +1769,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[y] <#cmnt_ref25>`_yarikoptic:
+`[n] <#cmnt_ref14>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1860,11 +1789,11 @@ yarikoptic:
 
 something like that ;-)
 
-`[z] <#cmnt_ref26>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[aa] <#cmnt_ref27>`_yarikoptic:
+`[p] <#cmnt_ref16>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
