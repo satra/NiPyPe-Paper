@@ -76,7 +76,7 @@ Several technical, practical and social issues hinder replicable,
 efficient and optimal use of neuroimaging analysis approaches.
 
 No uniform access to neuroimaging analysis software and usage
-information. For current multimodal datasets, researchers typically
+information. For current multi-modal datasets, researchers typically
 resort to using different software packages for different components of
 the analysis. However, these different software packages are accessed
 and interfaced with in different ways, such as: shell scripting (FSL,
@@ -96,7 +96,7 @@ within the walls of a lab, without extensive exposure or testing.
 Furthermore, testing comparative efficacy of algorithms often requires
 significant effort (Klein et al., 2010). In general, developers create
 software for a single package (e.g., VBM8 for SPM), create a standalone
-cross platform tool (e.g., mricron) or simply do not distribute the
+cross-platform tool (e.g., mricron) or simply do not distribute the
 software (e.g., normalization software used for the architectonic
 atlases - CHECK).
 
