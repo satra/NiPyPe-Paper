@@ -1123,6 +1123,22 @@ reproducibility by providing provenance tracking. Exchangibility of
 pipelines created using NiPyPe stimulates collaboration in the broader
 neuroimaging community.
 
+Acknowledgements
+
+A complete list of people who have contributed code to the project is
+available at
+http://nipy.org/nipype/contributors.html\ :sup:``[f] <#cmnt6>`_`\ . We
+thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
+Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
+and social support and for design discussions. We would like to thank
+Prof. John Gabrieli’s laboratory at MIT for testing NiPyPe through its
+evolutionary stages, in particular, Tyler Perrachione and Gretchen
+Reynolds. We would also like to thank the developers of FreeSurfer, FSL
+and SPM for being supportive of the project and providing valuable
+feedback on technical issues. Satrajit Ghosh would like to acknowledge
+support from NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the
+Ellison Medical Foundation, Katrien Vander Straeten and Amie Ghosh.
+
 --------------
 
 Supplementary Material
@@ -1691,46 +1707,50 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[f] <#cmnt_ref6>`_helenlramsden:
+`[f] <#cmnt_ref6>`_satrajit.ghosh:
+
+need to create this page
+
+`[g] <#cmnt_ref7>`_helenlramsden:
 
 until
 
-`[g] <#cmnt_ref7>`_davclark:
+`[h] <#cmnt_ref8>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[h] <#cmnt_ref8>`_cindeem:
+`[i] <#cmnt_ref9>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
+`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[j] <#cmnt_ref10>`_cindeem:
+`[k] <#cmnt_ref11>`_cindeem:
 
 While this provides some amount of continuity, understanding different
 aspects of neuroimaging has a steep learning curve, made steeper by
 incorporating the time needed to learn the different package interfaces
 and algorithms.
 
-`[k] <#cmnt_ref11>`_helenlramsden:
+`[l] <#cmnt_ref12>`_helenlramsden:
 
 spoken English, use 'due to'
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[m] <#cmnt_ref13>`_cindeem:
+`[n] <#cmnt_ref14>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[n] <#cmnt_ref14>`_cindeem:
+`[o] <#cmnt_ref15>`_cindeem:
 
 Node and MapNode objects provide interfaces with additional properties
 (e.g., hash checking of inputs, caching of results, ability to iterate
@@ -1741,18 +1761,18 @@ These mechanisms allow not only for provinence tracking, but aid in
 efficient pipeline execution. They provide the framework necessary to
 create a data analysis Workflow.
 
-`[o] <#cmnt_ref15>`_duncancarmichael:
+`[p] <#cmnt_ref16>`_duncancarmichael:
 
 extensive?
 
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
+`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1762,12 +1782,12 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[r] <#cmnt_ref18>`_cindeem:
+`[s] <#cmnt_ref19>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
 
-`[s] <#cmnt_ref19>`_cindeem:
+`[t] <#cmnt_ref20>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1775,7 +1795,7 @@ workflow-engine? and the idea of nodes and mapnodes are intserted
 without much explanation. Maybe also add an example of how the interface
 wraps an external package?
 
-`[t] <#cmnt_ref20>`_yarikoptic:
+`[u] <#cmnt_ref21>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1795,13 +1815,9 @@ yarikoptic:
 
 something like that ;-)
 
-`[u] <#cmnt_ref21>`_helenlramsden:
+`[v] <#cmnt_ref22>`_helenlramsden:
 
 This is compounded by?
-
-`[v] <#cmnt_ref22>`_satrajit.ghosh:
-
-need to create this page
 
 `[w] <#cmnt_ref23>`_cindeem:
 
