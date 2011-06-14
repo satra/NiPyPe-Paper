@@ -2,20 +2,23 @@ NiPyPe: A flexible, lightweight and extensible neuroimaging data
 processing framework
 =====================================================================================
 
-Krzysztof Gorgolewski1, Christopher Burns2, Cindee Madison2, Dav Clark4,
-Yaroslav O. Halchenko5, Michael L. Waskom, Satrajit S. Ghoshx
+Krzysztof Gorgolewski1, Christopher Burns2, Cindee Madison2, Dav Clark3,
+Yaroslav O. Halchenko4, Michael L. Waskom5, Satrajit S. Ghosh6
 
 1 School of Informatics, University of Edinburgh, Edinburgh, UK
 
 2 Helen Wills Neuroscience Institute, University of California,
 Berkeley, CA, USA
 
-4 Department of Psychology, University of California, Berkeley, CA, USA
+3 Department of Psychology, University of California, Berkeley, CA, USA
 
-5 Department of Psychological and Brain Sciences, Dartmouth College,
+4 Department of Psychological and Brain Sciences, Dartmouth College,
 Hanover, NH, USA
 
-x Research Laboratory of Electronics, Massachusetts Institute of
+5 McGovern Institute for Brain Research, Massachusetts Institute of
+Technology, Cambridge, MA, USA
+
+6 Research Laboratory of Electronics, Massachusetts Institute of
 Technology, Cambridge, MA, USA
 
 Corresponding author:
