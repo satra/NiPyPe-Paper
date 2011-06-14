@@ -539,13 +539,13 @@ resulting from executing the Interfaces. \ :sup:``[d] <#cmnt4>`_`\
 
 The MapNode class is special sub-class of Node that implements a
 MapReduce-like architecture (Dean and Ghemawat 2008). Encapsulating an
-Interface within a MapReduce node allows Interfaces that normally
-operate on a single input to execute the Interface on multiple inputs.
-When a MapNode executes, it creates a separate instance of the
-underlying Interface for every value of an input list and executes these
-instances independently. When all instances finish running their results
-are collected into a list and exposed through the MapNode’s outputs (see
-Figure iterabes\_vs\_mapnode). This approach improves granularity of the
+Interface within a MapNode allows Interfaces that normally operate on a
+single input to execute the Interface on multiple inputs. When a MapNode
+executes, it creates a separate instance of the underlying Interface for
+every value of an input list and executes these instances independently.
+When all instances finish running their results are collected into a
+list and exposed through the MapNode’s outputs (see Figure
+iterabes\_vs\_mapnode). This approach improves granularity of the
 workflow and provides easy support for Interfaces that can process only
 one input at a time. For example, the FSL ‘bet’ program can only run on
 a single input, but wrapping the BET Interface in a MapNode allows
