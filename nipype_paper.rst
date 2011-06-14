@@ -306,7 +306,8 @@ to be detected prior to executing the underlying program. The input
 definition also allows specifying relations between inputs. Often, some
 input options should not be set together (mutual exclusion) while other
 inputs need to be set as a group (mutual inclusion). An example input
-specification for the ‘bet’ program from FSL is shown in Listing bet.
+specification for the ‘bet’ (Braun Extraction Tool) program from FSL is
+shown in Listing bet.
 
 class BETInputSpec(FSLCommandInputSpec):\ :sup:``[c] <#cmnt3>`_`\ 
 
@@ -427,8 +428,8 @@ reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
 
 desc="bias field and neck cleanup")
 
-Listing bet. Specification of inputs for the Brain Extraction Tool
-(BET). Each field of this class is a Traits object which defines an
+Listing bet. Specification of inputs for the Brain Extraction Tool (BET)
+Interface. Each field of this class is a Traits object which defines an
 input with its data type (i.e. list of integers), constraints (i.e.
 length of the list), dependencies (when for example setting one option
 is mutually exclusive with another), and additional parameters (such as
@@ -743,9 +744,8 @@ NiPyPe is trying to address the problem of interacting with ever
 changing universe of neuroimaging software in a sustainable manner.
 Therefore the way its development is managed is a part of the solution.
 NiPyPe is distributed under Berkeley Software Distribution license which
-allows free copying, modification and distribution and, in
-fact,\ :sup:``[e] <#cmnt5>`_`\  NiPyPe meets all the requirements of
-open source definition (see Open Source
+allows free copying, modification and distribution and. NiPyPe also
+meets all the requirements of open source definition (see Open Source
 Initiative\ :sup:``[4] <#ftnt4>`_`\ ) and Debian Free Software
 Guidelines\ :sup:``[5] <#ftnt5>`_`\ . Development is carried out openly
 through distributed version control system (GIT via GitHub) in an online
@@ -1027,7 +1027,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long running studies when all data has to be analyzed using the same
-methods.\ :sup:``[f] <#cmnt6>`_`\  Furthermore, a data independent
+methods.\ :sup:``[e] <#cmnt5>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -1716,12 +1716,7 @@ but this would help.
 
 I think this is a big deal. You kind of gloss over it.
 
-`[e] <#cmnt_ref5>`_davclark:
-
-delete? Verbose and (to my eye) counter to the clearly evident truth
-("in fact" often cues "you might not have thought XXX")
-
-`[f] <#cmnt_ref6>`_satrajit.ghosh:
+`[e] <#cmnt_ref5>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1737,9 +1732,14 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[g] <#cmnt_ref7>`_helenlramsden:
+`[f] <#cmnt_ref6>`_helenlramsden:
 
 until
+
+`[g] <#cmnt_ref7>`_davclark:
+
+delete? Verbose and (to my eye) counter to the clearly evident truth
+("in fact" often cues "you might not have thought XXX")
 
 `[h] <#cmnt_ref8>`_cindeem:
 
