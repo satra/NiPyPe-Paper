@@ -140,18 +140,18 @@ Current solutions
 
 One attempt to address some of these issues has resulted in the SPM
 batch execution system. Unfortunately it supports only SPM modules and
-does not run in parallel. A much more extensible and feature rich
-solution is the LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov et
-al., 2010; Rex, Ma, & A. W. Toga, 2003). It provides an easy to use
-graphical interface for choosing processing steps or nodes from a
-predefined library and defining their dependencies and parameters. It
-also has extensive support for parallel execution on an appropriately
-configured cluster (including data transfer, pausing execution, and
-combining local and remote software). Additionally, the LONI Pipeline
-saves information about executed steps (such as software origin, version
-and architecture) providing provenance information (A. J.
-Mackenzie-Graham, J. D. Van Horn, R. P. Woods, Crawford, & A. W. Toga,
-2008).
+does not run in parallel. A much more
+extensible\ :sup:``[e] <#cmnt5>`_`\  and feature rich solution is the
+LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov et al., 2010; Rex, Ma,
+& A. W. Toga, 2003). It provides an easy to use graphical interface for
+choosing processing steps or nodes from a predefined library and
+defining their dependencies and parameters. It also has extensive
+support for parallel execution on an appropriately configured cluster
+(including data transfer, pausing execution, and combining local and
+remote software). Additionally, the LONI Pipeline saves information
+about executed steps (such as software origin, version and architecture)
+providing provenance information (A. J. Mackenzie-Graham, J. D. Van
+Horn, R. P. Woods, Crawford, & A. W. Toga, 2008).
 
 Processing nodes are defined in the LONI Pipeline using eXtensible
 Markup Language (XML). This one “size fits all” method makes it easy to
@@ -190,7 +190,7 @@ Methods
 -------
 
 NiPyPe consists of three components (see Figure architecture\_overview):
-1) interfaces or wrappers \ :sup:``[e] <#cmnt5>`_`\ around external
+1) interfaces or wrappers \ :sup:``[f] <#cmnt6>`_`\ around external
 tools that provide unified way for setting inputs, executing and
 retrieving outputs; 2) a workflow engine that allows creating analysis
 pipelines by connecting inputs and outputs of interfaces as a directed
@@ -203,7 +203,7 @@ we describe key architectural components and features of this software.
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[f] <#cmnt6>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[g] <#cmnt7>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -215,7 +215,7 @@ and cluster) execution.
 Interfaces
 ~~~~~~~~~~
 
-Interfaces\ :sup:``[g] <#cmnt7>`_`\  form the core of NiPyPe. As stated
+Interfaces\ :sup:``[h] <#cmnt8>`_`\  form the core of NiPyPe. As stated
 earlier, the goal of “Interfaces” is to provide a uniform mechanism for
 accessing analysis tools from neuroimaging software packages (e.g.,
 FreeSurfer, FSL, SPM). For example, there is a Realign Interface that
@@ -261,7 +261,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[h] <#cmnt8>`_`\ 
+".gz")\ :sup:``[i] <#cmnt9>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -291,7 +291,7 @@ inputs need to be set as a group (mutual inclusion). An example input
 specification for the ‘bet’ (Brain Extraction Tool) program from FSL is
 shown in Listing bet.
 
-class BETInputSpec(FSLCommandInputSpec):\ :sup:``[i] <#cmnt9>`_`\ 
+class BETInputSpec(FSLCommandInputSpec):\ :sup:``[j] <#cmnt10>`_`\ 
 
 """"""
 
@@ -427,7 +427,7 @@ For example, the Slicer command line execution modules come with an XML
 specification that allows NiPyPe to wrap them without creating
 individual interfaces. Interfaces can be used directly as a Python
 object and incorporated into any custom Python script or used
-interactively in a Python console.\ :sup:``[j] <#cmnt10>`_`\ 
+interactively in a Python console.\ :sup:``[k] <#cmnt11>`_`\ 
 
 Name
 
@@ -508,7 +508,7 @@ inputs, caching of results, ability to iterate over inputs). Nodes and
 MapNodes execute underlying Interfaces in their own uniquely named
 directories, thus providing a mechanism to isolate and track the outputs
 resulting from executing the Interfaces.
-\ :sup:``[k] <#cmnt11>`_`\ \ :sup:``[l] <#cmnt12>`_`\ 
+\ :sup:``[l] <#cmnt12>`_`\ \ :sup:``[m] <#cmnt13>`_`\ 
 
 The MapNode class is special sub-class of Node that implements a
 MapReduce-like architecture (Dean and Ghemawat 2008). Encapsulating an
@@ -592,7 +592,7 @@ Interfaces supports block, event and sparse designs. Contrast
 definitions provided to ContrastEstimate use the same condition or
 regressor names as used in the input to SpecifyModel.
 
-\ :sup:``[m] <#cmnt13>`_`\ 
+\ :sup:``[n] <#cmnt14>`_`\ 
 
 We create a master Workflow that connects the preprocessing and
 modelling Workflows, adds the ability to select data for processing
@@ -914,7 +914,7 @@ simulated data. Unfortunately, a thorough comparison is usually
 time-consuming, because of the need to deal with technicalities of
 different software packages. NiPyPe helps with this by standardizing the
 access to the software. Additionally, thanks to
-\ :sup:``[n] <#cmnt14>`_`\ the iterables mechanism, users can easily
+\ :sup:``[o] <#cmnt15>`_`\ the iterables mechanism, users can easily
 extend the comparison into many more dimensions in order to test
 different values of parameters.
 
@@ -978,7 +978,7 @@ toolbox, command line tool, c++ library etc.) to cover the whole user
 base. NiPyPe helps with this task. By creating one Interface developer
 exposes the tool to greater range of users. Independent of the way the
 tool was implemented it will be able to work with any piece of software
-currently supported by NiPyPe.\ :sup:``[o] <#cmnt15>`_`\ 
+currently supported by NiPyPe.\ :sup:``[p] <#cmnt16>`_`\ 
 
 A good example of such scenario is ArtifactDetection toolbox (ref TODO).
 This piece of software uses EPI timeseries and realignment parameters to
@@ -1001,7 +1001,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[p] <#cmnt16>`_`\  Furthermore, a data independent
+methods.\ :sup:``[q] <#cmnt17>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -1030,7 +1030,7 @@ execution. Running this workflow for 69 subjects on a cluster with 40
 cores takes 1 hour and 40 minutes relative to the 32 minutes for a
 single subject. The difference from the expected runtime of 32 minutes
 stems from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[q] <#cmnt17>`_`\ 
+bottlenecks.\ :sup:``[r] <#cmnt18>`_`\ 
 
 --------------
 
@@ -1140,7 +1140,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[r] <#cmnt18>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[s] <#cmnt19>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1681,7 +1681,11 @@ and algorithms.
 
 I mention this in my high level notes
 
-`[e] <#cmnt_ref5>`_cindeem:
+`[e] <#cmnt_ref5>`_duncancarmichael:
+
+extensive?
+
+`[f] <#cmnt_ref6>`_cindeem:
 
 choose one term and use, or this gets harder to follow...since we call
 them interfaces in the code, we should stick to it for now?
@@ -1693,7 +1697,7 @@ cindeem:
 1) interfaces wrap around external tools providing a unified way for
 setting inputs, executing, and retrieving outputs.
 
-`[f] <#cmnt_ref6>`_cindeem:
+`[g] <#cmnt_ref7>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1701,11 +1705,11 @@ workflow-engine? and the idea of nodes and mapnodes are intserted
 without much explanation. Maybe also add an example of how the interface
 wraps an external package?
 
-`[g] <#cmnt_ref7>`_cindeem:
+`[h] <#cmnt_ref8>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[h] <#cmnt_ref8>`_davclark:
+`[i] <#cmnt_ref9>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1716,7 +1720,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
+`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
 
 I could not find a shorter example of a well known program with
 dependecies in inputs. We can alternatively show only part of this.
@@ -1739,7 +1743,7 @@ Second Davs comment, dont let them get lost in the code, just outline
 the impt parts, use highlighting? Im not sure what the journal allows,
 but this would help.
 
-`[j] <#cmnt_ref10>`_cindeem:
+`[k] <#cmnt_ref11>`_cindeem:
 
 might be nice to state this in the opening paragraph....
 
@@ -1749,11 +1753,11 @@ FSL, SPM). Interfaces can be used directly as a Python object,
 incorporated into custom Python scripts or used interactively in a
 Python console. They are the core of the nipype pipeline.
 
-`[k] <#cmnt_ref11>`_davclark:
+`[l] <#cmnt_ref12>`_davclark:
 
 I think this is a big deal. You kind of gloss over it.
 
-`[l] <#cmnt_ref12>`_cindeem:
+`[m] <#cmnt_ref13>`_cindeem:
 
 Node and MapNode objects provide interfaces with additional properties
 (e.g., hash checking of inputs, caching of results, ability to iterate
@@ -1764,22 +1768,22 @@ These mechanisms allow not only for provinence tracking, but aid in
 efficient pipeline execution. They provide the framework necessary to
 create a data analysis Workflow.
 
-`[m] <#cmnt_ref13>`_cindeem:
+`[n] <#cmnt_ref14>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[n] <#cmnt_ref14>`_helenlramsden:
+`[o] <#cmnt_ref15>`_helenlramsden:
 
 spoken English, use 'due to'
 
-`[o] <#cmnt_ref15>`_cindeem:
+`[p] <#cmnt_ref16>`_cindeem:
 
 With Nipype, the developer can create one Interface and expose this new
 tool , written in any language, to a greater range of users, knowing it
 will work with the wide range of software currently supported by Nipype.
 
-`[p] <#cmnt_ref16>`_satrajit.ghosh:
+`[q] <#cmnt_ref17>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1795,33 +1799,29 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[q] <#cmnt_ref17>`_cindeem:
+`[r] <#cmnt_ref18>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
 
-`[r] <#cmnt_ref18>`_satrajit.ghosh:
+`[s] <#cmnt_ref19>`_satrajit.ghosh:
 
 need to create this page
 
-`[s] <#cmnt_ref19>`_davclark:
+`[t] <#cmnt_ref20>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
+`[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
+`[v] <#cmnt_ref22>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
-
-`[v] <#cmnt_ref22>`_duncancarmichael:
-
-extensive?
 
 `[w] <#cmnt_ref23>`_krzysztof.gorgolewski:
 
