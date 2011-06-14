@@ -2,10 +2,12 @@ NiPyPe: A flexible, lightweight and extensible neuroimaging data
 processing framework
 =====================================================================================
 
-Krzysztof Gorgolewski1, Christopher Burns, Cindee Madison, Dav Clark,
+Krzysztof Gorgolewski1, Christopher Burns, Cindee Madison, Dav Clark4,
 Yaroslav O. Halchenko5, Michael L. Waskom, Satrajit S. Ghoshx
 
 1 School of Informatics, University of Edinburgh, Edinburgh, UK
+
+4 Department of Psychology, University of California, Berkeley, CA, USA
 
 5 Department of Psychological and Brain Sciences, Dartmouth College,
 Hanover, NH, USA
@@ -47,16 +49,17 @@ Over the past twenty years, advances in non-invasive in vivo
 neuroimaging have resulted in an explosion of studies investigating
 human cognition in health and disease. Current imaging studies acquire
 multi-modal image data (e.g., structural, diffusion, functional) and
-combine with non-imaging behavioural data, patient and/or treatment
-history and demographic and genetic information. Several sophisticated
-software packages (e.g., AFNI, BrainVoyager, FSL, FreeSurfer, NiPy, R,
-SPM) are used to process and analyze such extensive data. In a typical
-analysis, algorithms from these packages, each with its own set of
-parameters, process the raw data. However, data collected for a single
-study can be diverse (highly multi-dimensional) and large, and
-algorithms suited for one dataset may not be optimal for another. This
-complicates analysis methods and makes data exploration and inference
-challenging, and comparative analysis of new algorithms difficult.
+combine these with non-imaging behavioural data, patient and/or
+treatment history and demographic and genetic information. Several
+sophisticated software packages (e.g., AFNI, BrainVoyager, FSL,
+FreeSurfer, NiPy, R, SPM) are used to process and analyze such extensive
+data. In a typical analysis, algorithms from these packages, each with
+its own set of parameters, process the raw data. However, data collected
+for a single study can be diverse (highly multi-dimensional) and large,
+and algorithms suited for one dataset may not be optimal for another.
+This complicates analysis methods and makes data exploration and
+inference challenging, and comparative analysis of new algorithms
+difficult.
 
 Current problems
 ~~~~~~~~~~~~~~~~
@@ -116,14 +119,14 @@ iterative process dependent on the quality of the data and participant
 population (e.g., neurotypical, presurgical, etc). Researchers usually
 experiment with different methods and their parameters to create a
 workflow suitable for their application. A computationally efficient
-execution allows for multiple rapid-iterations to optimize this tuning
-process. Support for optimized local execution (running independent
-processes in parallel, rerunning only those steps that have been
-influenced by the changes in parameters or dependencies since the last
-run) and exploration of parameter space could ease this prototyping
-stage of workflow development. Furthermore, very few of the available
-neuroimaging tools take advantage of the growing number of parallel
-hardware configurations (multicore, clusters, clouds and
+execution allows\ :sup:``[a] <#cmnt1>`_`\  for multiple rapid-iterations
+to optimize this tuning process. Support for optimized local execution
+(running independent processes in parallel, rerunning only those steps
+that have been influenced by the changes in parameters or dependencies
+since the last run) and exploration of parameter space could ease this
+prototyping stage of workflow development. Furthermore, very few of the
+available neuroimaging tools take advantage of the growing number of
+parallel hardware configurations (multicore, clusters, clouds and
 supercomputers).
 
 Methods sections in published articles are inadequate for reproducing
@@ -276,7 +279,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")
+".gz")\ :sup:``[b] <#cmnt2>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -305,7 +308,7 @@ input options should not be set together (mutual exclusion) while other
 inputs need to be set as a group (mutual inclusion). An example input
 specification for the ‘bet’ program from FSL is shown in Listing bet.
 
-class BETInputSpec(FSLCommandInputSpec):\ :sup:``[a] <#cmnt1>`_`\ 
+class BETInputSpec(FSLCommandInputSpec):\ :sup:``[c] <#cmnt3>`_`\ 
 
 """"""
 
@@ -532,7 +535,7 @@ provide Interfaces with additional properties (e.g., hash checking of
 inputs, caching of results, ability to iterate over inputs). Nodes and
 MapNodes execute underlying Interfaces in their own uniquely named
 directories, thus providing a mechanism to isolate and track the outputs
-resulting from executing the Interfaces.
+resulting from executing the Interfaces. \ :sup:``[d] <#cmnt4>`_`\ 
 
 The MapNode class is special sub-class of Node that implements a
 MapReduce-like architecture (Dean and Ghemawat 2008). Encapsulating an
@@ -740,8 +743,9 @@ NiPyPe is trying to address the problem of interacting with ever
 changing universe of neuroimaging software in a sustainable manner.
 Therefore the way its development is managed is a part of the solution.
 NiPyPe is distributed under Berkeley Software Distribution license which
-allows free copying, modification and distribution and, in fact, NiPyPe
-meets all the requirements of open source definition (see Open Source
+allows free copying, modification and distribution and, in
+fact,\ :sup:``[e] <#cmnt5>`_`\  NiPyPe meets all the requirements of
+open source definition (see Open Source
 Initiative\ :sup:``[4] <#ftnt4>`_`\ ) and Debian Free Software
 Guidelines\ :sup:``[5] <#ftnt5>`_`\ . Development is carried out openly
 through distributed version control system (GIT via GitHub) in an online
@@ -1023,7 +1027,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long running studies when all data has to be analyzed using the same
-methods.\ :sup:``[b] <#cmnt2>`_`\  Furthermore, a data independent
+methods.\ :sup:``[f] <#cmnt6>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -1670,7 +1674,22 @@ reusable, and manageable parts.
 
 `[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
 
-`[a] <#cmnt_ref1>`_krzysztof.gorgolewski:
+`[a] <#cmnt_ref1>`_davclark:
+
+I mention this in my high level notes
+
+`[b] <#cmnt_ref2>`_davclark:
+
+I assume you'll fix the formatting here - it might confuse people with
+moderate familiarity with python
+
+--------------
+
+krzysztof.gorgolewski:
+
+Yes.
+
+`[c] <#cmnt_ref3>`_krzysztof.gorgolewski:
 
 I could not find a shorter example of a well known program with
 dependecies in inputs. We can alternatively show only part of this.
@@ -1693,7 +1712,16 @@ Second Davs comment, dont let them get lost in the code, just outline
 the impt parts, use highlighting? Im not sure what the journal allows,
 but this would help.
 
-`[b] <#cmnt_ref2>`_satrajit.ghosh:
+`[d] <#cmnt_ref4>`_davclark:
+
+I think this is a big deal. You kind of gloss over it.
+
+`[e] <#cmnt_ref5>`_davclark:
+
+delete? Verbose and (to my eye) counter to the clearly evident truth
+("in fact" often cues "you might not have thought XXX")
+
+`[f] <#cmnt_ref6>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1709,50 +1737,41 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[c] <#cmnt_ref3>`_helenlramsden:
+`[g] <#cmnt_ref7>`_helenlramsden:
 
 until
 
-`[d] <#cmnt_ref4>`_davclark:
-
-delete? Verbose and (to my eye) counter to the clearly evident truth
-("in fact" often cues "you might not have thought XXX")
-
-`[e] <#cmnt_ref5>`_cindeem:
+`[h] <#cmnt_ref8>`_cindeem:
 
 here you use "interfaces" so I would stick with this common term
 
-`[f] <#cmnt_ref6>`_davclark:
-
-I mention this in my high level notes
-
-`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
+`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[h] <#cmnt_ref8>`_cindeem:
+`[j] <#cmnt_ref10>`_cindeem:
 
 While this provides some amount of continuity, understanding different
 aspects of neuroimaging has a steep learning curve, made steeper by
 incorporating the time needed to learn the different package interfaces
 and algorithms.
 
-`[i] <#cmnt_ref9>`_helenlramsden:
+`[k] <#cmnt_ref11>`_helenlramsden:
 
 spoken English, use 'due to'
 
-`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[k] <#cmnt_ref11>`_cindeem:
+`[m] <#cmnt_ref13>`_cindeem:
 
 I think this is fine, but for a reader not familiar with SPM, this may
 be hard to follow?
 
-`[l] <#cmnt_ref12>`_cindeem:
+`[n] <#cmnt_ref14>`_cindeem:
 
 Node and MapNode objects provide interfaces with additional properties
 (e.g., hash checking of inputs, caching of results, ability to iterate
@@ -1763,18 +1782,18 @@ These mechanisms allow not only for provinence tracking, but aid in
 efficient pipeline execution. They provide the framework necessary to
 create a data analysis Workflow.
 
-`[m] <#cmnt_ref13>`_duncancarmichael:
+`[o] <#cmnt_ref15>`_duncancarmichael:
 
 extensive?
 
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1784,25 +1803,10 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[p] <#cmnt_ref16>`_cindeem:
+`[r] <#cmnt_ref18>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
-
-`[q] <#cmnt_ref17>`_davclark:
-
-I assume you'll fix the formatting here - it might confuse people with
-moderate familiarity with python
-
---------------
-
-krzysztof.gorgolewski:
-
-Yes.
-
-`[r] <#cmnt_ref18>`_davclark:
-
-I think this is a big deal. You kind of gloss over it.
 
 `[s] <#cmnt_ref19>`_cindeem:
 
