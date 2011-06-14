@@ -129,31 +129,6 @@ available neuroimaging tools take advantage of the growing number of
 parallel hardware configurations (multicore, clusters, clouds and
 supercomputers).
 
-Methods sections in published articles are inadequate for reproducing
-results. A typical neuroimaging analysis involves several different
-algorithms with different parameter choices. However, very few
-publications contain necessary information (e.g., data, scripts,
-computer code) to reproduce results (however, see current manuscript
-submission policies for Science and PNAS). Accurately reproducing the
-results of a study without such details is almost impossible.
-Furthermore, with a lack of standards for review, there is significant
-variability in the review process for screening of the appropriateness
-of algorithms used for various processing steps. For example, it is
-still common to see the use of SPM’s normalization even though the
-authors themselves point to more accurate options for normalization.
-
-In-depth knowledge of neuroimaging analysis algorithms is limited to few
-individuals. While several analysis packages implement all “procedures”
-necessary to perform a particular analyses (e.g., doing a group fMRI
-study), the details of the implementation are, however, different. For
-example, SPM uses isotropic smoothing and FSL performs anisotropic
-smoothing based on the distribution of local voxel intensities. While a
-potential user (a cognitive neuroscientist) would like to freely combine
-processing steps from different packages to obtain an optimal workflow,
-such operational details are often not available within a laboratory
-knowledgebase. Thus, the diversity of software solutions in neuroimaging
-field results in a steep learning curve and high training costs.
-
 Current solutions
 
 One attempt to address some of these issues has resulted in the SPM
@@ -286,7 +261,7 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-.. figure:: images/image04.png
+.. figure:: images/image03.png
    :align: center
    :alt: 
 Figure simplified\_class\_hierarchy. Simplified class hierarchy of
@@ -445,18 +420,7 @@ For example, the Slicer command line execution modules come with an XML
 specification that allows NiPyPe to wrap them without creating
 individual interfaces. Interfaces can be used directly as a Python
 object and incorporated into any custom Python script or used
-interactively in a Python console (see Listing interactive\_realign).
-
->>> import nipype.interfaces.spm as spm
->>> from glob import glob
->>> all\_epi = glob('epi\*.nii') # this will return an unsorted list
->>> all\_epi.sort()
->>> realigner = spm.Realign()
->>> realigner.inputs.in\_files = all\_epi
->>> result = realigner.run()
-
-Listing interactive\_realign. Example of interactive use of NiPyPe. A
-realign algorithm from SPM is being run on a set of NIFTI images.
+interactively in a Python console.
 
 Name
 
@@ -576,6 +540,92 @@ submitting articles. This ensures that at least the data processing part
 of the published experiment is fully reproducible. Additionally,
 exchange of Workflows between researchers stimulates efficient use of
 methods and experimentation.
+
+Example - building a Workflow from scratch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this section, we describe how to create and extend a typical fMRI
+processing Workflow. A typical fMRI Workflow can be divided into two
+sections: 1) preprocessing and 2) modelling. The first one deals with
+cleaning data from confounds and noise and the second one fits a model
+to the cleaned data based on the experimental design. The preprocessing
+stage in this Workflow will consist of only two steps: 1) motion
+correction (aligns all volumes in a functional run to the mean realigned
+volume) and 2) smoothing (convolution with a 3D Gaussian kernel). We use
+SPM Interfaces to define the processing Nodes.
+
+realign = pe.Node(interface=spm.Realign(), name="realign")
+
+realign.inputs.register\_to\_mean = True
+
+smooth = pe.Node(interface=spm.Smooth(), name="smooth")
+
+smooth.inputs.fwhm = 4
+
+We create a Workflow to include these two Nodes and define the data flow
+from the output of the realign Node (realigned\_files) to the input of
+the smooth Node (in\_files). This creates a simple preprocessing
+workflow (see Figure workflow\_from\_scratch).
+
+preprocessing = pe.Workflow(name="preprocessing")
+
+preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
+
+A modelling Workflow is constructed in an analogous manner, by first
+defining Nodes fro model design, model estimation and contrast
+estimation. We again use SPM Interfaces for this purpose. However,
+NiPyPe adds an extra abstraction Interface for model specification whose
+output can be used to create models in different packages (e.g., SPM,
+FSL and NiPy). The nodes of this Workflow are: SpecifyModel (NiPyPe
+model abstraction Interface), Level1Design (SPM design definition),
+ModelEstimate, and ContrastEstimate. The connected modelling Workflow
+can be seen on Figure workflow\_from\_scratch. The model specification
+Interfaces supports block, event and sparse designs. Contrast
+definitions provided to ContrastEstimate use the same condition or
+regressor names as used in the input to SpecifyModel.
+
+We create a master Workflow that connects the preprocessing and
+modelling Workflows together, adds the ability to select data for
+processing (using DataGrabber Interface) and a DataSink Node to save the
+outputs of the entire Workflow. NiPyPe allows connecting Nodes between
+Workflows. We will use this feature to connect realignment\_parameters
+and smoothed\_files to modelling workflow.
+
+DataGrabber allows the user to define flexible search patterns which can
+be parameterized by user defined inputs (such as subject ID, session
+etc.). This Interface can adapt to a wide range of directory
+organization and file naming conventions. In our case we will
+parameterize it with subject ID. In this way we can run the same
+Workflow for different subjects. We automate this by iterating over a
+list of subject IDs, by setting the iterables property of the
+DataGrabber Node for the input subject\_id. The DataGrabber Node output
+is connected to the realign Node from preprocessing Workflow.
+
+DataSink on the other side provides means for storing selected results
+in a specified location. It supports automatic creation of folders,
+simple substitutions and regular expressions to alter target filenames.
+In this example we store the T maps resulting from contrast estimation.
+
+A Workflow defined this way (see Figure workflow\_from\_scratch, for
+full code see Supplementary material) is ready to run. This can be done
+by calling run() method of the master Workflow.
+
+If the run() method is called twice, the Workflow input hashing
+mechanism ensures that none of the Nodes are executed during the second
+run if the inputs remain the same. If, however, a highpass filter
+parameter of specify\_model is changed, some of the Nodes (but not all)
+would have to rerun. NiPyPe automatically determines which Nodes require
+rerunning.
+
+.. figure:: images/image06.png
+   :align: center
+   :alt: 
+Figure workflow\_from\_scratch. Graph describing the processing steps
+and dependencies for the example workflow. Every output-input connection
+is represented with a separate arrow. Nodes from every subworkflow are
+grouped in boxes with labels corresponding to the name of the
+subworkflow. Such graphs can be automatically generated from a Workflow
+definition and provide a quick overview of the pipeline.
 
 Iterables - Parameter space exploration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -761,11 +811,9 @@ address all of the issues described earlier. In particular, NiPyPe
 provides: 1) uniform access to neuroimaging analysis software and usage
 information; 2) a framework for comparative algorithm development and
 dissemination; 3) an environment for methodological continuity and paced
-training of new personnel in laboratories; 4) computationally efficient
-execution of neuroimaging analysis; 5) a complete recording of the
-methods used in a study; and 6) a framework for shared storage of
-information and evolution of analysis methods and approaches. In the
-following section, we demonstrate these solutions.
+training of new personnel in laboratories; and 4) computationally
+efficient execution of neuroimaging analysis. In the following section,
+we demonstrate these solutions.
 
 --------------
 
@@ -835,99 +883,13 @@ appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image05.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure html\_help. HTML help page for dtfit command from Camino. This
 was generated based on the Interface code: description and example was
 taken from the class docstring and inputs/outputs were list was created
 using traited input/output specification.
-
-Building a workflow from scratch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In this section, we describe how to create and extend a typical fMRI
-processing Workflow. A typical fMRI Workflow can be divided into two
-sections: 1) preprocessing and 2) modelling. The first one deals with
-cleaning data from confounds and noise and the second one fits a model
-to the cleaned data based on the experimental design. The preprocessing
-stage in this Workflow will consist of only two steps: 1) motion
-correction (aligns all volumes in a functional run to the mean realigned
-volume) and 2) smoothing (convolution with a 3D Gaussian kernel). We use
-SPM Interfaces to define the processing Nodes.
-
-realign = pe.Node(interface=spm.Realign(), name="realign")
-
-realign.inputs.register\_to\_mean = True
-
-smooth = pe.Node(interface=spm.Smooth(), name="smooth")
-
-smooth.inputs.fwhm = 4
-
-We create a Workflow to include these two Nodes and define the data flow
-from the output of the realign Node (realigned\_files) to the input of
-the smooth Node (in\_files). This creates a simple preprocessing
-workflow (see Figure workflow\_from\_scratch).
-
-preprocessing = pe.Workflow(name="preprocessing")
-
-preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
-
-A modelling Workflow is constructed in an analogous manner, by first
-defining Nodes fro model design, model estimation and contrast
-estimation. We again use SPM Interfaces for this purpose. However,
-NiPyPe adds an extra abstraction Interface for model specification whose
-output can be used to create models in different packages (e.g., SPM,
-FSL and NiPy). The nodes of this Workflow are: SpecifyModel (NiPyPe
-model abstraction Interface), Level1Design (SPM design definition),
-ModelEstimate, and ContrastEstimate. The connected modelling Workflow
-can be seen on Figure workflow\_from\_scratch. The model specification
-Interfaces supports block, event and sparse designs. Contrast
-definitions provided to ContrastEstimate use the same condition or
-regressor names as used in the input to SpecifyModel.
-
-We create a master Workflow that connects the preprocessing and
-modelling Workflows together, adds the ability to select data for
-processing (using DataGrabber Interface) and a DataSink Node to save the
-outputs of the entire Workflow. NiPyPe allows connecting Nodes between
-Workflows. We will use this feature to connect realignment\_parameters
-and smoothed\_files to modelling workflow.
-
-DataGrabber allows the user to define flexible search patterns which can
-be parameterized by user defined inputs (such as subject ID, session
-etc.). This Interface can adapt to a wide range of directory
-organization and file naming conventions. In our case we will
-parameterize it with subject ID. In this way we can run the same
-Workflow for different subjects. We automate this by iterating over a
-list of subject IDs, by setting the iterables property of the
-DataGrabber Node for the input subject\_id. The DataGrabber Node output
-is connected to the realign Node from preprocessing Workflow.
-
-DataSink on the other side provides means for storing selected results
-in a specified location. It supports automatic creation of folders,
-simple substitutions and regular expressions to alter target filenames.
-In this example we store the T maps resulting from contrast estimation.
-
-A Workflow defined this way (see Figure workflow\_from\_scratch, for
-full code see Supplementary material) is ready to run. This can be done
-by calling run() method of the master Workflow.
-
-If the run() method is called twice, the Workflow input hashing
-mechanism ensures that none of the Nodes are executed during the second
-run if the inputs remain the same. If, however, a highpass filter
-parameter of specify\_model is changed, some of the Nodes (but not all)
-would have to rerun. NiPyPe automatically determines which Nodes require
-rerunning.
-
-.. figure:: images/image02.png
-   :align: center
-   :alt: 
-Figure workflow\_from\_scratch. Graph describing the processing steps
-and dependencies for the example workflow. Every output-input connection
-is represented with a separate arrow. Nodes from every subworkflow are
-grouped in boxes with labels corresponding to the name of the
-subworkflow. Such graphs can be automatically generated from a Workflow
-definition and provide a quick overview of the pipeline.
 
 A framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -986,7 +948,7 @@ nodes have iterables parameter set. This allows to easily iterate over
 all combinations of FWHM and smoothing algorithms used in the
 comparison.
 
-.. figure:: images/image06.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure smoothing\_comparison\_results. Influence of different smoothing
@@ -1070,10 +1032,7 @@ neuroimaging analysis software and usage information; 2) No framework
 for comparative algorithm development and dissemination; 3) Personnel
 turnover in laboratories often limit methodological continuity and
 training new personnel takes time; 4) Neuroimaging software packages do
-not address computational efficiency; 5) Methods sections in published
-articles are inadequate for reproducing results; and 6) In-depth
-knowledge of neuroimaging analysis algorithms is limited to few
-individuals.
+not address computational efficiency.
 
 We addressed these issues by creating NiPyPe, an open-source,
 community-developed initiative under the umbrella of NiPy. NiPyPe,
@@ -1882,4 +1841,4 @@ cindeem:
 1) interfaces wrap around external tools providing a unified way for
 setting inputs, executing, and retrieving outputs.
 
-.. |image0| image:: images/image03.png
+.. |image0| image:: images/image02.png
