@@ -312,45 +312,8 @@ mask = traits.Bool(desc = 'create binary mask image',
 
 argstr='-m')
 
-\_xor\_inputs = ('functional', 'reduce\_bias', 'robust', 'padding',
-
-'remove\_eyes', 'surfaces', 't2\_guided')
-
-robust = traits.Bool(desc='robust brain centre estimation ' \\
-
-'(iterates BET several times)',
-
-argstr='-R', xor=\_xor\_inputs)
-
-padding = traits.Bool(desc='improve BET if FOV is very small in Z ' \\
-
-'(by temporarily padding end slices)',
-
-argstr='-Z', xor=\_xor\_inputs)
-
-remove\_eyes = traits.Bool(desc='eye & optic nerve cleanup (can be ' \\
-
-'useful in SIENA)',
-
-argstr='-S', xor=\_xor\_inputs)
-
-surfaces = traits.Bool(desc='run bet2 and then betsurf to get additional
-' \\
-
-'skull and scalp surfaces (includes ' \\
-
-'registrations)',
-
-argstr='-A', xor=\_xor\_inputs)
-
-t2\_guided = File(desc='as with creating surfaces, when also feeding in
-' \\
-
-'non-brain-extracted T2 (includes registrations)',
-
-argstr='-A2 %s', xor=\_xor\_inputs)
-
-functional = traits.Bool(argstr='-F', xor=\_xor\_inputs,
+functional = traits.Bool(argstr='-F', xor= ('functional',
+'reduce\_bias'),
 
 desc="apply to 4D fMRI data")
 
@@ -535,10 +498,7 @@ output can be used to create models in different packages (e.g., SPM,
 FSL and NiPy). The nodes of this Workflow are: SpecifyModel (NiPyPe
 model abstraction Interface), Level1Design (SPM design definition),
 ModelEstimate, and ContrastEstimate. The connected modelling Workflow
-can be seen on Figure workflow\_from\_scratch. The model specification
-Interfaces supports block, event and sparse designs. Contrast
-definitions provided to ContrastEstimate use the same condition or
-regressor names as used in the input to SpecifyModel.
+can be seen on Figure workflow\_from\_scratch.
 
 We create a master Workflow that connects the preprocessing and
 modelling Workflows, adds the ability to select data for processing
