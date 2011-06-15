@@ -173,7 +173,7 @@ earlier, we present NiPyPe (Neuroimaging in Python: Pipelines and
 Interfaces), an open source, community-developed, Python-based software
 package that easily interfaces with existing software for efficient
 analysis of neuroimaging data and rapid comparative development of
-algorithms. NiPyPe uses a flexible, efficient and well designed
+algorithms. NiPyPe uses a flexible, efficient and general purpose
 programming language – Python – as its foundation. Processing modules
 and their inputs and outputs are described in an object-oriented manner
 providing the flexibility to interface with any type of software (not
@@ -1535,117 +1535,6 @@ main\_workflow.connect(preprocessing, 'rename.out\_file', datasink,
 main\_workflow.run()
 
 main\_workflow.write\_graph()
-
-To be removed ->
-
-Adding artefact detection
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The example pipeline so far uses only SPM components and with the
-exception of DataGrabber and DataSink it could have been executed using
-SPM batch manager. We can extend it by adding non SPM components. Apart
-from motion correction and smoothing one can try to detect volumes
-confounded by acquisition or motion artefacts and add them to the design
-matrix as confound regressors. NiPyPe has a build in implementation of
-Artifact Detection Tool (TODO reference) which using motion parameters
-and global signal estimates which volumes should be omitted in the
-analysis. ArtifactDetect Node takes two inputs: realigned volumes and
-realignment parameters. Its output can be send to SpecifyModel node to
-include new regressors in the design matrix. Workflow with added
-artefact detection can be seen in Figure TODO.
-
-Adding brain mask estimation from structural image
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Without specifying a mask explicitly SPM will estimate one from EPI
-sequence. However, this is not the best signal to estimate border
-between brain and skull. T1 sequence is usually used for this purpose.
-Additionally one can overlay the results (thresholded T-maps) on it for
-presentation purposes. FSL provides a brain extraction tool (BET)
-(Stephen M Smith, 2002). To incorporate it into the example workflow we
-will need to coregister functional images to the structural.
-Coregistration will be done using SPM implementation estimated on the
-mean functional image from the realignment Node and applied to the whole
-series. Coregistered images will become an input of the smoothing Node.
-We will also add a BET node which will get input from DataGrabber (the
-raw T1 volume) and provide inputs for ArtifactDetect (to restrict
-artefact detection only to relevant areas) and Level1Design. The
-improved Workflow can be seen in Figure TODO.
-
-Thresholding and visualising statistical maps
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Another step that is missing from the example workflow is thresholding
-of the statistical maps estimated by the EstimateContrast Node. For
-thresholding we will use topological (random field theory based) false
-discovery rate corrected thresholding calculated on cluster sizes
-implemented in SPM. For visualisation we will use combination of two
-tools from FSL: Overlay (to merge structural and thresholded statistic
-volumes) and Slicer (to create a bitmap of slices). Bitmaps will also be
-sent to DataSink. Resulting overlay bitmaps and extended workflow can be
-seen on Figure TODO.
-
-Comparison of different smoothing methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-One of the goals of NiPyPe is make comparison between different
-parameters and algorithms easier. For example the Full Width Half
-Maximum (FWHM) of the smoothing kernel is usually set to an arbitrary
-value. Because smoothing take place in the middle of the pipeline (after
-realignment but before model estimation) it can influence all the steps
-following it. It would be therefore useful to branch the processing just
-before Smooth Node and run it and all its direct and indirect children
-with different FWHM. NiPyPe support this scenario through iterables. In
-the same matter as with subject IDs user can iterate over a set of
-FWHMs, effectively cloning relevant branches. A comparison between 4mm
-and 8mm FWHM with corresponding workflow is presented in Figure TODO.
-
-Another common scenario involves comparison between different methods
-trying to achieve the same goal. In the case of smoothing those include
-(but are not limited to): isotropic volumetric smoothing, anisotropic
-volumetric smoothing, isotropic surface smoothing. First one is the
-method used in the example pipeline. Second one involves smoothing only
-voxels of similar intensity in attempt to retain structure. This was
-implemented in SUSAN from FSL (S.M. Smith, 1992). Third method involves
-reconstructing surface of the cortex and smoothing along it (Hagler Jr.,
-Saygin, & Martin I. Sereno, 2006). This avoids bleeding of signal over
-sulci.
-
-Establishing parameters from data and smoothing using SUSAN is a
-Workflow build into NiPyPe. It can be created using
-create\_susan\_smooth() function. It has similar inputs and outputs as
-SPM Smooth Interface.
-
-Smoothing on surface involves doing a full cortical reconstruction from
-T1 volume using FreeSurfer (Fischl, M I Sereno, & Dale, 1999) followed
-by coregistering functional images to the reconstructed surface using
-BBRegister. Finally surface smoothing algorithm from FreeSurfer is
-called.
-
-Statistical maps along with the pipeline used to generate them can be
-found in Figure TODO.
-
-More complex workflows
-~~~~~~~~~~~~~~~~~~~~~~
-
-The example workflow outlined above was kept oversimplified for
-demonstration purposes. NiPyPe, however, scales well for more
-complicated designs. As a proof we have analyzed real world fMRI
-reliability study using NiPyPe. Processing has iterated over subjects,
-tasks (motor, 3 x language, and line bisection), sessions, thresholding
-methods (topological FDR with Gamma-Gaussian Mixture Model or FWE
-cluster forming threshold), and Regions of Interest (full brain or
-relevant cortical area). For each combination of iterables PDF reports
-including realignment parameters, histograms of T values, thresholded
-and unthresholded T maps were created. Diagram of this Workflow can be
-seen on Figure TODO. Basing on output of this Workflow within (Figure
-TODO) and between (Figure TODO) subject variability estimation Workflows
-were created. Overlap maps were also saved as PDFs and Dice and Jaccard
-coefficient were recorded in local database.
-
-Despite of the complexity of this analysis thanks to support for
-encapsulating workflows we were able to divide it into independent,
-reusable, and manageable parts.
 
 --------------
 
