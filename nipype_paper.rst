@@ -72,10 +72,11 @@ difficult.
 Current problems
 ~~~~~~~~~~~~~~~~
 
-Several technical, practical and social issues hinder replicable,
-efficient and optimal use of neuroimaging analysis approaches.
+Here we outline major technical, practical and social issues hinder
+replicable, efficient and optimal use of neuroimaging analysis
+approaches:
 
-No uniform access to neuroimaging analysis software and usage
+1) No uniform access to neuroimaging analysis software and usage
 information. For current multi-modal datasets, researchers typically
 resort to using different software packages for different components of
 the analysis. However, these different software packages are accessed
@@ -89,7 +90,7 @@ and ensures compatibility with other tools. This often necessitates
 extensive interactions with the authors of the software to understand
 their parameters, their quirks and their usage.
 
-No framework for comparative algorithm development and dissemination.
+2) No framework for comparative algorithm development and dissemination.
 Except for some large software development efforts (e.g., SPM, FSL,
 FreeSurfer), most algorithm development happens in-house and stays
 within the walls of a lab, without extensive exposure or testing.
@@ -100,7 +101,7 @@ cross-platform tool (e.g., mricron) or simply do not distribute the
 software (e.g., normalization software used for the architectonic
 atlases - CHECK).
 
-Personnel turnover in laboratories often limits methodological
+3) Personnel turnover in laboratories often limits methodological
 continuity and training new personnel takes time. Most cognitive
 neuroscience laboratories aim to understand some aspect of cognition.
 Although, a majority of such laboratories gather and analyze
@@ -108,34 +109,36 @@ neuroimaging data, very few of them have the personnel with the
 technical expertise to understand methodological development and modify
 laboratory procedures to adopt new tools. Typically, processing steps
 are created and crystallized until a lab member with appropriate skills
-can modify the procedures. Typical training takes place through
-self-teaching by following online tutorials, taking organized courses
-or, as is most often the case, by learning from existing members of the
-lab. While this provides some amount of continuity, understanding
-different aspects of neuroimaging has a steep learning curve, and
-steeper when one takes into account the time and resources needed to
-learn the different package interfaces and algorithms.
+can modify the procedures.\ :sup:``[a] <#cmnt1>`_`\  Lab personnel
+trains through self-teaching by following online tutorials, taking
+organized courses or, as is most often the case, by learning from
+existing members of the lab. While this provides some amount of
+continuity, understanding different aspects of neuroimaging has a steep
+learning curve, and steeper when one takes into account the time and
+resources needed to learn the different package interfaces and
+algorithms.
 
-Neuroimaging software packages do not address computational efficiency.
-The primary focus of neuroimaging analysis algorithms is to solve
-problems (e.g., registration, statistical estimation, tractography).
-While some developers focus on algorithmic or numerical efficiency, most
-developers do not focus on efficiency in the context of running multiple
-algorithms on multiple subjects, a common scenario in neuroimaging
-analysis. Creating an analysis workflow for a particular study is an
-iterative process dependent on the quality of the data and participant
-population (e.g., neurotypical, presurgical, etc). Researchers usually
-experiment with different methods and their parameters to create a
-workflow suitable for their application. A computationally efficient
-execution allows\ :sup:``[a] <#cmnt1>`_`\  for multiple rapid-iterations
-to optimize this tuning process. Support for optimized local execution
-(running independent processes in parallel, rerunning only those steps
-that have been influenced by the changes in parameters or dependencies
-since the last run) and exploration of parameter space could ease this
-prototyping stage of workflow development.\ :sup:``[b] <#cmnt2>`_`\ 
-Furthermore, very few of the available neuroimaging tools take advantage
-of the growing number of parallel hardware configurations (multicore,
-clusters, clouds and supercomputers).
+4) Neuroimaging software packages do not address computational
+efficiency. The primary focus of neuroimaging analysis algorithms is to
+solve problems (e.g., registration, statistical estimation,
+tractography). While some developers focus on algorithmic or numerical
+efficiency, most developers do not focus on efficiency in the context of
+running multiple algorithms on multiple subjects, a common scenario in
+neuroimaging analysis. Creating an analysis workflow for a particular
+study is an iterative process dependent on the quality of the data and
+participant population (e.g., neurotypical, presurgical, etc).
+Researchers usually experiment with different methods and their
+parameters to create a workflow suitable for their application. A
+computationally efficient execution allows\ :sup:``[b] <#cmnt2>`_`\  for
+multiple rapid-iterations to optimize this tuning process. Support for
+optimized local execution (running independent processes in parallel,
+rerunning only those steps that have been influenced by the changes in
+parameters or dependencies since the last run) and exploration of
+parameter space could ease this prototyping stage of workflow
+development.\ :sup:``[c] <#cmnt3>`_`\  Furthermore, very few of the
+available neuroimaging tools take advantage of the growing number of
+parallel hardware configurations (multicore, clusters, clouds and
+supercomputers).
 
 Current solutions
 
@@ -154,19 +157,19 @@ and architecture) providing provenance information (A. J.
 Mackenzie-Graham, J. D. Van Horn, R. P. Woods, Crawford, & A. W. Toga,
 2008).
 
-Processing nodes are defined in the LONI Pipeline using eXtensible
-Markup Language (XML). This one “size fits all” method makes it easy to
-add new nodes as long as they are well behaved command lines. However,
-many software packages do not meet this criterion. For example, SPM,
-written in MATLAB, does not provide a command line interface.
-Furthermore, for several command line programs, arguments are not easy
-to describe in the LONI XML schema (e.g., ANTS – Avants & Gee, 2004).
-Although it provides a wonderful graphical interface, the LONI Pipeline
-environment does not provide an easy option to script a workflow or for
-rapidly exploring parametric variations within a workflow (e.g.,
-VisTrails\ :sup:``[1] <#ftnt1>`_`\ ). Finally, due to restrictive
-licensing it is not straightforward to modify and redistribute the
-modifications.
+However, the LONI Pipeline does not come without limitations. Processing
+nodes are defined using eXtensible Markup Language (XML). This “one size
+fits all” method makes it easy to add new nodes as long as they are well
+behaved command lines. However, many software packages do not meet this
+criterion. For example, SPM, written in MATLAB, does not provide a
+command line interface. Furthermore, for several command line programs,
+arguments are not easy to describe in the LONI XML schema (e.g., ANTS –
+Avants & Gee, 2004). Although it provides a helpful graphical interface,
+the LONI Pipeline environment does not provide an easy option to script
+a workflow or for rapidly exploring parametric variations within a
+workflow (e.g., VisTrails\ :sup:``[1] <#ftnt1>`_`\ ). Finally, due to
+restrictive licensing it is not straightforward to modify and
+redistribute the modifications.
 
 To address issues with existing workflow systems and the ones described
 earlier, we present NiPyPe (Neuroimaging in Python: Pipelines and
@@ -183,7 +186,7 @@ machines and remote execution on clusters. NiPyPe is distributed with a
 BSD License allowing anyone to make changes and redistribute it.
 Development is done openly with collaborators from many different labs,
 allowing rapid adaptation to the varied needs of the neuroimaging
-community.\ :sup:``[c] <#cmnt3>`_`\ 
+community.\ :sup:``[d] <#cmnt4>`_`\ 
 
 --------------
 
@@ -204,7 +207,7 @@ features of this software.
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[d] <#cmnt4>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[e] <#cmnt5>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -263,7 +266,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[e] <#cmnt5>`_`\ 
+".gz")\ :sup:``[f] <#cmnt6>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -295,12 +298,6 @@ shown in Listing bet.
 
 class BETInputSpec(FSLCommandInputSpec):
 
-""""""
-
-# We use position args here as list indices - so a negative number
-
-# will put something on the end
-
 in\_file = File(exists=True,
 
 desc = 'input file to skull strip',
@@ -311,60 +308,9 @@ out\_file = File(desc = 'name of output skull stripped image',
 
 argstr='%s', position=1, genfile=True)
 
-outline = traits.Bool(desc = 'create surface outline image',
-
-argstr='-o')
-
 mask = traits.Bool(desc = 'create binary mask image',
 
 argstr='-m')
-
-skull = traits.Bool(desc = 'create skull image',
-
-argstr='-s')
-
-no\_output = traits.Bool(argstr='-n',
-
-desc="Don't generate segmented output")
-
-frac = traits.Float(desc = 'fractional intensity threshold',
-
-argstr='-f %.2f')
-
-vertical\_gradient = traits.Float(argstr='-g %.2f',
-
-desc='vertical gradient in fractional intensity ' \\
-
-'threshold (-1, 1)')
-
-radius = traits.Int(argstr='-r %d', units='mm',
-
-desc="head radius")
-
-center = traits.List(traits.Int, desc = 'center of gravity in voxels',
-
-argstr='-c %s', minlen=0, maxlen=3,
-
-units='voxels')
-
-threshold = traits.Bool(argstr='-t',
-
-desc="apply thresholding to segmented brain image and mask")
-
-mesh = traits.Bool(argstr='-e',
-
-desc="generate a vtk mesh brain surface")
-
-# the remaining 'options' are more like modes (mutually exclusive) that
-
-# FSL actually implements in a shell script wrapper around the bet
-binary.
-
-# for some combinations of them in specific order a call would not fail,
-
-# but in general using more than one of the following is clearly not
-
-# supported
 
 \_xor\_inputs = ('functional', 'reduce\_bias', 'robust', 'padding',
 
@@ -412,13 +358,14 @@ reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
 
 desc="bias field and neck cleanup")
 
-Listing bet. Specification of inputs for the Brain Extraction Tool (BET)
-Interface. Each field of this class is a Traits object which defines an
-input with its data type (i.e. list of integers), constraints (i.e.
-length of the list), dependencies (when for example setting one option
-is mutually exclusive with another), and additional parameters (such as
-argstr and position which describe how to convert an input into a
-command line argument).
+Listing bet. Part of the inputs specification for the Brain Extraction
+Tool (BET) Interface. Full specification covers 18 different arguments.
+Each field of this class is a Traits object which defines an input with
+its data type (i.e. list of integers), constraints (i.e. length of the
+list), dependencies (when for example setting one option is mutually
+exclusive with another, see the xor parameter), and additional
+parameters (such as argstr and position which describe how to convert an
+input into a command line argument).
 
 Currently NiPyPe (version 0.4) ships with wide range of interfaces (see
 Table supported\_software.). Adding new Interfaces is simply a matter of
@@ -997,7 +944,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[f] <#cmnt6>`_`\  Furthermore, a data independent
+methods.\ :sup:``[g] <#cmnt7>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -1027,7 +974,7 @@ on a compute cluster (40 cores distributed across 6 machines) took 1
 hour and 40 minutes relative to 32 minutes for processing a single
 subject. The difference from the expected runtime of 64 minutes stems
 from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[g] <#cmnt7>`_`\ 
+bottlenecks.\ :sup:``[h] <#cmnt8>`_`\ 
 
 --------------
 
@@ -1137,7 +1084,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[h] <#cmnt8>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[i] <#cmnt9>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1148,6 +1095,8 @@ and SPM for being supportive of the project and providing valuable
 feedback on technical issues. Satrajit Ghosh would like to acknowledge
 support from NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the
 Ellison Medical Foundation, Katrien Vander Straeten and Amie Ghosh.
+Krzysztof Gorgolewski would like to thank Mark Bastin, Cyril Pernet, and
+Amos Storkey for their supervision.
 
 --------------
 
@@ -1548,11 +1497,15 @@ main\_workflow.write\_graph()
 
 `[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
 
-`[a] <#cmnt_ref1>`_davclark:
+`[a] <#cmnt_ref1>`_krzysztof.gorgolewski:
+
+What did you mean by this? Something else than the previous sentence?
+
+`[b] <#cmnt_ref2>`_davclark:
 
 I mention this in my high level notes
 
-`[b] <#cmnt_ref2>`_chris.d.burns:
+`[c] <#cmnt_ref3>`_chris.d.burns:
 
 This proposes a solution to the problem, while the rest of the
 paragraphs in this section outline the problems. Should be stated later
@@ -1564,7 +1517,7 @@ krzysztof.gorgolewski:
 
 I agree - we should just delete this bit.
 
-`[c] <#cmnt_ref3>`_chris.d.burns:
+`[d] <#cmnt_ref4>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1582,7 +1535,7 @@ What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
 
-`[d] <#cmnt_ref4>`_cindeem:
+`[e] <#cmnt_ref5>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1624,7 +1577,7 @@ Is engine a part of workflow or plugin? I would even say to make two
 figures.....this one is very informative...but maybe a simpler one that
 gives the main structure you are trying to explain will help clarify?
 
-`[e] <#cmnt_ref5>`_davclark:
+`[f] <#cmnt_ref6>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1635,7 +1588,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[f] <#cmnt_ref6>`_satrajit.ghosh:
+`[g] <#cmnt_ref7>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1651,33 +1604,29 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[g] <#cmnt_ref7>`_cindeem:
+`[h] <#cmnt_ref8>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
 
-`[h] <#cmnt_ref8>`_satrajit.ghosh:
+`[i] <#cmnt_ref9>`_satrajit.ghosh:
 
 need to create this page
 
-`[i] <#cmnt_ref9>`_davclark:
+`[j] <#cmnt_ref10>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
-
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
-
-What did you mean by this? Something else than the previous sentence?
 
 `[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
