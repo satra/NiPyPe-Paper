@@ -132,10 +132,10 @@ to optimize this tuning process. Support for optimized local execution
 (running independent processes in parallel, rerunning only those steps
 that have been influenced by the changes in parameters or dependencies
 since the last run) and exploration of parameter space could ease this
-prototyping stage of workflow development. Furthermore, very few of the
-available neuroimaging tools take advantage of the growing number of
-parallel hardware configurations (multicore, clusters, clouds and
-supercomputers).
+prototyping stage of workflow development.\ :sup:``[b] <#cmnt2>`_`\ 
+Furthermore, very few of the available neuroimaging tools take advantage
+of the growing number of parallel hardware configurations (multicore,
+clusters, clouds and supercomputers).
 
 Current solutions
 
@@ -159,8 +159,8 @@ Markup Language (XML). This one “size fits all” method makes it easy to
 add new nodes as long as they are well behaved command lines. However,
 many software packages do not meet this criterion. For example, SPM,
 written in MATLAB, does not provide a command line interface.
-Furthermore, for several command line programs arguments are not easy to
-describe in the LONI XML schema (e.g., ANTS – Avants & Gee, 2004).
+Furthermore, for several command line programs, arguments are not easy
+to describe in the LONI XML schema (e.g., ANTS – Avants & Gee, 2004).
 Although it provides a wonderful graphical interface, the LONI Pipeline
 environment does not provide an easy option to script a workflow or for
 rapidly exploring parametric variations within a workflow (e.g.,
@@ -183,7 +183,7 @@ machines and remote execution on clusters. NiPyPe is distributed with a
 BSD License allowing anyone to make changes and redistribute it.
 Development is done openly with collaborators from many different labs,
 allowing rapid adaptation to the varied needs of the neuroimaging
-community.
+community.\ :sup:``[c] <#cmnt3>`_`\ 
 
 --------------
 
@@ -204,7 +204,7 @@ features of this software.
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[b] <#cmnt2>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[d] <#cmnt4>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -263,7 +263,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[c] <#cmnt3>`_`\ 
+".gz")\ :sup:``[e] <#cmnt5>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -293,7 +293,7 @@ inputs need to be set as a group (mutual inclusion). An example input
 specification for the ‘bet’ (Brain Extraction Tool) program from FSL is
 shown in Listing bet.
 
-class BETInputSpec(FSLCommandInputSpec):\ :sup:``[d] <#cmnt4>`_`\ 
+class BETInputSpec(FSLCommandInputSpec):
 
 """"""
 
@@ -592,8 +592,6 @@ can be seen on Figure workflow\_from\_scratch. The model specification
 Interfaces supports block, event and sparse designs. Contrast
 definitions provided to ContrastEstimate use the same condition or
 regressor names as used in the input to SpecifyModel.
-
-\ :sup:``[e] <#cmnt5>`_`\ 
 
 We create a master Workflow that connects the preprocessing and
 modelling Workflows, adds the ability to select data for processing
@@ -1665,7 +1663,37 @@ reusable, and manageable parts.
 
 I mention this in my high level notes
 
-`[b] <#cmnt_ref2>`_cindeem:
+`[b] <#cmnt_ref2>`_chris.d.burns:
+
+This proposes a solution to the problem, while the rest of the
+paragraphs in this section outline the problems. Should be stated later
+in paper? (Agree with Dav).
+
+--------------
+
+krzysztof.gorgolewski:
+
+I agree - we should just delete this bit.
+
+`[c] <#cmnt_ref3>`_chris.d.burns:
+
+"rapid adaptation to the varied needs...", I know what you mean, but it
+sounds a bit chaotic, almost like the software could change direction
+wildly. When in reality, a variety of collaborators increases your
+sampling of the community, giving you better coverage of the problem
+domain resulting in a tool suite that is more broadly applicable.
+
+--------------
+
+krzysztof.gorgolewski:
+
+Agreed, but this is just geek talk ;)
+
+What about "Development is done openly with collaborators from many
+different labs, allowing adaptation to the varied needs of a broad
+neuroimaging community."
+
+`[d] <#cmnt_ref4>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1673,7 +1701,41 @@ workflow-engine? and the idea of nodes and mapnodes are intserted
 without much explanation. Maybe also add an example of how the interface
 wraps an external package?
 
-`[c] <#cmnt_ref3>`_davclark:
+--------------
+
+krzysztof.gorgolewski:
+
+I'll try to make it graphically more appealing and clear. Concepts such
+as Node and MapNode are explained later and I hoped that the reader
+would go back to this figure a few time while reading. But maybe we are
+trying to put too much here.
+
+What do you mean by "an example how interface wraps an external
+package"? A code listing of one of our interfaces? We already have part
+of it for BET.
+
+--------------
+
+krzysztof.gorgolewski:
+
+https://www.dropbox.com/s/t0iopc50gw4p532/nipype\_architecture\_overview.png
+
+--------------
+
+cindeem:
+
+"an example of an interface wrapping an external package"...I meant to
+show this graphically on the figure...not explicitly in code...
+
+Also you mention the three main parts of nipype...but it is still hard
+to see in the new figure...(though I do like how you use it in later
+text)..I think it causes confusion here...
+
+Is engine a part of workflow or plugin? I would even say to make two
+figures.....this one is very informative...but maybe a simpler one that
+gives the main structure you are trying to explain will help clarify?
+
+`[e] <#cmnt_ref5>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1683,34 +1745,6 @@ moderate familiarity with python
 krzysztof.gorgolewski:
 
 Yes.
-
-`[d] <#cmnt_ref4>`_krzysztof.gorgolewski:
-
-I could not find a shorter example of a well known program with
-dependecies in inputs. We can alternatively show only part of this.
-
---------------
-
-davclark:
-
-You might say that Bet does skull stripping (or more idiosyncratically,
-"Brain Extraction"). I think the point could be made with an ellipsis
-and perhaps textually say that you cover the 18 different arguments. Of
-particular interest, I would leave in the xor\_flags, as that's a nice
-feature.
-
---------------
-
-cindeem:
-
-Second Davs comment, dont let them get lost in the code, just outline
-the impt parts, use highlighting? Im not sure what the journal allows,
-but this would help.
-
-`[e] <#cmnt_ref5>`_cindeem:
-
-I think this is fine, but for a reader not familiar with SPM, this may
-be hard to follow?
 
 `[f] <#cmnt_ref6>`_satrajit.ghosh:
 
@@ -1754,12 +1788,16 @@ section?
 
 `[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
+What did you mean by this? Something else than the previous sentence?
+
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1769,7 +1807,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[n] <#cmnt_ref14>`_yarikoptic:
+`[o] <#cmnt_ref15>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1789,11 +1827,11 @@ yarikoptic:
 
 something like that ;-)
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[p] <#cmnt_ref16>`_yarikoptic:
+`[q] <#cmnt_ref17>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
