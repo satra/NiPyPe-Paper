@@ -145,20 +145,23 @@ the intent to reproduce.
 
 Current solutions\ :sup:``[a] <#cmnt1>`_`\ 
 
-One attempt to address some of these issues has resulted in the SPM
-batch execution system. Unfortunately it supports only SPM modules and
-does not run in parallel. A much more extensive and feature rich
-solution is the LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov et
-al., 2010; Rex, Ma, & A. W. Toga, 2003). It provides an easy to use
-graphical interface for choosing processing steps or nodes from a
-predefined library and defining their dependencies and parameters. It
-also has extensive support for parallel execution on an appropriately
-configured cluster (including data transfer, pausing execution, and
-combining local and remote software). Additionally, the LONI Pipeline
-saves information about executed steps (such as software origin, version
-and architecture) providing provenance information (A. J.
-Mackenzie-Graham, J. D. Van Horn, R. P. Woods, Crawford, & A. W. Toga,
-2008).
+There were several attempts to address those issues by creating a
+pipeline engine. Taverna (REF), VisTrails(REF) are general pipelining
+systems and do not address problems specific to neuroimaging. BrainVisa
+(REF), MIPAV (REF), SPM (REF) include their own batch processing tools,
+but not allow mixing components from other packages. Fiswidgets is on
+the other side outdated and does not support state of the art methods. A
+much more extensive and feature rich solution is the LONI Pipeline (I.
+D. Dinov et al., 2009; I. Dinov et al., 2010; Rex, Ma, & A. W. Toga,
+2003). It provides an easy to use graphical interface for choosing
+processing steps or nodes from a predefined library and defining their
+dependencies and parameters. It also has extensive support for parallel
+execution on an appropriately configured cluster (including data
+transfer, pausing execution, and combining local and remote software).
+Additionally, the LONI Pipeline saves information about executed steps
+(such as software origin, version and architecture) providing provenance
+information (A. J. Mackenzie-Graham, J. D. Van Horn, R. P. Woods,
+Crawford, & A. W. Toga, 2008).
 
 However, the LONI Pipeline does not come without limitations. Processing
 nodes are defined using eXtensible Markup Language (XML). This “one size
