@@ -143,7 +143,7 @@ leaves a significant burden on the user to satisfy these journal
 requirements as well as ensure that analysis details are preserved with
 the intent to reproduce.
 
-Current solutions\ :sup:``[a] <#cmnt1>`_`\ 
+Current solutions
 
 There were several attempts to address those issues by creating a
 pipeline engine. Taverna (REF), VisTrails(REF) are general pipelining
@@ -213,7 +213,7 @@ features of this software.
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[b] <#cmnt2>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[a] <#cmnt1>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -272,7 +272,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[c] <#cmnt3>`_`\ 
+".gz")\ :sup:``[b] <#cmnt2>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -445,7 +445,7 @@ Interfaces encapsulated into Node or MapNode objects can be connected
 together within a Workflow. By connecting inputs of some Nodes to
 outputs of others user implicitly specifies dependencies. These are
 represented internally as a directed acyclic graph (DAG).
-\ :sup:``[d] <#cmnt4>`_`\ The current semantics of Workflow do not allow
+\ :sup:``[c] <#cmnt3>`_`\ The current semantics of Workflow do not allow
 conditionals and hence the graph needs to be acyclic. Workflows
 themselves can be a node of the Workflow graph (see Figure
 architecture\_overview). This enables a hierarchical architecture and
@@ -634,9 +634,9 @@ Rerunning workflows has also been optimized. The framework checks which
 inputs parameters has changed from the last run and will execute only
 the nodes for which inputs have changed. Even though those changes can
 propagate rerunning time can decrease
-dramatically.\ :sup:``[e] <#cmnt5>`_`\ 
+dramatically.\ :sup:``[d] <#cmnt4>`_`\ 
 
-The Function Interface\ :sup:``[f] <#cmnt6>`_`\ 
+The Function Interface\ :sup:``[e] <#cmnt5>`_`\ 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 One of the Interfaces implemented in NiPyPe requires special attention:
@@ -658,7 +658,7 @@ To be able to efficiently manage and debug Workflow one has to have
 access to a graphical representation. Using graphviz (Ref), NiPyPe
 generates static graphs representing Nodes and connections between them.
 In the current version four types of graphs are
-supported:\ :sup:``[g] <#cmnt7>`_`\  orig – does not expand inner
+supported:\ :sup:``[f] <#cmnt6>`_`\  orig – does not expand inner
 Workflows, flat – expands inner workflows, exec – expands workflows and
 iterables, and hierarchical – expands workflows but maintains their
 hierarchy. Graphs can be saved in a variety of file formats including
@@ -915,7 +915,7 @@ well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
 methods, but different people might be assigned to do this throut the
-years.\ :sup:``[h] <#cmnt8>`_`\  Furthermore, a data independent
+years.\ :sup:``[g] <#cmnt7>`_`\  Furthermore, a data independent
 Workflow definition (see Figure create\_spm\_preproc) enables sharing
 Workflows within and across research laboratories. NiPyPe provides a
 medium for exchanging knowledge and expertise between researchers
@@ -955,7 +955,7 @@ package provides a seamless and flexible environment for executing
 Workflows in parallel on a variety of environments from local multi-core
 workstations to high-performance clusters. In the SPM workflow for
 single subject functional data analysis shown
-below\ :sup:``[i] <#cmnt9>`_`\ , only a few components can be
+below\ :sup:``[h] <#cmnt8>`_`\ , only a few components can be
 parallelized. However, running this workflow across several subjects
 provides room for embarrassingly parallel execution. Running this
 Workflow in distributed mode for 69 subjects on a compute cluster (40
@@ -964,7 +964,7 @@ to the 32 minutes required to execute the analysis steps in series for a
 single subject on the same cluster. The difference from the expected
 runtime of 64 minutes (32 minutes for the first 40 subjects and another
 32 minutes for the remaining 29 subjects) stems from disk i/o and other
-network and processing resource bottlenecks.\ :sup:``[j] <#cmnt10>`_`\ 
+network and processing resource bottlenecks.\ :sup:``[i] <#cmnt9>`_`\ 
 
 --------------
 
@@ -993,7 +993,7 @@ packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
-We use Python for several reasons\ :sup:``[k] <#cmnt11>`_`\ . It has
+We use Python for several reasons\ :sup:``[j] <#cmnt10>`_`\ . It has
 extensive scientific computing and visualization support through
 packages such as SciPy, NumPy, Matplotlib and Mayavi (Millman & Aivazis,
 2011; Pérez, Granger, & Hunter, 2010) . The Nibabel package provides
@@ -1074,7 +1074,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[l] <#cmnt12>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[k] <#cmnt11>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquaux, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1487,34 +1487,7 @@ main\_workflow.write\_graph()
 
 `[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
 
-`[a] <#cmnt_ref1>`_satrajit.ghosh:
-
-need to add information on brainvisa, mipav, fiswidgets, (neuroimaging
-specific), taverna, vistrails (non-specific)
-
---------------
-
-krzysztof.gorgolewski:
-
-Our introduction is already longer than discussion. Maybe we should put
-this into discussion?
-
---------------
-
-satrajit.ghosh:
-
-you want to at least summarize these in a paragraph and state that these
-do not address the above problems. it sets the background against which
-nipype is created.
-
---------------
-
-krzysztof.gorgolewski:
-
-I wrote few sentences mentioning those systems, but since I have only
-used SPM batch I cannot really say more.
-
-`[b] <#cmnt_ref2>`_cindeem:
+`[a] <#cmnt_ref1>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1562,7 +1535,7 @@ satrajit.ghosh:
 
 how does this one look?
 
-`[c] <#cmnt_ref3>`_davclark:
+`[b] <#cmnt_ref2>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1573,7 +1546,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[d] <#cmnt_ref4>`_Michael.L.Waskom:
+`[c] <#cmnt_ref3>`_Michael.L.Waskom:
 
 At times, when I've explained this to people learning Nipype, the
 "construct a DAG" element of the approach really threw them for a loop.
@@ -1593,7 +1566,7 @@ krzysztof.gorgolewski:
 I'm not sure what do you mean by the second part of your comment, but I
 have rephrased the paragraph in a clearer manner.
 
-`[e] <#cmnt_ref5>`_Michael.L.Waskom:
+`[d] <#cmnt_ref4>`_Michael.L.Waskom:
 
 A big advantage of the efficient rerunning in my opinion is the ability,
 after you've written your workflow and started analyzing data, to add
@@ -1613,7 +1586,7 @@ I think that QC would be worth discussing (apart from rerunning issue),
 but you would have to extend this a bit. I might be good to say that
 automation does not mean you should not look at your raw data.
 
-`[f] <#cmnt_ref6>`_Michael.L.Waskom:
+`[e] <#cmnt_ref5>`_Michael.L.Waskom:
 
 I would move this back to below the introduction of interfaces in
 general
@@ -1625,7 +1598,16 @@ krzysztof.gorgolewski:
 Yeah but this would disrupt our neat 1-to-1 relation between "problems"
 from introduction and "solutions" in results.
 
-`[g] <#cmnt_ref7>`_Michael.L.Waskom:
+--------------
+
+Michael.L.Waskom:
+
+Hmm that's true. Is it the case that other pipeline solutions make it
+more difficult to integrate your own arbitrary processing code? If so
+that's maybe worth pointing out. Otherwise it's not a big problem and is
+fine here.
+
+`[f] <#cmnt_ref6>`_Michael.L.Waskom:
 
 Also, maybe point out that you can use simple/detailed graphs to
 represent the workflow with different levels of complexity
@@ -1637,7 +1619,17 @@ krzysztof.gorgolewski:
 Do you mean the exec graph? I believe the semantics of write\_graph
 might have changed since detailed\_graphs.
 
-`[h] <#cmnt_ref8>`_satrajit.ghosh:
+--------------
+
+Michael.L.Waskom:
+
+The last time I used write\_graph (my workflows haven't really changed
+since big 0.4 changes) it wrote out a "simple" graph the just displayed
+the dependency relationships between nodes, and also a "detailed" graph,
+that displayed exactly which outputs were connected to which inputs of
+each node. Is that no longer the case?
+
+`[g] <#cmnt_ref7>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1671,11 +1663,20 @@ krzysztof.gorgolewski:
 
 Unless you want to use something else than SPM.
 
-`[i] <#cmnt_ref9>`_satrajit.ghosh:
+--------------
+
+Michael.L.Waskom:
+
+Or a set of Bash/Python/Perl scripts that you don't change. My point is,
+unless I'm missing something, the reusability of workflows doesn't seem
+to be all that relevant in the case of one project, at least compared to
+other scripted solutions.
+
+`[h] <#cmnt_ref8>`_satrajit.ghosh:
 
 INSERT workflow figure or attach as supplementary material
 
-`[j] <#cmnt_ref10>`_cindeem:
+`[i] <#cmnt_ref9>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1686,7 +1687,7 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[k] <#cmnt_ref11>`_Michael.L.Waskom:
+`[j] <#cmnt_ref10>`_Michael.L.Waskom:
 
 Perhaps more general Python evangelism is out of the scope of this
 paper, but I think that it's worth pointing out that the
@@ -1704,7 +1705,15 @@ krzysztof.gorgolewski:
 True, but such a claim would have to be supported somehow (by a citation
 or an example). Any ideas?
 
-`[l] <#cmnt_ref12>`_satrajit.ghosh:
+--------------
+
+Michael.L.Waskom:
+
+Good point. I replied to this over email as I'm not aware of any but
+wanted to bring it to Yarick's attention because I thought he might be.
+If anyone else is, feel free to chime in!
+
+`[k] <#cmnt_ref11>`_satrajit.ghosh:
 
 need to create this page
 
@@ -1720,33 +1729,33 @@ satrajit.ghosh:
 
 because we don't have 33 contributors
 
-`[m] <#cmnt_ref13>`_davclark:
+`[l] <#cmnt_ref12>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[p] <#cmnt_ref16>`_Michael.L.Waskom:
+`[o] <#cmnt_ref15>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
+`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1756,7 +1765,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[s] <#cmnt_ref19>`_yarikoptic:
+`[r] <#cmnt_ref18>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1776,7 +1785,7 @@ yarikoptic:
 
 something like that ;-)
 
-`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
+`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
 
 a graph of for example create\_susan\_smooth() or code listing?
 
@@ -1786,11 +1795,11 @@ satrajit.ghosh:
 
 sure
 
-`[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
+`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[v] <#cmnt_ref22>`_chris.d.burns:
+`[u] <#cmnt_ref21>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1808,7 +1817,7 @@ What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
 
-`[w] <#cmnt_ref23>`_yarikoptic:
+`[v] <#cmnt_ref22>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
