@@ -209,7 +209,7 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-.. figure:: images/image06.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 
@@ -279,7 +279,7 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-.. figure:: images/image03.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure simplified\_class\_hierarchy. Simplified class hierarchy of
@@ -811,7 +811,7 @@ appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image04.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure html\_help. HTML help page for dtfit command from Camino. This
@@ -874,7 +874,7 @@ nodes have iterables parameter set. This allows to easily iterate over
 all combinations of FWHM and smoothing algorithms used in the
 comparison.
 
-.. figure:: images/image05.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 Figure smoothing\_comparison\_results. Influence of different smoothing
@@ -1813,4 +1813,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image02.png
+.. |image0| image:: images/image03.png
