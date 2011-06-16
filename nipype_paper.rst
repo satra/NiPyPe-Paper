@@ -125,16 +125,23 @@ neuroimaging analysis. Creating an analysis workflow for a particular
 study is an iterative process dependent on the quality of the data and
 participant population (e.g., neurotypical, presurgical, etc).
 Researchers usually experiment with different methods and their
-parameters to create a workflow suitable for their application. A
-computationally efficient execution allows for multiple rapid-iterations
-to optimize this tuning process. Support for optimized local execution
-(running independent processes in parallel, rerunning only those steps
-that have been influenced by the changes in parameters or dependencies
-since the last run) and exploration of parameter space could ease this
-prototyping stage of workflow development. Furthermore, very few of the
-available neuroimaging tools take advantage of the growing number of
-parallel hardware configurations (multicore, clusters, clouds and
-supercomputers).
+parameters to create a workflow suitable for their application, but no
+suitable framework currently exists to make this process efficient.
+Furthermore, very few of the available neuroimaging tools take advantage
+of the growing number of parallel hardware configurations (multicore,
+clusters, clouds and supercomputers).
+
+5) Method sections are often inadequate for reproducing results. Several
+journals (e.g., PNAS, Science, PLoS) require mandatory submission of
+data and scripts necessary to reproduce results of the a study. However,
+most current method sections do not have sufficient details to enable a
+researcher knowledgeable in the domain to reproduce the analysis
+process. Furthermore, as discussed above, typical neuroimaging analyses
+integrate several tools and current analysis software do not make it
+easy to reproduce all the analysis steps in the proper order. This
+leaves a significant burden on the user to satisfy these journal
+requirements as well as ensure that analysis details are preserved with
+the intent to reproduce.
 
 Current solutions\ :sup:``[a] <#cmnt1>`_`\ 
 
@@ -921,18 +928,26 @@ having to understand how to set them up and execute them.
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The NiPyPe package provides a seamless and flexible environment for
-executing workflows in parallel on a variety of environments from local
-multi-core workstations to high-performance clusters. In the SPM
-workflow for single subject functional data analysis shown below (where
-is this workflow), only a few components can be parallelized. However,
-running this workflow across several subjects provides room for
-embarrassingly parallel execution. Running this workflow for 69 subjects
-on a compute cluster (40 cores distributed across 6 machines) took 1
-hour and 40 minutes relative to 32 minutes for processing a single
-subject. The difference from the expected runtime of 64 minutes stems
-from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[j] <#cmnt10>`_`\ 
+A computationally efficient execution allows for multiple
+rapid-iterations to optimize a Workflow for a given application. Support
+for optimized local execution (running independent processes in
+parallel, rerunning only those steps that have been influenced by the
+changes in parameters or dependencies since the last run) and
+exploration of parameter space eases Workflow development. The NiPyPe
+package provides a seamless and flexible environment for executing
+Workflows in parallel on a variety of environments from local multi-core
+workstations to high-performance clusters. In the SPM workflow for
+single subject functional data analysis shown
+below\ :sup:``[j] <#cmnt10>`_`\ , only a few components can be
+parallelized. However, running this workflow across several subjects
+provides room for embarrassingly parallel execution. Running this
+Workflow in distributed mode for 69 subjects on a compute cluster (40
+cores distributed across 6 machines) took 1 hour and 40 minutes relative
+to the 32 minutes required to execute the analysis steps in series for a
+single subject on the same cluster. The difference from the expected
+runtime of 64 minutes (32 minutes for the first 40 subjects and another
+32 minutes for the remaining 29 subjects) stems from disk i/o and other
+network and processing resource bottlenecks.\ :sup:``[k] <#cmnt11>`_`\ 
 
 --------------
 
@@ -961,7 +976,7 @@ packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
-We use Python for several reasons\ :sup:``[k] <#cmnt11>`_`\ . Python has
+We use Python for several reasons\ :sup:``[l] <#cmnt12>`_`\ . Python has
 extensive scientific computing and visualization support through
 packages such as SciPy, NumPy, Matplotlib and Mayavi (Millman & Aivazis,
 2011; Pérez, Granger, & Hunter, 2010) . The Nibabel package provides
@@ -1042,7 +1057,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[l] <#cmnt12>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[m] <#cmnt13>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1657,7 +1672,11 @@ krzysztof.gorgolewski:
 
 Unless you want to use something else than SPM.
 
-`[j] <#cmnt_ref10>`_cindeem:
+`[j] <#cmnt_ref10>`_satrajit.ghosh:
+
+INSERT workflow figure or attach as supplementary material
+
+`[k] <#cmnt_ref11>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1668,7 +1687,7 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[k] <#cmnt_ref11>`_Michael.L.Waskom:
+`[l] <#cmnt_ref12>`_Michael.L.Waskom:
 
 Perhaps more general Python evangelism is out of the scope of this
 paper, but I think that it's worth pointing out that the
@@ -1686,7 +1705,7 @@ krzysztof.gorgolewski:
 True, but such a claim would have to be supported somehow (by a citation
 or an example). Any ideas?
 
-`[l] <#cmnt_ref12>`_satrajit.ghosh:
+`[m] <#cmnt_ref13>`_satrajit.ghosh:
 
 need to create this page
 
@@ -1702,33 +1721,33 @@ satrajit.ghosh:
 
 because we don't have 33 contributors
 
-`[m] <#cmnt_ref13>`_davclark:
+`[n] <#cmnt_ref14>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[p] <#cmnt_ref16>`_Michael.L.Waskom:
+`[q] <#cmnt_ref17>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
+`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
+`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1738,7 +1757,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[s] <#cmnt_ref19>`_yarikoptic:
+`[t] <#cmnt_ref20>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1757,10 +1776,6 @@ Camino), Matlab (SPM) and Python (NiPy)."?
 yarikoptic:
 
 something like that ;-)
-
-`[t] <#cmnt_ref20>`_satrajit.ghosh:
-
-INSERT workflow figure or attach as supplementary material
 
 `[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
 
