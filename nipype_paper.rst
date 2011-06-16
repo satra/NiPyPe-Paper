@@ -188,8 +188,8 @@ plug-in architecture and supports both local execution on multicore
 machines and remote execution on clusters. NiPyPe is distributed with a
 BSD License allowing anyone to make changes and redistribute it.
 Development is done openly with collaborators from many different labs,
-allowing rapid adaptation to the varied needs of the neuroimaging
-community.\ :sup:``[b] <#cmnt2>`_`\ 
+allowing adaptation to the varied needs of a broad neuroimaging
+community.
 
 --------------
 
@@ -206,11 +206,11 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-.. figure:: images/image01.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[c] <#cmnt3>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[b] <#cmnt2>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -269,14 +269,14 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[d] <#cmnt4>`_`\ 
+".gz")\ :sup:``[c] <#cmnt3>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
  print zipper.cmdline
  zipper.run()
 
-.. figure:: images/image03.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 Figure simplified\_class\_hierarchy. Simplified class hierarchy of
@@ -439,8 +439,10 @@ a single input, but wrapping the BET Interface in a MapNode allows
 running ‘bet’ on multiple inputs.
 
 Interfaces encapsulated into Node or MapNode objects can be connected
-together within a Workflow object as a directed acyclic graph (DAG).
-\ :sup:``[e] <#cmnt5>`_`\ The current semantics of Workflow do not allow
+together within a Workflow. By connecting inputs of some Nodes to
+outputs of others user implicitly specifies dependencies. These are
+represented internally as a directed acyclic graph (DAG).
+\ :sup:``[d] <#cmnt4>`_`\ The current semantics of Workflow do not allow
 conditionals and hence the graph needs to be acyclic. Workflows
 themselves can be a node of the Workflow graph (see Figure
 architecture\_overview). This enables a hierarchical architecture and
@@ -629,9 +631,9 @@ Rerunning workflows has also been optimized. The framework checks which
 inputs parameters has changed from the last run and will execute only
 the nodes for which inputs have changed. Even though those changes can
 propagate rerunning time can decrease
-dramatically.\ :sup:``[f] <#cmnt6>`_`\ 
+dramatically.\ :sup:``[e] <#cmnt5>`_`\ 
 
-The Function Interface\ :sup:``[g] <#cmnt7>`_`\ 
+The Function Interface\ :sup:``[f] <#cmnt6>`_`\ 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 One of the Interfaces implemented in NiPyPe requires special attention:
@@ -653,7 +655,7 @@ To be able to efficiently manage and debug Workflow one has to have
 access to a graphical representation. Using graphviz (Ref), NiPyPe
 generates static graphs representing Nodes and connections between them.
 In the current version four types of graphs are
-supported:\ :sup:``[h] <#cmnt8>`_`\  orig – does not expand inner
+supported:\ :sup:``[g] <#cmnt7>`_`\  orig – does not expand inner
 Workflows, flat – expands inner workflows, exec – expands workflows and
 iterables, and hierarchical – expands workflows but maintains their
 hierarchy. Graphs can be saved in a variety of file formats including
@@ -806,7 +808,7 @@ appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image04.png
+.. figure:: images/image03.png
    :align: center
    :alt: 
 Figure html\_help. HTML help page for dtfit command from Camino. This
@@ -869,7 +871,7 @@ nodes have iterables parameter set. This allows to easily iterate over
 all combinations of FWHM and smoothing algorithms used in the
 comparison.
 
-.. figure:: images/image05.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure smoothing\_comparison\_results. Influence of different smoothing
@@ -909,11 +911,12 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[i] <#cmnt9>`_`\  Furthermore, a data independent
-Workflow definition (see Figure XX) enables sharing Workflows within and
-across research laboratories. NiPyPe provides a medium for exchanging
-knowledge and expertise between researchers focused on methods in
-neuroimaging and those interested in applications.
+methods, but different people might be assigned to do
+this.\ :sup:``[h] <#cmnt8>`_`\  Furthermore, a data independent Workflow
+definition (see Figure XX\ :sup:``[i] <#cmnt9>`_`\ ) enables sharing
+Workflows within and across research laboratories. NiPyPe provides a
+medium for exchanging knowledge and expertise between researchers
+focused on methods in neuroimaging and those interested in applications.
 
 The uniform access to Interfaces and the ease of use of Workflows in
 NiPyPe helps with training new staff. Encapsulation provided by
@@ -976,7 +979,7 @@ packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
-We use Python for several reasons\ :sup:``[l] <#cmnt12>`_`\ . Python has
+We use Python for several reasons\ :sup:``[l] <#cmnt12>`_`\ . It has
 extensive scientific computing and visualization support through
 packages such as SciPy, NumPy, Matplotlib and Mayavi (Millman & Aivazis,
 2011; Pérez, Granger, & Hunter, 2010) . The Nibabel package provides
@@ -1497,25 +1500,7 @@ krzysztof.gorgolewski:
 I wrote few sentences mentioning those systems, but since I have only
 used SPM batch I cannot really say more.
 
-`[b] <#cmnt_ref2>`_chris.d.burns:
-
-"rapid adaptation to the varied needs...", I know what you mean, but it
-sounds a bit chaotic, almost like the software could change direction
-wildly. When in reality, a variety of collaborators increases your
-sampling of the community, giving you better coverage of the problem
-domain resulting in a tool suite that is more broadly applicable.
-
---------------
-
-krzysztof.gorgolewski:
-
-Agreed, but this is just geek talk ;)
-
-What about "Development is done openly with collaborators from many
-different labs, allowing adaptation to the varied needs of a broad
-neuroimaging community."
-
-`[c] <#cmnt_ref3>`_cindeem:
+`[b] <#cmnt_ref2>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1563,7 +1548,7 @@ satrajit.ghosh:
 
 how does this one look?
 
-`[d] <#cmnt_ref4>`_davclark:
+`[c] <#cmnt_ref3>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1574,7 +1559,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[e] <#cmnt_ref5>`_Michael.L.Waskom:
+`[d] <#cmnt_ref4>`_Michael.L.Waskom:
 
 At times, when I've explained this to people learning Nipype, the
 "construct a DAG" element of the approach really threw them for a loop.
@@ -1594,7 +1579,7 @@ krzysztof.gorgolewski:
 I'm not sure what do you mean by the second part of your comment, but I
 have rephrased the paragraph in a clearer manner.
 
-`[f] <#cmnt_ref6>`_Michael.L.Waskom:
+`[e] <#cmnt_ref5>`_Michael.L.Waskom:
 
 A big advantage of the efficient rerunning in my opinion is the ability,
 after you've written your workflow and started analyzing data, to add
@@ -1614,7 +1599,7 @@ I think that QC would be worth discussing (apart from rerunning issue),
 but you would have to extend this a bit. I might be good to say that
 automation does not mean you should not look at your raw data.
 
-`[g] <#cmnt_ref7>`_Michael.L.Waskom:
+`[f] <#cmnt_ref6>`_Michael.L.Waskom:
 
 I would move this back to below the introduction of interfaces in
 general
@@ -1626,7 +1611,7 @@ krzysztof.gorgolewski:
 Yeah but this would disrupt our neat 1-to-1 relation between "problems"
 from introduction and "solutions" in results.
 
-`[h] <#cmnt_ref8>`_Michael.L.Waskom:
+`[g] <#cmnt_ref7>`_Michael.L.Waskom:
 
 Also, maybe point out that you can use simple/detailed graphs to
 represent the workflow with different levels of complexity
@@ -1638,7 +1623,7 @@ krzysztof.gorgolewski:
 Do you mean the exec graph? I believe the semantics of write\_graph
 might have changed since detailed\_graphs.
 
-`[i] <#cmnt_ref9>`_satrajit.ghosh:
+`[h] <#cmnt_ref8>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1671,6 +1656,16 @@ over the course of an experiment doesn't.
 krzysztof.gorgolewski:
 
 Unless you want to use something else than SPM.
+
+`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
+
+a graph of for example create\_susan\_smooth() or code listing?
+
+--------------
+
+satrajit.ghosh:
+
+sure
 
 `[j] <#cmnt_ref10>`_satrajit.ghosh:
 
@@ -1779,17 +1774,25 @@ something like that ;-)
 
 `[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
 
-a graph of for example create\_susan\_smooth() or code listing?
+Needs incorporating into the section.
+
+`[v] <#cmnt_ref22>`_chris.d.burns:
+
+"rapid adaptation to the varied needs...", I know what you mean, but it
+sounds a bit chaotic, almost like the software could change direction
+wildly. When in reality, a variety of collaborators increases your
+sampling of the community, giving you better coverage of the problem
+domain resulting in a tool suite that is more broadly applicable.
 
 --------------
 
-satrajit.ghosh:
+krzysztof.gorgolewski:
 
-sure
+Agreed, but this is just geek talk ;)
 
-`[v] <#cmnt_ref22>`_krzysztof.gorgolewski:
-
-Needs incorporating into the section.
+What about "Development is done openly with collaborators from many
+different labs, allowing adaptation to the varied needs of a broad
+neuroimaging community."
 
 `[w] <#cmnt_ref23>`_yarikoptic:
 
@@ -1797,4 +1800,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image02.png
+.. |image0| image:: images/image01.png
