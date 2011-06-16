@@ -139,7 +139,7 @@ available neuroimaging tools take advantage of the growing number of
 parallel hardware configurations (multicore, clusters, clouds and
 supercomputers).
 
-Current solutions
+Current solutions\ :sup:``[d] <#cmnt4>`_`\ 
 
 One attempt to address some of these issues has resulted in the SPM
 batch execution system. Unfortunately it supports only SPM modules and
@@ -185,7 +185,7 @@ machines and remote execution on clusters. NiPyPe is distributed with a
 BSD License allowing anyone to make changes and redistribute it.
 Development is done openly with collaborators from many different labs,
 allowing rapid adaptation to the varied needs of the neuroimaging
-community.\ :sup:``[d] <#cmnt4>`_`\ 
+community.\ :sup:``[e] <#cmnt5>`_`\ 
 
 --------------
 
@@ -206,7 +206,7 @@ features of this software.
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[e] <#cmnt5>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[f] <#cmnt6>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -265,7 +265,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[f] <#cmnt6>`_`\ 
+".gz")\ :sup:``[g] <#cmnt7>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -903,7 +903,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[g] <#cmnt7>`_`\  Furthermore, a data independent
+methods.\ :sup:``[h] <#cmnt8>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -933,7 +933,7 @@ on a compute cluster (40 cores distributed across 6 machines) took 1
 hour and 40 minutes relative to 32 minutes for processing a single
 subject. The difference from the expected runtime of 64 minutes stems
 from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[h] <#cmnt8>`_`\ 
+bottlenecks.\ :sup:``[i] <#cmnt9>`_`\ 
 
 --------------
 
@@ -1043,7 +1043,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[i] <#cmnt9>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[j] <#cmnt10>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1476,7 +1476,12 @@ krzysztof.gorgolewski:
 
 I agree - we should just delete this bit.
 
-`[d] <#cmnt_ref4>`_chris.d.burns:
+`[d] <#cmnt_ref4>`_satrajit.ghosh:
+
+need to add information on brainvisa, mipav, fiswidgets, (neuroimaging
+specific), taverna, vistrails (non-specific)
+
+`[e] <#cmnt_ref5>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1494,7 +1499,7 @@ What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
 
-`[e] <#cmnt_ref5>`_cindeem:
+`[f] <#cmnt_ref6>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1536,7 +1541,7 @@ Is engine a part of workflow or plugin? I would even say to make two
 figures.....this one is very informative...but maybe a simpler one that
 gives the main structure you are trying to explain will help clarify?
 
-`[f] <#cmnt_ref6>`_davclark:
+`[g] <#cmnt_ref7>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1547,7 +1552,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[g] <#cmnt_ref7>`_satrajit.ghosh:
+`[h] <#cmnt_ref8>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1563,19 +1568,14 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[h] <#cmnt_ref8>`_cindeem:
+`[i] <#cmnt_ref9>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
 
-`[i] <#cmnt_ref9>`_satrajit.ghosh:
-
-need to create this page
-
 `[j] <#cmnt_ref10>`_satrajit.ghosh:
 
-need to add information on brainvisa, mipav, fiswidgets, (neuroimaging
-specific), taverna, vistrails (non-specific)
+need to create this page
 
 `[k] <#cmnt_ref11>`_davclark:
 
