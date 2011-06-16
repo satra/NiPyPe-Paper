@@ -78,8 +78,8 @@ approaches:
 1) No uniform access to neuroimaging analysis software and usage
 information. For current multi-modal datasets, researchers typically
 resort to using different software packages for different components of
-the analysis. However, these different software packages are accessed
-and interfaced with in different ways, such as: shell scripting (FSL,
+the analysis. However, these different software packages are accessed,
+and interfaced with, in different ways, such as: shell scripting (FSL,
 AFNI, Camino), Matlab (SPM) and Python (NiPy). This has resulted in a
 heterogeneous set of software with no uniform way to use these tools or
 execute them. With the primary focus on algorithmic improvement,
@@ -106,10 +106,8 @@ neuroscience laboratories aim to understand some aspect of cognition.
 Although, a majority of such laboratories gather and analyze
 neuroimaging data, very few of them have the personnel with the
 technical expertise to understand methodological development and modify
-laboratory procedures to adopt new tools. Typically, processing steps
-are created and crystallized until a lab member with appropriate skills
-can modify the procedures.\ :sup:``[a] <#cmnt1>`_`\  Lab personnel
-trains through self-teaching by following online tutorials, taking
+laboratory procedures to adopt new tools. Lab personnel with no prior
+imaging experience often learn by following online tutorials, taking
 organized courses or, as is most often the case, by learning from
 existing members of the lab. While this provides some amount of
 continuity, understanding different aspects of neuroimaging has a steep
@@ -128,18 +126,17 @@ study is an iterative process dependent on the quality of the data and
 participant population (e.g., neurotypical, presurgical, etc).
 Researchers usually experiment with different methods and their
 parameters to create a workflow suitable for their application. A
-computationally efficient execution allows\ :sup:``[b] <#cmnt2>`_`\  for
-multiple rapid-iterations to optimize this tuning process. Support for
-optimized local execution (running independent processes in parallel,
-rerunning only those steps that have been influenced by the changes in
-parameters or dependencies since the last run) and exploration of
-parameter space could ease this prototyping stage of workflow
-development.\ :sup:``[c] <#cmnt3>`_`\  Furthermore, very few of the
+computationally efficient execution allows for multiple rapid-iterations
+to optimize this tuning process. Support for optimized local execution
+(running independent processes in parallel, rerunning only those steps
+that have been influenced by the changes in parameters or dependencies
+since the last run) and exploration of parameter space could ease this
+prototyping stage of workflow development. Furthermore, very few of the
 available neuroimaging tools take advantage of the growing number of
 parallel hardware configurations (multicore, clusters, clouds and
 supercomputers).
 
-Current solutions\ :sup:``[d] <#cmnt4>`_`\ 
+Current solutions\ :sup:``[a] <#cmnt1>`_`\ 
 
 One attempt to address some of these issues has resulted in the SPM
 batch execution system. Unfortunately it supports only SPM modules and
@@ -185,7 +182,7 @@ machines and remote execution on clusters. NiPyPe is distributed with a
 BSD License allowing anyone to make changes and redistribute it.
 Development is done openly with collaborators from many different labs,
 allowing rapid adaptation to the varied needs of the neuroimaging
-community.\ :sup:``[e] <#cmnt5>`_`\ 
+community.\ :sup:``[b] <#cmnt2>`_`\ 
 
 --------------
 
@@ -206,7 +203,7 @@ features of this software.
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[f] <#cmnt6>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[c] <#cmnt3>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -265,7 +262,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[g] <#cmnt7>`_`\ 
+".gz")\ :sup:``[d] <#cmnt4>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -903,7 +900,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[h] <#cmnt8>`_`\  Furthermore, a data independent
+methods.\ :sup:``[e] <#cmnt5>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -933,7 +930,7 @@ on a compute cluster (40 cores distributed across 6 machines) took 1
 hour and 40 minutes relative to 32 minutes for processing a single
 subject. The difference from the expected runtime of 64 minutes stems
 from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[i] <#cmnt9>`_`\ 
+bottlenecks.\ :sup:``[f] <#cmnt6>`_`\ 
 
 --------------
 
@@ -1043,7 +1040,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[j] <#cmnt10>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[g] <#cmnt7>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1456,32 +1453,34 @@ main\_workflow.write\_graph()
 
 `[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
 
-`[a] <#cmnt_ref1>`_krzysztof.gorgolewski:
+`[a] <#cmnt_ref1>`_satrajit.ghosh:
 
-What did you mean by this? Something else than the previous sentence?
-
-`[b] <#cmnt_ref2>`_davclark:
-
-I mention this in my high level notes
-
-`[c] <#cmnt_ref3>`_chris.d.burns:
-
-This proposes a solution to the problem, while the rest of the
-paragraphs in this section outline the problems. Should be stated later
-in paper? (Agree with Dav).
+need to add information on brainvisa, mipav, fiswidgets, (neuroimaging
+specific), taverna, vistrails (non-specific)
 
 --------------
 
 krzysztof.gorgolewski:
 
-I agree - we should just delete this bit.
+Our introduction is already longer than discussion. Maybe we should put
+this into discussion?
 
-`[d] <#cmnt_ref4>`_satrajit.ghosh:
+--------------
 
-need to add information on brainvisa, mipav, fiswidgets, (neuroimaging
-specific), taverna, vistrails (non-specific)
+satrajit.ghosh:
 
-`[e] <#cmnt_ref5>`_chris.d.burns:
+you want to at least summarize these in a paragraph and state that these
+do not address the above problems. it sets the background against which
+nipype is created.
+
+--------------
+
+krzysztof.gorgolewski:
+
+I wrote few sentences mentioning those systems, but since I have only
+used SPM batch I cannot really say more.
+
+`[b] <#cmnt_ref2>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1499,7 +1498,7 @@ What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
 
-`[f] <#cmnt_ref6>`_cindeem:
+`[c] <#cmnt_ref3>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1541,7 +1540,13 @@ Is engine a part of workflow or plugin? I would even say to make two
 figures.....this one is very informative...but maybe a simpler one that
 gives the main structure you are trying to explain will help clarify?
 
-`[g] <#cmnt_ref7>`_davclark:
+--------------
+
+satrajit.ghosh:
+
+how does this one look?
+
+`[d] <#cmnt_ref4>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1552,7 +1557,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[h] <#cmnt_ref8>`_satrajit.ghosh:
+`[e] <#cmnt_ref5>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1568,29 +1573,101 @@ time or save raw data and analyse all the subjects at the end of the
 study. I admit the latter option is better and it makes the whole
 argument a bit artificial.
 
-`[i] <#cmnt_ref9>`_cindeem:
+--------------
+
+Michael.L.Waskom:
+
+Well, I'm not sure the second way is necessarily "better" as usually
+it's important to check once you have a reasonable amount of subjects
+you're getting the "sanity check" effects you expect to see, plus to
+analyze for lab meetings/conferences, etc., especially in longer running
+studies. But I'm not sure what the reusable aspect of workflows gets you
+in regard to this issue that a SPM Batch script you just don't touch
+over the course of an experiment doesn't.
+
+--------------
+
+krzysztof.gorgolewski:
+
+Unless you want to use something else than SPM.
+
+`[f] <#cmnt_ref6>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
 
-`[j] <#cmnt_ref10>`_satrajit.ghosh:
+--------------
+
+satrajit.ghosh:
+
+does this address your concern?
+
+`[g] <#cmnt_ref7>`_satrajit.ghosh:
 
 need to create this page
 
-`[k] <#cmnt_ref11>`_davclark:
+--------------
+
+krzysztof.gorgolewski:
+
+Why not use or link to: https://www.ohloh.net/p/nipype/contributors
+
+--------------
+
+satrajit.ghosh:
+
+because we don't have 33 contributors
+
+`[h] <#cmnt_ref8>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[i] <#cmnt_ref9>`_Michael.L.Waskom:
+
+A big advantage of the efficient rerunning in my opinion is the ability,
+after you've written your workflow and started analyzing data, to add
+quality control interfaces to your Workflows and go back and rerun them
+to quickly generate the QC info, while ensuring that any future data
+that is processed creates it automatically. Perhaps a better point for
+the discussion (I couldn't find anywhere in the discussion where you
+mention the rerunning aspect), but might be worth mentioning as a lot of
+automated solutions to more to obscure what your data look like than
+facilitate exploration.
+
+--------------
+
+krzysztof.gorgolewski:
+
+I think that QC would be worth discussing (apart from rerunning issue),
+but you would have to extend this a bit. I might be good to say that
+automation does not mean you should not look at your raw data.
+
+`[j] <#cmnt_ref10>`_Michael.L.Waskom:
+
+I would move this back to below the introduction of interfaces in
+general
+
+--------------
+
+krzysztof.gorgolewski:
+
+Yeah but this would disrupt our neat 1-to-1 relation between "problems"
+from introduction and "solutions" in results.
+
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
+
+`[m] <#cmnt_ref13>`_Michael.L.Waskom:
+
+Looks like find and replace got greedy
 
 `[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
@@ -1599,7 +1676,27 @@ implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_Michael.L.Waskom:
+
+At times, when I've explained this to people learning Nipype, the
+"construct a DAG" element of the approach really threw them for a loop.
+I've found it helpful to point out that, when you're writing any sort of
+analysis script with a (little-w) workflow, you're implicitly specifying
+a DAG of the processing you wish to happen. Nipype just makes the graph
+architecture explicit, in a way that (I think) makes it easier to follow
+what's happening once you understand what Nipype is doing, and makes it
+easier to go back and change things without having to keep track of
+"edges" formed by using the same names for inputs and outputs of
+different processing calls.
+
+--------------
+
+krzysztof.gorgolewski:
+
+I'm not sure what do you mean by the second part of your comment, but I
+have rephrased the paragraph in a clearer manner.
+
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1609,7 +1706,25 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[p] <#cmnt_ref16>`_yarikoptic:
+`[q] <#cmnt_ref17>`_Michael.L.Waskom:
+
+Perhaps more general Python evangelism is out of the scope of this
+paper, but I think that it's worth pointing out that the
+simplicity/consistency of Python syntax compared to BASH or MATLAB is a
+particular virtue in neuroimaging environments where a) "single
+experiments" are often long and involved and outlast the terms of
+individual research staff members (this ties into points you make
+elsewhere in the paper) and b) the people writing, editing, and reading
+the code are generally not trained in software development.
+
+--------------
+
+krzysztof.gorgolewski:
+
+True, but such a claim would have to be supported somehow (by a citation
+or an example). Any ideas?
+
+`[r] <#cmnt_ref18>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1629,11 +1744,37 @@ yarikoptic:
 
 something like that ;-)
 
-`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
+`[s] <#cmnt_ref19>`_satrajit.ghosh:
+
+INSERT workflow figure or attach as supplementary material
+
+`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
+
+a graph of for example create\_susan\_smooth() or code listing?
+
+--------------
+
+satrajit.ghosh:
+
+sure
+
+`[u] <#cmnt_ref21>`_Michael.L.Waskom:
+
+Also, maybe point out that you can use simple/detailed graphs to
+represent the workflow with different levels of complexity
+
+--------------
+
+krzysztof.gorgolewski:
+
+Do you mean the exec graph? I believe the semantics of write\_graph
+might have changed since detailed\_graphs.
+
+`[v] <#cmnt_ref22>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[r] <#cmnt_ref18>`_yarikoptic:
+`[w] <#cmnt_ref23>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
