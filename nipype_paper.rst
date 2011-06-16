@@ -914,12 +914,12 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods, but different people might be assigned to do
-this.\ :sup:``[h] <#cmnt8>`_`\  Furthermore, a data independent Workflow
-definition (see Figure create\_spm\_preproc) enables sharing Workflows
-within and across research laboratories. NiPyPe provides a medium for
-exchanging knowledge and expertise between researchers focused on
-methods in neuroimaging and those interested in applications.
+methods, but different people might be assigned to do this throut the
+years.\ :sup:``[h] <#cmnt8>`_`\  Furthermore, a data independent
+Workflow definition (see Figure create\_spm\_preproc) enables sharing
+Workflows within and across research laboratories. NiPyPe provides a
+medium for exchanging knowledge and expertise between researchers
+focused on methods in neuroimaging and those interested in applications.
 
 The uniform access to Interfaces and the ease of use of Workflows in
 NiPyPe helps with training new staff. Encapsulation provided by
@@ -937,9 +937,10 @@ having to understand how to set them up and execute them.
 Figure create\_spm\_preproc. create\_spm\_preproc() functions returns
 this reusable, data independent Workflow. It implements typical fMRI
 preprocessing with smoothing (SPM), motion correction (SPM), artefact
-detection (nipype) and coregistration (FreeSurfer). Inputs and outputs
-are grouped using IdentityInterfaces (for source code see Supplementary
-Material).
+detection (NiPyPe) and coregistration (FreeSurfer). Inputs and outputs
+are grouped using IdentityInterfaces. Thanks this changes in the
+configuration of the nodes will not break backward compatibility. For
+full source code see Supplementary Material.
 
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
