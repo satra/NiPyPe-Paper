@@ -209,7 +209,7 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-.. figure:: images/image05.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 
@@ -279,7 +279,7 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-.. figure:: images/image02.png
+.. figure:: images/image03.png
    :align: center
    :alt: 
 Figure simplified\_class\_hierarchy. Simplified class hierarchy of
@@ -542,7 +542,7 @@ parameter of specify\_model is changed, some of the Nodes (but not all)
 would have to rerun. NiPyPe automatically determines which Nodes require
 rerunning.
 
-.. figure:: images/image06.png
+.. figure:: images/image07.png
    :align: center
    :alt: 
 Figure workflow\_from\_scratch. Graph describing the processing steps
@@ -811,7 +811,7 @@ appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image03.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure html\_help. HTML help page for dtfit command from Camino. This
@@ -874,7 +874,7 @@ nodes have iterables parameter set. This allows to easily iterate over
 all combinations of FWHM and smoothing algorithms used in the
 comparison.
 
-.. figure:: images/image04.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure smoothing\_comparison\_results. Influence of different smoothing
@@ -916,10 +916,10 @@ reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
 methods, but different people might be assigned to do
 this.\ :sup:``[h] <#cmnt8>`_`\  Furthermore, a data independent Workflow
-definition (see Figure XX\ :sup:``[i] <#cmnt9>`_`\ ) enables sharing
-Workflows within and across research laboratories. NiPyPe provides a
-medium for exchanging knowledge and expertise between researchers
-focused on methods in neuroimaging and those interested in applications.
+definition (see Figure create\_spm\_preproc) enables sharing Workflows
+within and across research laboratories. NiPyPe provides a medium for
+exchanging knowledge and expertise between researchers focused on
+methods in neuroimaging and those interested in applications.
 
 The uniform access to Interfaces and the ease of use of Workflows in
 NiPyPe helps with training new staff. Encapsulation provided by
@@ -930,6 +930,16 @@ gradually learn what the sub-components (and their sub-components) do.
 Playing with Interfaces in an interactive console is also a great way to
 learn how different algorithms work with different parameters without
 having to understand how to set them up and execute them.
+
+.. figure:: images/image01.png
+   :align: center
+   :alt: 
+Figure create\_spm\_preproc. create\_spm\_preproc() functions returns
+this reusable, data independent Workflow. It implements typical fMRI
+preprocessing with smoothing (SPM), motion correction (SPM), artefact
+detection (nipype) and coregistration (FreeSurfer). Inputs and outputs
+are grouped using IdentityInterfaces (for source code see Supplementary
+Material).
 
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -944,7 +954,7 @@ package provides a seamless and flexible environment for executing
 Workflows in parallel on a variety of environments from local multi-core
 workstations to high-performance clusters. In the SPM workflow for
 single subject functional data analysis shown
-below\ :sup:``[j] <#cmnt10>`_`\ , only a few components can be
+below\ :sup:``[i] <#cmnt9>`_`\ , only a few components can be
 parallelized. However, running this workflow across several subjects
 provides room for embarrassingly parallel execution. Running this
 Workflow in distributed mode for 69 subjects on a compute cluster (40
@@ -953,7 +963,7 @@ to the 32 minutes required to execute the analysis steps in series for a
 single subject on the same cluster. The difference from the expected
 runtime of 64 minutes (32 minutes for the first 40 subjects and another
 32 minutes for the remaining 29 subjects) stems from disk i/o and other
-network and processing resource bottlenecks.\ :sup:``[k] <#cmnt11>`_`\ 
+network and processing resource bottlenecks.\ :sup:``[j] <#cmnt10>`_`\ 
 
 --------------
 
@@ -982,7 +992,7 @@ packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
-We use Python for several reasons\ :sup:``[l] <#cmnt12>`_`\ . It has
+We use Python for several reasons\ :sup:``[k] <#cmnt11>`_`\ . It has
 extensive scientific computing and visualization support through
 packages such as SciPy, NumPy, Matplotlib and Mayavi (Millman & Aivazis,
 2011; Pérez, Granger, & Hunter, 2010) . The Nibabel package provides
@@ -1063,7 +1073,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[m] <#cmnt13>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[l] <#cmnt12>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquaux, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1660,21 +1670,11 @@ krzysztof.gorgolewski:
 
 Unless you want to use something else than SPM.
 
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
-
-a graph of for example create\_susan\_smooth() or code listing?
-
---------------
-
-satrajit.ghosh:
-
-sure
-
-`[j] <#cmnt_ref10>`_satrajit.ghosh:
+`[i] <#cmnt_ref9>`_satrajit.ghosh:
 
 INSERT workflow figure or attach as supplementary material
 
-`[k] <#cmnt_ref11>`_cindeem:
+`[j] <#cmnt_ref10>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1685,7 +1685,7 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[l] <#cmnt_ref12>`_Michael.L.Waskom:
+`[k] <#cmnt_ref11>`_Michael.L.Waskom:
 
 Perhaps more general Python evangelism is out of the scope of this
 paper, but I think that it's worth pointing out that the
@@ -1703,7 +1703,7 @@ krzysztof.gorgolewski:
 True, but such a claim would have to be supported somehow (by a citation
 or an example). Any ideas?
 
-`[m] <#cmnt_ref13>`_satrajit.ghosh:
+`[l] <#cmnt_ref12>`_satrajit.ghosh:
 
 need to create this page
 
@@ -1719,33 +1719,33 @@ satrajit.ghosh:
 
 because we don't have 33 contributors
 
-`[n] <#cmnt_ref14>`_davclark:
+`[m] <#cmnt_ref13>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[q] <#cmnt_ref17>`_Michael.L.Waskom:
+`[p] <#cmnt_ref16>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
+`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
+`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1755,7 +1755,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[t] <#cmnt_ref20>`_yarikoptic:
+`[s] <#cmnt_ref19>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1774,6 +1774,16 @@ Camino), Matlab (SPM) and Python (NiPy)."?
 yarikoptic:
 
 something like that ;-)
+
+`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
+
+a graph of for example create\_susan\_smooth() or code listing?
+
+--------------
+
+satrajit.ghosh:
+
+sure
 
 `[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
 
@@ -1803,4 +1813,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image01.png
+.. |image0| image:: images/image02.png
