@@ -432,20 +432,20 @@ a single input, but wrapping the BET Interface in a MapNode allows
 running ‘bet’ on multiple inputs.
 
 Interfaces encapsulated into Node or MapNode objects can be connected
-together within a Workflow object as a directed acyclic graph (DAG). The
-current semantics of Workflow do not allow conditionals and hence the
-graph needs to be acyclic. Workflows themselves can be a node of the
-Workflow graph (see Figure architecture\_overview). This enables a
-hierarchical architecture and encourages workflow reuse. The workflow
-engine validates that all nodes have unique names, ensures that there
-are no cycles and prevents connecting multiple outputs to a given input.
-For example in an fMRI processing Workflow, the preprocessing, model
-fitting and visualisation of results can be implemented as individual
-Workflows connected together in the main Workflow. This not only
-improves clarity of designed Workflows but also enables easy exchange of
-whole subsets. Common Workflows can be shared across different studies
-within and across laboratories thus reducing redundancy and increasing
-consistency.
+together within a Workflow object as a directed acyclic graph (DAG).
+\ :sup:``[e] <#cmnt5>`_`\ The current semantics of Workflow do not allow
+conditionals and hence the graph needs to be acyclic. Workflows
+themselves can be a node of the Workflow graph (see Figure
+architecture\_overview). This enables a hierarchical architecture and
+encourages workflow reuse. The workflow engine validates that all nodes
+have unique names, ensures that there are no cycles and prevents
+connecting multiple outputs to a given input. For example in an fMRI
+processing Workflow, the preprocessing, model fitting and visualisation
+of results can be implemented as individual Workflows connected together
+in the main Workflow. This not only improves clarity of designed
+Workflows but also enables easy exchange of whole subsets. Common
+Workflows can be shared across different studies within and across
+laboratories thus reducing redundancy and increasing consistency.
 
 A Workflow provides a detailed description of the processing steps and
 how data flows between Interfaces. Thus it is also a source of
@@ -621,10 +621,11 @@ seamless.
 Rerunning workflows has also been optimized. The framework checks which
 inputs parameters has changed from the last run and will execute only
 the nodes for which inputs have changed. Even though those changes can
-propagate rerunning time can decrease dramatically.
+propagate rerunning time can decrease
+dramatically.\ :sup:``[f] <#cmnt6>`_`\ 
 
-The Function Interface
-~~~~~~~~~~~~~~~~~~~~~~
+The Function Interface\ :sup:``[g] <#cmnt7>`_`\ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 One of the Interfaces implemented in NiPyPe requires special attention:
 The Function Interface. Its constructor takes as arguments Python
@@ -644,13 +645,14 @@ Workflow Visualisation
 To be able to efficiently manage and debug Workflow one has to have
 access to a graphical representation. Using graphviz (Ref), NiPyPe
 generates static graphs representing Nodes and connections between them.
-In the current version four types of graphs are supported: orig – does
-not expand inner Workflows, flat – expands inner workflows, exec –
-expands workflows and iterables, and hierarchical – expands workflows
-but maintains their hierarchy. Graphs can be saved in a variety of file
-formats including Scalable Vector Graphics (SVG) and Portable Network
-Graphics (PNG) (see Figures workflow\_from\_scratch and
-smoothing\_comparison\_workflow for an examples)
+In the current version four types of graphs are
+supported:\ :sup:``[h] <#cmnt8>`_`\  orig – does not expand inner
+Workflows, flat – expands inner workflows, exec – expands workflows and
+iterables, and hierarchical – expands workflows but maintains their
+hierarchy. Graphs can be saved in a variety of file formats including
+Scalable Vector Graphics (SVG) and Portable Network Graphics (PNG) (see
+Figures workflow\_from\_scratch and smoothing\_comparison\_workflow for
+an examples)
 
 Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~
@@ -741,7 +743,8 @@ Users access interfaces by importing them from NiPyPe modules. Each
 neuroimaging software distribution such as FSL, SPM, Camino, etc., has a
 corresponding module in the nipype.interfaces namespace.
 
->>> from NiPyPe.interfaces.camino import DTIFit
+>>> from NiPyPe\ :sup:``[i] <#cmnt9>`_`\ .interfaces.camino import
+DTIFit
 
 The help() function for each interface prints the inputs and the outputs
 associated with the interface.
@@ -900,7 +903,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[e] <#cmnt5>`_`\  Furthermore, a data independent
+methods.\ :sup:``[j] <#cmnt10>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -930,7 +933,7 @@ on a compute cluster (40 cores distributed across 6 machines) took 1
 hour and 40 minutes relative to 32 minutes for processing a single
 subject. The difference from the expected runtime of 64 minutes stems
 from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[f] <#cmnt6>`_`\ 
+bottlenecks.\ :sup:``[k] <#cmnt11>`_`\ 
 
 --------------
 
@@ -959,20 +962,20 @@ packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
-We use Python for several reasons. Python has extensive scientific
-computing and visualization support through packages such as SciPy,
-NumPy, Matplotlib and Mayavi (Millman & Aivazis, 2011; Pérez, Granger, &
-Hunter, 2010) . The Nibabel package provides support for reading and
-writing common neuroimaging file formats (e.g., NIFTI, ANALYZE and
-DICOM). Being a high-level language, Python supports rapid prototyping,
-is easy to learn and adopt and is available across all major operating
-systems. But the Python community also embraces openness in design and
-availability of software and is evidenced by the growing list of python
-software. Python has already been embraced by the neuroscientific
-community and is rapidly gaining popularity (Bednar, 2009; Goodman &
-Brette, 2009). NiPyPe, based on Python, thus has immediate access to
-this extensive community and its software, technological resources and
-support structure.
+We use Python for several reasons\ :sup:``[l] <#cmnt12>`_`\ . Python has
+extensive scientific computing and visualization support through
+packages such as SciPy, NumPy, Matplotlib and Mayavi (Millman & Aivazis,
+2011; Pérez, Granger, & Hunter, 2010) . The Nibabel package provides
+support for reading and writing common neuroimaging file formats (e.g.,
+NIFTI, ANALYZE and DICOM). Being a high-level language, Python supports
+rapid prototyping, is easy to learn and adopt and is available across
+all major operating systems. But the Python community also embraces
+openness in design and availability of software and is evidenced by the
+growing list of python software. Python has already been embraced by the
+neuroscientific community and is rapidly gaining popularity (Bednar,
+2009; Goodman & Brette, 2009). NiPyPe, based on Python, thus has
+immediate access to this extensive community and its software,
+technological resources and support structure.
 
 NiPyPe provides a formal and flexible framework to accommodate the
 diversity of imaging software. Within neuroimaging community, not all
@@ -1040,7 +1043,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[g] <#cmnt7>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[m] <#cmnt13>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1557,7 +1560,75 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[e] <#cmnt_ref5>`_satrajit.ghosh:
+`[e] <#cmnt_ref5>`_Michael.L.Waskom:
+
+At times, when I've explained this to people learning Nipype, the
+"construct a DAG" element of the approach really threw them for a loop.
+I've found it helpful to point out that, when you're writing any sort of
+analysis script with a (little-w) workflow, you're implicitly specifying
+a DAG of the processing you wish to happen. Nipype just makes the graph
+architecture explicit, in a way that (I think) makes it easier to follow
+what's happening once you understand what Nipype is doing, and makes it
+easier to go back and change things without having to keep track of
+"edges" formed by using the same names for inputs and outputs of
+different processing calls.
+
+--------------
+
+krzysztof.gorgolewski:
+
+I'm not sure what do you mean by the second part of your comment, but I
+have rephrased the paragraph in a clearer manner.
+
+`[f] <#cmnt_ref6>`_Michael.L.Waskom:
+
+A big advantage of the efficient rerunning in my opinion is the ability,
+after you've written your workflow and started analyzing data, to add
+quality control interfaces to your Workflows and go back and rerun them
+to quickly generate the QC info, while ensuring that any future data
+that is processed creates it automatically. Perhaps a better point for
+the discussion (I couldn't find anywhere in the discussion where you
+mention the rerunning aspect), but might be worth mentioning as a lot of
+automated solutions to more to obscure what your data look like than
+facilitate exploration.
+
+--------------
+
+krzysztof.gorgolewski:
+
+I think that QC would be worth discussing (apart from rerunning issue),
+but you would have to extend this a bit. I might be good to say that
+automation does not mean you should not look at your raw data.
+
+`[g] <#cmnt_ref7>`_Michael.L.Waskom:
+
+I would move this back to below the introduction of interfaces in
+general
+
+--------------
+
+krzysztof.gorgolewski:
+
+Yeah but this would disrupt our neat 1-to-1 relation between "problems"
+from introduction and "solutions" in results.
+
+`[h] <#cmnt_ref8>`_Michael.L.Waskom:
+
+Also, maybe point out that you can use simple/detailed graphs to
+represent the workflow with different levels of complexity
+
+--------------
+
+krzysztof.gorgolewski:
+
+Do you mean the exec graph? I believe the semantics of write\_graph
+might have changed since detailed\_graphs.
+
+`[i] <#cmnt_ref9>`_Michael.L.Waskom:
+
+Looks like find and replace got greedy
+
+`[j] <#cmnt_ref10>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1591,7 +1662,7 @@ krzysztof.gorgolewski:
 
 Unless you want to use something else than SPM.
 
-`[f] <#cmnt_ref6>`_cindeem:
+`[k] <#cmnt_ref11>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1602,111 +1673,7 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[g] <#cmnt_ref7>`_satrajit.ghosh:
-
-need to create this page
-
---------------
-
-krzysztof.gorgolewski:
-
-Why not use or link to: https://www.ohloh.net/p/nipype/contributors
-
---------------
-
-satrajit.ghosh:
-
-because we don't have 33 contributors
-
-`[h] <#cmnt_ref8>`_davclark:
-
-delete? Verbose and (to my eye) counter to the clearly evident truth
-("in fact" often cues "you might not have thought XXX")
-
-`[i] <#cmnt_ref9>`_Michael.L.Waskom:
-
-A big advantage of the efficient rerunning in my opinion is the ability,
-after you've written your workflow and started analyzing data, to add
-quality control interfaces to your Workflows and go back and rerun them
-to quickly generate the QC info, while ensuring that any future data
-that is processed creates it automatically. Perhaps a better point for
-the discussion (I couldn't find anywhere in the discussion where you
-mention the rerunning aspect), but might be worth mentioning as a lot of
-automated solutions to more to obscure what your data look like than
-facilitate exploration.
-
---------------
-
-krzysztof.gorgolewski:
-
-I think that QC would be worth discussing (apart from rerunning issue),
-but you would have to extend this a bit. I might be good to say that
-automation does not mean you should not look at your raw data.
-
-`[j] <#cmnt_ref10>`_Michael.L.Waskom:
-
-I would move this back to below the introduction of interfaces in
-general
-
---------------
-
-krzysztof.gorgolewski:
-
-Yeah but this would disrupt our neat 1-to-1 relation between "problems"
-from introduction and "solutions" in results.
-
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
-
-Is this something different than iterables\_vs\_mapnode?
-
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
-
-Isn't it a bit of an overkill to show all different types of graphs?
-Maybe we should point just to one of the workflow graphs from Result
-section?
-
-`[m] <#cmnt_ref13>`_Michael.L.Waskom:
-
-Looks like find and replace got greedy
-
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
-
-I am a bit afraid to make provenance tracking a big point. UCLA
-implementation has the following advantages: it's independent from LONI
-Pipeline, its standardized using an XML Schema, it includes architecture
-and version tracking.
-
-`[o] <#cmnt_ref15>`_Michael.L.Waskom:
-
-At times, when I've explained this to people learning Nipype, the
-"construct a DAG" element of the approach really threw them for a loop.
-I've found it helpful to point out that, when you're writing any sort of
-analysis script with a (little-w) workflow, you're implicitly specifying
-a DAG of the processing you wish to happen. Nipype just makes the graph
-architecture explicit, in a way that (I think) makes it easier to follow
-what's happening once you understand what Nipype is doing, and makes it
-easier to go back and change things without having to keep track of
-"edges" formed by using the same names for inputs and outputs of
-different processing calls.
-
---------------
-
-krzysztof.gorgolewski:
-
-I'm not sure what do you mean by the second part of your comment, but I
-have rephrased the paragraph in a clearer manner.
-
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
-
-What figure dis you have in mind here?
-
---------------
-
-satrajit.ghosh:
-
-i was thinking of a simple doctest code
-
-`[q] <#cmnt_ref17>`_Michael.L.Waskom:
+`[l] <#cmnt_ref12>`_Michael.L.Waskom:
 
 Perhaps more general Python evangelism is out of the scope of this
 paper, but I think that it's worth pointing out that the
@@ -1724,7 +1691,55 @@ krzysztof.gorgolewski:
 True, but such a claim would have to be supported somehow (by a citation
 or an example). Any ideas?
 
-`[r] <#cmnt_ref18>`_yarikoptic:
+`[m] <#cmnt_ref13>`_satrajit.ghosh:
+
+need to create this page
+
+--------------
+
+krzysztof.gorgolewski:
+
+Why not use or link to: https://www.ohloh.net/p/nipype/contributors
+
+--------------
+
+satrajit.ghosh:
+
+because we don't have 33 contributors
+
+`[n] <#cmnt_ref14>`_davclark:
+
+delete? Verbose and (to my eye) counter to the clearly evident truth
+("in fact" often cues "you might not have thought XXX")
+
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+
+Is this something different than iterables\_vs\_mapnode?
+
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+
+Isn't it a bit of an overkill to show all different types of graphs?
+Maybe we should point just to one of the workflow graphs from Result
+section?
+
+`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
+
+I am a bit afraid to make provenance tracking a big point. UCLA
+implementation has the following advantages: it's independent from LONI
+Pipeline, its standardized using an XML Schema, it includes architecture
+and version tracking.
+
+`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
+
+What figure dis you have in mind here?
+
+--------------
+
+satrajit.ghosh:
+
+i was thinking of a simple doctest code
+
+`[s] <#cmnt_ref19>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1744,11 +1759,11 @@ yarikoptic:
 
 something like that ;-)
 
-`[s] <#cmnt_ref19>`_satrajit.ghosh:
+`[t] <#cmnt_ref20>`_satrajit.ghosh:
 
 INSERT workflow figure or attach as supplementary material
 
-`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
+`[u] <#cmnt_ref21>`_krzysztof.gorgolewski:
 
 a graph of for example create\_susan\_smooth() or code listing?
 
@@ -1757,18 +1772,6 @@ a graph of for example create\_susan\_smooth() or code listing?
 satrajit.ghosh:
 
 sure
-
-`[u] <#cmnt_ref21>`_Michael.L.Waskom:
-
-Also, maybe point out that you can use simple/detailed graphs to
-represent the workflow with different levels of complexity
-
---------------
-
-krzysztof.gorgolewski:
-
-Do you mean the exec graph? I believe the semantics of write\_graph
-might have changed since detailed\_graphs.
 
 `[v] <#cmnt_ref22>`_krzysztof.gorgolewski:
 
