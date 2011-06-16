@@ -743,8 +743,7 @@ Users access interfaces by importing them from NiPyPe modules. Each
 neuroimaging software distribution such as FSL, SPM, Camino, etc., has a
 corresponding module in the nipype.interfaces namespace.
 
->>> from NiPyPe\ :sup:``[i] <#cmnt9>`_`\ .interfaces.camino import
-DTIFit
+>>> from nipype.interfaces.camino import DTIFit
 
 The help() function for each interface prints the inputs and the outputs
 associated with the interface.
@@ -903,7 +902,7 @@ new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Reusing workflows is especially important for
 long-running studies when all data has to be analyzed using the same
-methods.\ :sup:``[j] <#cmnt10>`_`\  Furthermore, a data independent
+methods.\ :sup:``[i] <#cmnt9>`_`\  Furthermore, a data independent
 Workflow definition (see Figure XX) enables sharing Workflows within and
 across research laboratories. NiPyPe provides a medium for exchanging
 knowledge and expertise between researchers focused on methods in
@@ -933,7 +932,7 @@ on a compute cluster (40 cores distributed across 6 machines) took 1
 hour and 40 minutes relative to 32 minutes for processing a single
 subject. The difference from the expected runtime of 64 minutes stems
 from disk i/o, network and processing resource
-bottlenecks.\ :sup:``[k] <#cmnt11>`_`\ 
+bottlenecks.\ :sup:``[j] <#cmnt10>`_`\ 
 
 --------------
 
@@ -962,7 +961,7 @@ packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
-We use Python for several reasons\ :sup:``[l] <#cmnt12>`_`\ . Python has
+We use Python for several reasons\ :sup:``[k] <#cmnt11>`_`\ . Python has
 extensive scientific computing and visualization support through
 packages such as SciPy, NumPy, Matplotlib and Mayavi (Millman & Aivazis,
 2011; Pérez, Granger, & Hunter, 2010) . The Nibabel package provides
@@ -1043,7 +1042,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[m] <#cmnt13>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[l] <#cmnt12>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1624,11 +1623,7 @@ krzysztof.gorgolewski:
 Do you mean the exec graph? I believe the semantics of write\_graph
 might have changed since detailed\_graphs.
 
-`[i] <#cmnt_ref9>`_Michael.L.Waskom:
-
-Looks like find and replace got greedy
-
-`[j] <#cmnt_ref10>`_satrajit.ghosh:
+`[i] <#cmnt_ref9>`_satrajit.ghosh:
 
 chris: what do you mean by this?
 
@@ -1662,7 +1657,7 @@ krzysztof.gorgolewski:
 
 Unless you want to use something else than SPM.
 
-`[k] <#cmnt_ref11>`_cindeem:
+`[j] <#cmnt_ref10>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1673,7 +1668,7 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[l] <#cmnt_ref12>`_Michael.L.Waskom:
+`[k] <#cmnt_ref11>`_Michael.L.Waskom:
 
 Perhaps more general Python evangelism is out of the scope of this
 paper, but I think that it's worth pointing out that the
@@ -1691,7 +1686,7 @@ krzysztof.gorgolewski:
 True, but such a claim would have to be supported somehow (by a citation
 or an example). Any ideas?
 
-`[m] <#cmnt_ref13>`_satrajit.ghosh:
+`[l] <#cmnt_ref12>`_satrajit.ghosh:
 
 need to create this page
 
@@ -1707,20 +1702,24 @@ satrajit.ghosh:
 
 because we don't have 33 contributors
 
-`[n] <#cmnt_ref14>`_davclark:
+`[m] <#cmnt_ref13>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
+
+`[p] <#cmnt_ref16>`_Michael.L.Waskom:
+
+Looks like find and replace got greedy
 
 `[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
 
