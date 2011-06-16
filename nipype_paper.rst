@@ -1,6 +1,5 @@
 NiPyPe: A flexible, lightweight and extensible neuroimaging data
 processing framework
-=====================================================================================
 
 Krzysztof Gorgolewski1, Christopher Burns2, Cindee Madison2, Dav Clark3,
 Yaroslav O. Halchenko4, Michael L. Waskom5, Satrajit S. Ghosh6
@@ -1573,29 +1572,34 @@ system here, or make it more general??
 
 need to create this page
 
-`[j] <#cmnt_ref10>`_davclark:
+`[j] <#cmnt_ref10>`_satrajit.ghosh:
+
+need to add information on brainvisa, mipav, fiswidgets, (neuroimaging
+specific), taverna, vistrails (non-specific)
+
+`[k] <#cmnt_ref11>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1605,7 +1609,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[o] <#cmnt_ref15>`_yarikoptic:
+`[p] <#cmnt_ref16>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1625,11 +1629,11 @@ yarikoptic:
 
 something like that ;-)
 
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[q] <#cmnt_ref17>`_yarikoptic:
+`[r] <#cmnt_ref18>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
