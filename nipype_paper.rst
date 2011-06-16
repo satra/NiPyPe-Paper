@@ -1064,7 +1064,7 @@ Acknowledgements
 A complete list of people who have contributed code to the project is
 available at
 http://nipy.org/nipype/contributors.html\ :sup:``[m] <#cmnt13>`_`\ . We
-thank Fernando Perez, Matthew Brett, Gael Varoquax, Jean-Baptiste
+thank Fernando Perez, Matthew Brett, Gael Varoquaux, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
 Prof. John Gabrieli’s laboratory at MIT for testing NiPyPe through its
