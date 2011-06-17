@@ -176,22 +176,23 @@ details are preserved with the intent to reproduce.
 Current solutions
 
 There were several attempts to address those issues by creating a
-pipeline engine. Taverna (REF), VisTrails(REF) are general pipelining
-systems and do not address problems specific to neuroimaging. BrainVisa
-(REF), MIPAV (REF), SPM (REF) include their own batch processing tools,
-but do not allow mixing components from other packages. Fiswidgets is on
-the other side outdated and does not support state of the art methods. A
-much more extensive and feature rich solution is the LONI Pipeline (I.
-D. Dinov et al., 2009; I. Dinov et al., 2010; Rex, Ma, & A. W. Toga,
-2003). It provides an easy to use graphical interface for choosing
-processing steps or nodes from a predefined library and defining their
-dependencies and parameters. It also has extensive support for parallel
-execution on an appropriately configured cluster (including data
-transfer, pausing execution, and combining local and remote software).
-Additionally, the LONI Pipeline saves information about executed steps
-(such as software origin, version and architecture) providing provenance
-information (A. J. Mackenzie-Graham, J. D. Van Horn, R. P. Woods,
-Crawford, & A. W. Toga, 2008).
+pipeline engine. Taverna\ :sup:``[a] <#cmnt1>`_`\  (REF), VisTrails(REF)
+are general pipelining systems and do not address problems specific to
+neuroimaging. BrainVisa (REF), MIPAV (REF), SPM (REF) include their own
+batch processing tools, but do not allow mixing components from other
+packages. Fiswidgets is on the other side outdated and does not support
+state of the art methods. A much more extensive and feature rich
+solution is the LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov et
+al., 2010; Rex, Ma, & A. W. Toga, 2003). It provides an easy to use
+graphical interface for choosing processing steps or nodes from a
+predefined library and defining their dependencies and parameters. It
+also has extensive support for parallel execution on an appropriately
+configured cluster (including data transfer, pausing execution, and
+combining local and remote software). Additionally, the LONI Pipeline
+saves information about executed steps (such as software origin, version
+and architecture) providing provenance information (A. J.
+Mackenzie-Graham, J. D. Van Horn, R. P. Woods, Crawford, & A. W. Toga,
+2008).
 
 However, the LONI Pipeline does not come without limitations. Processing
 nodes are defined using eXtensible Markup Language (XML). This “one size
@@ -204,7 +205,7 @@ Avants & Gee, 2004). Although it provides a helpful graphical interface,
 the LONI Pipeline environment does not provide an easy option to script
 a workflow or for rapidly exploring parametric variations within a
 workflow (e.g., VisTrails\ :sup:``[1] <#ftnt1>`_`\ ). Finally, due to
-restrictive licensing it is not straightforward to modify and
+restrictive licensing, it is not straightforward to modify and
 redistribute the modifications.
 
 To address issues with existing workflow systems and the ones described
@@ -218,11 +219,11 @@ and their inputs and outputs are described in an object-oriented manner
 providing the flexibility to interface with any type of software (not
 just well behaved command lines). The workflow execution engine has a
 plug-in architecture and supports both local execution on multicore
-machines and remote execution on clusters. NiPyPe is distributed with a
-BSD License allowing anyone to make changes and redistribute it.
-Development is done openly with collaborators from many different labs,
-allowing adaptation to the varied needs of a broad neuroimaging
-community.
+machines and remote execution on clusters. NiPyPe is distributed
+with\ :sup:``[b] <#cmnt2>`_`\  a BSD license allowing anyone to make
+changes and redistribute it. Development is done openly with
+collaborators from many different labs, allowing adaptation to the
+varied needs of a broad neuroimaging community.
 
 --------------
 
@@ -233,17 +234,17 @@ NiPyPe consists of three components (see Figure architecture\_overview):
 1) interfaces to external tools that provide a unified way for setting
 inputs, executing and retrieving outputs; 2) a workflow engine that
 allows creating analysis pipelines by connecting inputs and outputs of
-interfaces as a directed acyclic graph (DAG); and 3) plugins that
-execute workflows either locally or in a distributed processing
-environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
-following sections, we describe key architectural components and
-features of this software.
+interfaces as a directed acyclic graph (DAG); and 3) plugins
+that\ :sup:``[c] <#cmnt3>`_`\  execute workflows either locally or in a
+distributed processing environment (e.g.,
+Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the following sections,
+we describe key architectural components and features of this software.
 
 .. figure:: images/image06.png
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[a] <#cmnt1>`_`\ Architecture
+Figure architecture\_overview. \ :sup:``[d] <#cmnt4>`_`\ Architecture
 overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
 MapNodes and connected together within a Workflows. Workflows themselves
 can act as a Node inside another Workflows supporting encapsulation
@@ -302,7 +303,7 @@ class GZipTask(CommandLine):
  def \_list\_outputs(self):
  outputs = self.output\_spec().get()
  outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[b] <#cmnt2>`_`\ 
+".gz")\ :sup:``[e] <#cmnt5>`_`\ 
  return outputs
 if \_\_name\_\_ == '\_\_main\_\_':
  zipper = GZipTask(input\_file='an\_existing\_file')
@@ -319,7 +320,7 @@ related to execution of command line applications is grouped in one
 class. New classes can be added on top of that. For example FSL
 Interfaces are essentially command lines with some extra common
 properties (such as setting the type of the output file by an
-environment variable).
+environment variable).\ :sup:``[f] <#cmnt6>`_`\ 
 
 We use Enthought Traits\ :sup:``[3] <#ftnt3>`_`\  to create a formal
 definition for Interface inputs and outputs, to define input constraints
@@ -366,7 +367,7 @@ exclusive with another, see the xor parameter), and additional
 parameters (such as argstr and position which describe how to convert an
 input into a command line argument).
 
-Currently NiPyPe (version 0.4) ships with wide range of interfaces (see
+Currently, NiPyPe (version 0.4) ships with wide range of interfaces (see
 Table supported\_software.). Adding new Interfaces is simply a matter of
 writing a Python class definition as was shown in Figure XX. When a
 formal specification of inputs and outputs are provided by the
@@ -463,7 +464,7 @@ Interface within a MapNode allows Interfaces that normally operate on a
 single input to execute the Interface on multiple inputs. When a MapNode
 executes, it creates a separate instance of the underlying Interface for
 every value of an input list and executes these instances independently.
-When all instances finish running their results are collected into a
+When all instances finish running, their results are collected into a
 list and exposed through the MapNode’s outputs (see Figure
 iterabes\_vs\_mapnode). This approach improves granularity of the
 workflow and provides easy support for Interfaces that can process only
@@ -675,7 +676,7 @@ Rerunning workflows has also been optimized. The framework checks which
 inputs parameters has changed from the last run and will execute only
 the nodes for which inputs have changed. Even though those changes can
 propagate rerunning time can decrease
-dramatically.\ :sup:``[c] <#cmnt3>`_`\ 
+dramatically.\ :sup:``[g] <#cmnt7>`_`\ 
 
 The Function Interface
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -847,7 +848,7 @@ all input dependencies are satisfied, generating an error if either of
 these conditions are not met.
 
 NiPyPe standardizes running and accessing help information irrespective
-of whether the underlying software is a matlab program, a command line
+of whether the underlying software is a MATLAB program, a command line
 tool or Python module. The framework deals with translating inputs into
 appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
@@ -927,13 +928,14 @@ main contrast.
 
 Algorithm comparison is not the only way NiPyPe can be useful for a
 neuroimaging methods researcher. It is in the interest of every methods
-author to make his or hers work most accessible. This usually means
-providing ready to use implementations. However, because the field is so
-diverse, software developers have to provide several packages (SPM
-toolbox, command line tool, c++ library etc.) to cover the whole user
-base. With NiPyPe, a developer can create one Interface and expose a new
-tool, written in any language, to a greater range of users, knowing it
-will work with the wide range of software currently supported by NiPyPe.
+author\ :sup:``[h] <#cmnt8>`_`\  to make his or hers work most
+accessible. This usually means providing ready to use implementations.
+However, because the field is so diverse, software developers have to
+provide several packages (SPM toolbox, command line tool, C++ library
+etc.) to cover the whole user base. With NiPyPe, a developer can create
+one Interface and expose a new tool, written in any language, to a
+greater range of users, knowing it will work with the wide range of
+software currently supported by NiPyPe.
 
 A good example of such scenario is ArtifactDetection toolbox (ref TODO).
 This piece of software uses EPI timeseries and realignment parameters to
@@ -1006,7 +1008,7 @@ to execute the analysis steps in series for a single subject on the same
 cluster. The difference from the expected runtime of 64 minutes (32
 minutes for the first 40 subjects and another 32 minutes for the
 remaining 29 subjects) stems from disk i/o and other network and
-processing resource bottlenecks.\ :sup:``[d] <#cmnt4>`_`\ 
+processing resource bottlenecks.\ :sup:``[i] <#cmnt9>`_`\ 
 
 .. figure:: images/image07.png
    :align: center
@@ -1139,7 +1141,7 @@ space exploration are some of the core design features. Our framework
 also improves reproducibility by providing provenance tracking.
 Exchangibility of pipelines created using NiPyPe stimulates
 collaboration in the broader neuroimaging
-community.\ :sup:``[e] <#cmnt5>`_`\ 
+community.\ :sup:``[j] <#cmnt10>`_`\ 
 
 Acknowledgements
 
@@ -1560,7 +1562,28 @@ main\_workflow.write\_graph()
 
 `[6] <#ftnt_ref6>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
 
-`[a] <#cmnt_ref1>`_cindeem:
+`[a] <#cmnt_ref1>`_uni.designer.sg:
+
+if there are no publications to reference, the URL should go as
+footnotes (as required by Frontiers)
+
+--------------
+
+krzysztof.gorgolewski:
+
+There is a proper reference - I'll put it when I compose the manuscript.
+
+`[c] <#cmnt_ref3>`_uni.designer.sg:
+
+Is plugin the correct term here?
+
+--------------
+
+krzysztof.gorgolewski:
+
+Yes. An exchangeable piece of code with unified interface.
+
+`[d] <#cmnt_ref4>`_cindeem:
 
 I like this graph, but it is a little hard to follow the 3 components
 listed above...possibly interfaces could have a separate shape? combine
@@ -1608,7 +1631,7 @@ satrajit.ghosh:
 
 how does this one look?
 
-`[b] <#cmnt_ref2>`_davclark:
+`[e] <#cmnt_ref5>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1619,7 +1642,19 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[c] <#cmnt_ref3>`_Michael.L.Waskom:
+`[f] <#cmnt_ref6>`_uni.designer.sg:
+
+You might want to remove this last sentence, because it is about
+something other than depicted in the Figure
+
+--------------
+
+krzysztof.gorgolewski:
+
+It's an example which in my opinion makes the explanation easier to
+understand.
+
+`[g] <#cmnt_ref7>`_Michael.L.Waskom:
 
 A big advantage of the efficient rerunning in my opinion is the ability,
 after you've written your workflow and started analyzing data, to add
@@ -1654,7 +1689,11 @@ On the other side this is not something that we have address . We plan
 to, and there was some talking about it, but there aren't any quality
 assurance specific mechanisms in nipype.
 
-`[d] <#cmnt_ref4>`_cindeem:
+`[h] <#cmnt_ref8>`_uni.designer.sg:
+
+developer
+
+`[i] <#cmnt_ref9>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1665,48 +1704,37 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[e] <#cmnt_ref5>`_satrajit.ghosh:
+`[j] <#cmnt_ref10>`_satrajit.ghosh:
 
 needs a rewrite and a stronger finishing statement.
 
-`[f] <#cmnt_ref6>`_davclark:
+`[k] <#cmnt_ref11>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[h] <#cmnt_ref8>`_uni.designer.sg:
-
-if there are no publications to reference, the URL should go as
-footnotes (as required by Frontiers)
-
---------------
-
-krzysztof.gorgolewski:
-
-There is a proper reference - I'll put it when I compose the manuscript.
-
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[j] <#cmnt_ref10>`_Michael.L.Waskom:
+`[n] <#cmnt_ref14>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1716,7 +1744,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[m] <#cmnt_ref13>`_yarikoptic:
+`[q] <#cmnt_ref17>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1736,33 +1764,7 @@ yarikoptic:
 
 something like that ;-)
 
-`[n] <#cmnt_ref14>`_uni.designer.sg:
-
-Is plugin the correct term here?
-
---------------
-
-krzysztof.gorgolewski:
-
-Yes. An exchangeable piece of code with unified interface.
-
-`[o] <#cmnt_ref15>`_uni.designer.sg:
-
-developer
-
-`[p] <#cmnt_ref16>`_uni.designer.sg:
-
-You might want to remove this last sentence, because it is about
-something other than depicted in the Figure
-
---------------
-
-krzysztof.gorgolewski:
-
-It's an example which in my opinion makes the explanation easier to
-understand.
-
-`[q] <#cmnt_ref17>`_satrajit.ghosh:
+`[r] <#cmnt_ref18>`_satrajit.ghosh:
 
 INSERT workflow figure or attach as supplementary material
 
@@ -1778,7 +1780,7 @@ satrajit.ghosh:
 
 yes
 
-`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
+`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
 
 a graph of for example create\_susan\_smooth() or code listing?
 
@@ -1788,11 +1790,11 @@ satrajit.ghosh:
 
 sure
 
-`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
+`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[t] <#cmnt_ref20>`_chris.d.burns:
+`[u] <#cmnt_ref21>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1810,7 +1812,7 @@ What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
 
-`[u] <#cmnt_ref21>`_yarikoptic:
+`[v] <#cmnt_ref22>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
