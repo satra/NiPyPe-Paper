@@ -487,7 +487,7 @@ single input to execute the Interface on multiple inputs. When a MapNode
 executes, it creates a separate instance of the underlying Interface for
 every value of an input list and executes these instances independently.
 When all instances finish running, their results are collected into a
-list and exposed through the MapNode’s outputs (see Figure 3). This
+list and exposed through the MapNode’s outputs (see Figure 4). This
 approach improves granularity of the workflow and provides easy support
 for Interfaces that can process only one input at a time. For example,
 the FSL ‘bet’ program can only run on a single input, but wrapping the
@@ -594,9 +594,9 @@ simple substitutions and regular expressions to alter target filenames.
 In this example we store the statistical (T maps) resulting from
 contrast estimation.
 
-A Workflow defined this way (see Figure workflow\_from\_scratch, for
-full code see Supplementary material) is ready to run. This can be done
-by calling run() method of the master Workflow.
+A Workflow defined this way (see Figure 3, for full code see
+Supplementary material) is ready to run. This can be done by calling
+run() method of the master Workflow.
 
 If the run() method is called twice, the Workflow input hashing
 mechanism ensures that none of the Nodes are executed during the second
@@ -644,17 +644,16 @@ of parameter variations on the results of the Workflow.
 It is important to note that unlike MapNode, which creates copies of the
 underlying interface for every element of an input of type list,
 iterables operate on the subgraph of a node and creates copies of not
-only the node but also all the nodes dependent on it (see Figure
-iterables\_vs\_mapnode).
+only the node but also all the nodes dependent on it (see Figure 4).
 
-|image0|Figure iterables\_vs\_mapnode. Branching the dependency tree
-using iterables and MapNodes. If we take the processing pipeline A and
-set iterables parameter of DataGrabber to list of two subjects NiPyPe
-will effectivelly execute graph B. Identical processing will be applied
-to every subject from the list. Iterables can be used in one graph on
-many levels - for example setting iterables on Smooth FWHM to a list of
-4 and 8 mm will result in graph C. MapNode also branches the execution
-tree but in contrast to iterables it merges it straight away effectively
+|image0|Figure 4. Branching the dependency tree using iterables and
+MapNodes. If we take the processing pipeline A and set iterables
+parameter of DataGrabber to list of two subjects NiPyPe will
+effectivelly execute graph B. Identical processing will be applied to
+every subject from the list. Iterables can be used in one graph on many
+levels - for example setting iterables on Smooth FWHM to a list of 4 and
+8 mm will result in graph C. MapNode also branches the execution tree
+but in contrast to iterables it merges it straight away effectively
 performing a MapReduce operation (D).
 
 Parallel Distribution and Execution Plug-ins
@@ -848,9 +847,9 @@ The output of the help() function is standardized across all Interfaces.
 It is automatically generated based on input and output definitions and
 includes information about required inputs, types, and default value.
 Alternatively, extended information is available in the form of
-auto-generated HTML documentation on the NiPyPe website (see Figure
-html\_help). This extended information includes examples that
-demonstrate how the interface can be used.
+auto-generated HTML documentation on the NiPyPe website (see Figure 5).
+This extended information includes examples that demonstrate how the
+interface can be used.
 
 For every Interface, input values are set through the inputs field:
 
@@ -880,10 +879,10 @@ user with a uniform interface.
 .. figure:: images/image04.png
    :align: center
    :alt: 
-Figure html\_help. HTML help page for dtfit command from Camino. This
-was generated based on the Interface code: description and example was
-taken from the class docstring and inputs/outputs were list was created
-using traited input/output specification.
+Figure 5. HTML help page for dtfit command from Camino. This was
+generated based on the Interface code: description and example was taken
+from the class docstring and inputs/outputs were list was created using
+traited input/output specification.
 
 A framework for comparative algorithm development and dissemination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -924,30 +923,27 @@ algorithm from FreeSurfer is called.
 
 Smoothed EPI volumes (direct/local influence) and statistical maps
 (indirect/global influence), along with the pipeline used to generate
-them can be found in Figure smoothing\_comparison\_workflow and
-smoothing\_comparison\_results. Full code used to generate this data can
-be found in the supplementary material. This comparison serves only to
-demonstrate NiPyPe capabilities a comparison between smoothing methods
-is outside of the scope of this paper and will most likely require more
-subjects and quantitative metrics.
+them can be found in Figure 6 and 7. Full code used to generate this
+data can be found in the supplementary material. This comparison serves
+only to demonstrate NiPyPe capabilities a comparison between smoothing
+methods is outside of the scope of this paper and will most likely
+require more subjects and quantitative metrics.
 
 .. figure:: images/image00.png
    :align: center
    :alt: 
-Figure smoothing\_comparison\_workflow. Graph showing the workflow used
-for the smoothing methods and parameters comparison. The gray shaded
-nodes have iterables parameter set. This allows to easily iterate over
-all combinations of FWHM and smoothing algorithms used in the
-comparison.
+Figure 6. Graph showing the workflow used for the smoothing methods and
+parameters comparison. The gray shaded nodes have iterables parameter
+set. This allows to easily iterate over all combinations of FWHM and
+smoothing algorithms used in the comparison.
 
 .. figure:: images/image05.png
    :align: center
    :alt: 
-Figure smoothing\_comparison\_results. Influence of different smoothing
-methods and their parameters. Upper half shows direct influence of
-smoothing on the EPI sequence (slice 16, volume 0, run 2). Lower half
-shows indirect influence of smoothing on the T maps (same slice) of the
-main contrast.
+Figure 7. Influence of different smoothing methods and their parameters.
+Upper half shows direct influence of smoothing on the EPI sequence
+(slice 16, volume 0, run 2). Lower half shows indirect influence of
+smoothing on the T maps (same slice) of the main contrast.
 
 Algorithm comparison is not the only way NiPyPe can be useful for a
 neuroimaging methods researcher. It is in the interest of every methods
@@ -981,11 +977,11 @@ well tested piece of code is being reused (instead of being
 reimplemented every time). Since a Workflow definition is an abstract
 and simplified representation of the data processing stream, it is much
 easier to describe and hand over to new project personnel. Furthermore,
-a data independent Workflow definition (see Figure create\_spm\_preproc)
-enables sharing Workflows within and across research laboratories.
-NiPyPe provides a high-level abstraction mechanism for exchanging
-knowledge and expertise between researchers focused on methods in
-neuroimaging and those interested in applications.
+a data independent Workflow definition (see Figure 8) enables sharing
+Workflows within and across research laboratories. NiPyPe provides a
+high-level abstraction mechanism for exchanging knowledge and expertise
+between researchers focused on methods in neuroimaging and those
+interested in applications.
 
 The uniform access to Interfaces and the ease of use of Workflows in
 NiPyPe helps with training new staff. Encapsulation provided by
@@ -1000,13 +996,13 @@ having to understand how to set them up and execute them.
 .. figure:: images/image02.png
    :align: center
    :alt: 
-Figure create\_spm\_preproc. create\_spm\_preproc() functions returns
-this reusable, data independent Workflow. It implements typical fMRI
-preprocessing with smoothing (SPM), motion correction (SPM), artefact
-detection (NiPyPe) and coregistration (FreeSurfer). Inputs and outputs
-are grouped using IdentityInterfaces. Thanks this changes in the
-configuration of the nodes will not break backward compatibility. For
-full source code see Supplementary Material.
+Figure 8. create\_spm\_preproc() functions returns this reusable, data
+independent Workflow. It implements typical fMRI preprocessing with
+smoothing (SPM), motion correction (SPM), artefact detection (NiPyPe)
+and coregistration (FreeSurfer). Inputs and outputs are grouped using
+IdentityInterfaces. Thanks this changes in the configuration of the
+nodes will not break backward compatibility. For full source code see
+Supplementary Material.
 
 Computationally efficient execution of neuroimaging analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1020,23 +1016,23 @@ exploration of parameter space eases Workflow development. The NiPyPe
 package provides a seamless and flexible environment for executing
 Workflows in parallel on a variety of environments from local multi-core
 workstations to high-performance clusters. In the SPM workflow for
-single subject functional data analysis (see Figure
-spm\_tutorial2\_graph), only a few components can be parallelized.
-However, running this workflow across several subjects provides room for
-embarrassingly parallel execution. Running this Workflow in distributed
-mode for 69 subjects on a compute cluster (40 cores distributed across 6
-machines) took 1 hour and 40 minutes relative to the 32 minutes required
-to execute the analysis steps in series for a single subject on the same
-cluster. The difference from the expected runtime of 64 minutes (32
-minutes for the first 40 subjects and another 32 minutes for the
-remaining 29 subjects) stems from disk i/o and other network and
-processing resource bottlenecks.\ :sup:``[g] <#cmnt7>`_`\ 
+single subject functional data analysis (see Figure 9), only a few
+components can be parallelized. However, running this workflow across
+several subjects provides room for embarrassingly parallel execution.
+Running this Workflow in distributed mode for 69 subjects on a compute
+cluster (40 cores distributed across 6 machines) took 1 hour and 40
+minutes relative to the 32 minutes required to execute the analysis
+steps in series for a single subject on the same cluster. The difference
+from the expected runtime of 64 minutes (32 minutes for the first 40
+subjects and another 32 minutes for the remaining 29 subjects) stems
+from disk i/o and other network and processing resource
+bottlenecks.\ :sup:``[g] <#cmnt7>`_`\ 
 
 .. figure:: images/image07.png
    :align: center
    :alt: 
-Figure spm\_tutorial2\_graph. Single subject fMRI Workflow used for
-benchmarking parallel execution.
+Figure 9. Single subject fMRI Workflow used for benchmarking parallel
+execution.
 
 Captures details of analysis required to reproduce results
 
@@ -1095,7 +1091,7 @@ on became popular community-driven FOSS projects, attracting users and
 contributors, and even often outlasting the involvement of the original
 authors. Python has already been embraced by the neuroscientific
 community and is rapidly gaining popularity (Bednar, 2009; Goodman &
-Brette, 2009). The Connectome viewer and library, DiPy, NiBabel, NiPy,
+Brette, 2009). The Connectome Viewer Toolkit(REF), DiPy, NiBabel, NiPy,
 NiTime, PyMVPA, PyXNAT and Scikits-Learn are just a few examples of
 neuroimaging related software written in Python. NiPyPe, based on
 Python, thus has immediate access to this extensive community and its
