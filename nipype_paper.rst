@@ -131,17 +131,17 @@ Furthermore, very few of the available neuroimaging tools take advantage
 of the growing number of parallel hardware configurations (multicore,
 clusters, clouds and supercomputers).
 
-5) Method sections are often inadequate for reproducing results. Several
-journals (e.g., PNAS, Science, PLoS) require mandatory submission of
-data and scripts necessary to reproduce results of the a study. However,
-most current method sections do not have sufficient details to enable a
-researcher knowledgeable in the domain to reproduce the analysis
-process. Furthermore, as discussed above, typical neuroimaging analyses
-integrate several tools and current analysis software do not make it
-easy to reproduce all the analysis steps in the proper order. This
-leaves a significant burden on the user to satisfy these journal
-requirements as well as ensure that analysis details are preserved with
-the intent to reproduce.
+5) Method sections of journal articles are often inadequate for
+reproducing results. Several journals (e.g., PNAS, Science, PLoS)
+require mandatory submission of data and scripts necessary to reproduce
+results of the a study. However, most current method sections do not
+have sufficient details to enable a researcher knowledgeable in the
+domain to reproduce the analysis process. Furthermore, as discussed
+above, typical neuroimaging analyses integrate several tools and current
+analysis software do not make it easy to reproduce all the analysis
+steps in the proper order. This leaves a significant burden on the user
+to satisfy these journal requirements as well as ensure that analysis
+details are preserved with the intent to reproduce.
 
 Current solutions
 
@@ -149,7 +149,7 @@ There were several attempts to address those issues by creating a
 pipeline engine. Taverna (REF), VisTrails(REF) are general pipelining
 systems and do not address problems specific to neuroimaging. BrainVisa
 (REF), MIPAV (REF), SPM (REF) include their own batch processing tools,
-but not allow mixing components from other packages. Fiswidgets is on
+but do not allow mixing components from other packages. Fiswidgets is on
 the other side outdated and does not support state of the art methods. A
 much more extensive and feature rich solution is the LONI Pipeline (I.
 D. Dinov et al., 2009; I. Dinov et al., 2010; Rex, Ma, & A. W. Toga,
@@ -209,7 +209,7 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-.. figure:: images/image02.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 
@@ -279,7 +279,7 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-.. figure:: images/image04.png
+.. figure:: images/image03.png
    :align: center
    :alt: 
 Figure simplified\_class\_hierarchy. Simplified class hierarchy of
@@ -739,9 +739,11 @@ laboratories, and address all of the issues described earlier. In
 particular, NiPyPe provides: 1) uniform access to neuroimaging analysis
 software and usage information; 2) a framework for comparative algorithm
 development and dissemination; 3) an environment for methodological
-continuity and paced training of new personnel in laboratories; and 4)
-computationally efficient execution of neuroimaging analysis. In the
-following section, we demonstrate these solutions.
+continuity and paced training of new personnel in laboratories; 4)
+computationally efficient execution of neuroimaging analysis; and 5) a
+mechanism to capture the data processing details in compact scripts and
+graphs. In the following section, we provide examples to demonstrate
+these solutions.
 
 --------------
 
@@ -811,7 +813,7 @@ appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image05.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure html\_help. HTML help page for dtfit command from Camino. This
@@ -966,10 +968,20 @@ runtime of 64 minutes (32 minutes for the first 40 subjects and another
 32 minutes for the remaining 29 subjects) stems from disk i/o and other
 network and processing resource bottlenecks.\ :sup:``[i] <#cmnt9>`_`\ 
 
+Captures details of analysis required to reproduce results
+
+The graphs and code presented in the examples above capture all the
+necessary details to rerun the analysis. Any user who has the same
+versions of the tools installed on their machine and access to the data
+and scripts, will be able to reproduce the results of the study. For
+example, running NiPyPe within the NeuroDebian framework can provide
+access to specific versions of the underlying tools. This provides an
+easy mechanism to be compliant with the submitting data and scripts/code
+mandates of PNAS and Science.
+
 --------------
 
 Discussion
-----------
 
 Current neuroimaging software offer users an incredible opportunity to
 analyze their data in different ways, with different underlying
@@ -979,15 +991,16 @@ neuroimaging analysis software and usage information; 2) No framework
 for comparative algorithm development and dissemination; 3) Personnel
 turnover in laboratories often limit methodological continuity and
 training new personnel takes time; 4) Neuroimaging software packages do
-not address computational efficiency.
+not address computational efficiency; and 5) Method sections of journal
+articles are often inadequate for reproducing results.
 
 We addressed these issues by creating NiPyPe, an open-source,
 community-developed initiative under the umbrella of NiPy. NiPyPe,
-solves these issues by providing a uniform interface to existing
+solves these issues by providing uniform Interfaces to existing
 neuroimaging software and by facilitating interaction between these
-packages within workflows. NiPyPe provides an environment that
+packages within Workflows. NiPyPe provides an environment that
 encourages interactive exploration of algorithms from different packages
-(e.g., SPM, FSL), eases the design of workflows within and between
+(e.g., SPM, FSL), eases the design of Workflows within and between
 packages, and reduces the learning curve necessary to use different
 packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
@@ -1004,21 +1017,23 @@ all major operating systems. But the Python community also embraces
 openness in design and availability of software and is evidenced by the
 growing list of python software. Python has already been embraced by the
 neuroscientific community and is rapidly gaining popularity (Bednar,
-2009; Goodman & Brette, 2009). NiPyPe, based on Python, thus has
-immediate access to this extensive community and its software,
-technological resources and support structure.
+2009; Goodman & Brette, 2009). NiPy, DiPy, Nibabel, Nitime, the
+Connectome viewer and library and PyXNAT are just a few examples.
+NiPyPe, based on Python, thus has immediate access to this extensive
+community and its software, technological resources and support
+structure.
 
 NiPyPe provides a formal and flexible framework to accommodate the
 diversity of imaging software. Within neuroimaging community, not all
 software are limited to well behaved command line tools. Furthermore, a
 number of these tools do not have well defined inputs, outputs or usage
-help. Currently we use Enthought Traits to define inputs and outputs of
-interfaces. However, such definitions can be easily translated into
+help. Although, currently we use Enthought Traits to define inputs and
+outputs of interfaces, such definitions can be easily translated into
 instances of an XML schema. On the other hand, when a tool provides a
-formal description of their inputs and outputs (e.g., Slicer 3D;
-slicer.org), it is possible to take these definitions and automatically
+formal XML description of their inputs and outputs (e.g., Slicer 3D,
+BRAINS), it is possible to take these definitions and automatically
 generate NiPyPe wrappers for those classes.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NiPyPe development welcomes input and contributions from the community.
 The source code is freely distributed under a BSD license allowing
@@ -1029,20 +1044,20 @@ world. The diverse and geographically distributed user and developer
 base makes NiPyPe a flexible project that takes into account needs of
 many scientists.
 
-Improving openness and transparency of research has been a goal of
-NiPyPe since its inception. A workflow definition is in principle
-sufficient to replicate the analysis. Since it was used to actually
-analyze the data it is more detailed and accurate than a typical methods
-description in a paper, but also has the advantage of being reused by
-others. By accompanying a publication with a formal definition of
-processing pipeline (such as a NiPyPe script) increases reproducibility
-and transparency of research. The Interfaces and Workflows of NiPyPe
-capture neuroimaging analysis knowledge and the evolution of methods.
-Workflows can be reused and shared within and across laboratories. In
-addition, at the execution level, NiPyPe captures a variety of
-provenance information. However, this aspect can be improved by
-generating provenance reports defined by a standardized XML schema
-(Mackenzie-Graham, Van Horn, Woods, Crawford, & Toga, 2008).
+Improving openness and transparency, and reproducibility of research has
+been a goal of NiPyPe since its inception. A Workflow definition is, in
+principle, sufficient to reproduce the analysis. Since it was used to
+actually analyze the data it is more detailed and accurate than a
+typical methods description in a paper, but also has the advantage of
+being reused and shared within and across laboratories. Accompanying a
+publication with a formal definition of the processing pipeline (such as
+a NiPyPe script) increases reproducibility and transparency of research.
+The Interfaces and Workflows of NiPyPe capture neuroimaging analysis
+knowledge and the evolution of methods. Although, at the execution
+level, NiPyPe captures a variety of provenance information, this aspect
+can be improved by generating provenance reports defined by a
+standardized XML schema (Mackenzie-Graham, Van Horn, Woods, Crawford, &
+Toga, 2008).
 
 Increased diversity of neuroimaging data processing software has made
 systematic comparison of performance and accuracy of underlying
@@ -1062,13 +1077,13 @@ Summary
 ~~~~~~~
 
 We present an extensible framework for creating Interfaces and Workflows
-for neuroimaging data processing. Community based open in nature
-development provides flexibility required in scientific use.
-Prototyping, algorithm comparison and parameter space exploration are
-some of the core design features. Our framework also improves
-reproducibility by providing provenance tracking. Exchangibility of
-pipelines created using NiPyPe stimulates collaboration in the broader
-neuroimaging community.
+for neuroimaging data processing. An open, community-driven development
+philosophy provides flexibility required to address the diverse needs in
+neuroimaging analysis. Prototyping, algorithm comparison and parameter
+space exploration are some of the core design features. Our framework
+also improves reproducibility by providing provenance tracking.
+Exchangibility of pipelines created using NiPyPe stimulates
+collaboration in the broader neuroimaging community.
 
 Acknowledgements
 
@@ -1082,11 +1097,12 @@ Prof. John Gabrieli’s laboratory at MIT for testing NiPyPe through its
 evolutionary stages, in particular, Tyler Perrachione and Gretchen
 Reynolds. We would also like to thank the developers of FreeSurfer, FSL
 and SPM for being supportive of the project and providing valuable
-feedback on technical issues. Satrajit Ghosh would like to acknowledge
-support from NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the
-Ellison Medical Foundation, Katrien Vander Straeten and Amie Ghosh.
-Krzysztof Gorgolewski would like to thank Mark Bastin, Cyril Pernet, and
-Amos Storkey for their supervision.
+feedback on technical issues. We would like to thank XX for providing
+feedback during the preparation of the manuscript. Satrajit Ghosh would
+like to acknowledge support from NIBIB R03 EB008673 (PI: Ghosh and
+Whitfield-Gabrieli), the Ellison Medical Foundation, Katrien Vander
+Straeten and Amie Ghosh. Krzysztof Gorgolewski would like to thank Mark
+Bastin, Cyril Pernet, and Amos Storkey for their supervision.
 
 --------------
 
@@ -1823,4 +1839,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image03.png
+.. |image0| image:: images/image02.png
