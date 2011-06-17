@@ -471,22 +471,34 @@ one input at a time. For example, the FSL ‘bet’ program can only run on
 a single input, but wrapping the BET Interface in a MapNode allows
 running ‘bet’ on multiple inputs.
 
-Interfaces encapsulated into Node or MapNode objects can be connected
-together within a Workflow. By connecting inputs of some Nodes to
-outputs of others user implicitly specifies dependencies. These are
-represented internally as a directed acyclic graph (DAG). The current
-semantics of Workflow do not allow conditionals and hence the graph
-needs to be acyclic. Workflows themselves can be a node of the Workflow
-graph (see Figure architecture\_overview). This enables a hierarchical
-architecture and encourages workflow reuse. The workflow engine
-validates that all nodes have unique names, ensures that there are no
-cycles and prevents connecting multiple outputs to a given input. For
-example in an fMRI processing Workflow, the preprocessing, model fitting
-and visualisation of results can be implemented as individual Workflows
-connected together in the main Workflow. This not only improves clarity
-of designed Workflows but also enables easy exchange of whole subsets.
-Common Workflows can be shared across different studies within and
-across laboratories thus reducing redundancy and increasing consistency.
+A Workflow object captures the processing stages of a pipeline and the
+dependencies between these processes. Interfaces encapsulated into Node
+or MapNode objects can be connected together within a Workflow. By
+connecting outputs of some Nodes to inputs of others, the user
+implicitly specifies dependencies. These are represented internally as a
+directed acyclic graph (DAG). The current semantics of Workflow do not
+allow conditionals and hence the graph needs to be acyclic. Workflows
+themselves can be a node of the Workflow graph (see Figure
+architecture\_overview). This enables a hierarchical architecture and
+encourages workflow reuse. The workflow engine validates that all nodes
+have unique names, ensures that there are no cycles and prevents
+connecting multiple outputs to a given input. For example in an fMRI
+processing Workflow, the preprocessing, model fitting and visualisation
+of results can be implemented as individual Workflows connected together
+in the main Workflow. This not only improves clarity of designed
+Workflows but also enables easy exchange of whole subsets. Common
+Workflows can be shared across different studies within and across
+laboratories thus reducing redundancy and increasing consistency.
+
+While a neuroimaging processing pipeline could be implemented as a Bash,
+MATLAB or a Python script, NiPyPe explicitly implements a pipeline as a
+graph. This makes it easy to follow what steps are being executed and in
+what order. It also makes it easier to go back and change things by
+simply reconnecting different outputs and inputs or by inserting new
+Nodes/MapNodes. This alleviates the tedious component of scripting where
+one has to manually ensure that the inputs and outputs of different
+processing calls match and that operations do not overwrite each others
+outputs.
 
 A Workflow provides a detailed description of the processing steps and
 how data flows between Interfaces. Thus it is also a source of
@@ -1005,7 +1017,7 @@ and scripts, will be able to reproduce the results of the study. For
 example, running NiPyPe within the NeuroDebian framework can provide
 access to specific versions of the underlying tools. This provides an
 easy mechanism to be compliant with the submitting data and scripts/code
-mandates of PNAS and Science.
+mandates of journals such as PNAS and Science.
 
 --------------
 
