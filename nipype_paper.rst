@@ -239,7 +239,7 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-.. figure:: images/image05.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 
@@ -309,7 +309,7 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-.. figure:: images/image03.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 Figure simplified\_class\_hierarchy. Simplified class hierarchy of
@@ -843,7 +843,7 @@ appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image04.png
+.. figure:: images/image03.png
    :align: center
    :alt: 
 Figure html\_help. HTML help page for dtfit command from Camino. This
@@ -906,7 +906,7 @@ nodes have iterables parameter set. This allows to easily iterate over
 all combinations of FWHM and smoothing algorithms used in the
 comparison.
 
-.. figure:: images/image06.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure smoothing\_comparison\_results. Influence of different smoothing
@@ -1043,9 +1043,17 @@ Hunter, 2010) . The Nibabel package provides support for reading and
 writing common neuroimaging file formats (e.g., NIFTI, ANALYZE and
 DICOM). Being a high-level language, Python supports rapid prototyping,
 is easy to learn and adopt and is available across all major operating
-systems. But the Python community also embraces openness in design and
-availability of software and is evidenced by the growing list of python
-software. Python has already been embraced by the neuroscientific
+systems. Python is also known to be a good choice for the first
+programming language to learn (Zelle 1999) and is chosen as the language
+for introductory programming at many schools and
+universities\ :sup:``[6] <#ftnt6>`_`\ . Being a generic and free, with
+various extensions available "out of the box", it allowed many
+researchers to start implementing and sharing their ideas (scratching
+their itch) with minimal knowledge of Python while learning more of it
+and programming principles along the way. Many of such endeavors later
+on became popular community-driven FOSS projects, attracting users and
+contributors, and even often outlasting the involvement of the original
+authors. Python has already been embraced by the neuroscientific
 community and is rapidly gaining popularity (Bednar, 2009; Goodman &
 Brette, 2009). NiPy, DiPy, Nibabel, Nitime, the Connectome viewer and
 library and PyXNAT are just a few examples. NiPyPe, based on Python,
@@ -1531,6 +1539,8 @@ main\_workflow.write\_graph()
 `[4] <#ftnt_ref4>`_http://www.opensource.org/docs/osd
 
 `[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
+
+`[6] <#ftnt_ref6>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
 
 `[a] <#cmnt_ref1>`_cindeem:
 
