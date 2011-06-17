@@ -230,11 +230,11 @@ varied needs of a broad neuroimaging community.
 Methods
 -------
 
-NiPyPe consists of three components (see Figure architecture\_overview):
-1) interfaces to external tools that provide a unified way for setting
-inputs, executing and retrieving outputs; 2) a workflow engine that
-allows creating analysis pipelines by connecting inputs and outputs of
-interfaces as a directed acyclic graph (DAG); and 3) plugins
+NiPyPe consists of three components (see Figure 1): 1) interfaces to
+external tools that provide a unified way for setting inputs, executing
+and retrieving outputs; 2) a workflow engine that allows creating
+analysis pipelines by connecting inputs and outputs of interfaces as a
+directed acyclic graph (DAG); and 3) plugins
 that\ :sup:``[c] <#cmnt3>`_`\  execute workflows either locally or in a
 distributed processing environment (e.g.,
 Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the following sections,
@@ -244,14 +244,14 @@ we describe key architectural components and features of this software.
    :align: center
    :alt: 
 
-Figure architecture\_overview. \ :sup:``[d] <#cmnt4>`_`\ Architecture
-overview of the NiPyPe framework. Interfaces are wrapped with Nodes or
-MapNodes and connected together within a Workflows. Workflows themselves
-can act as a Node inside another Workflows supporting encapsulation
-design pattern. Dependency graph is transformed before executing by the
-engine component. Execution is performed by one of the plugins.
-Currently NiPyPe supports serial and parallel (both local multithreading
-and cluster) execution.
+Figure 1. \ :sup:``[d] <#cmnt4>`_`\ Architecture overview of the NiPyPe
+framework. Interfaces are wrapped with Nodes or MapNodes and connected
+together within a Workflows. Workflows themselves can act as a Node
+inside another Workflows supporting encapsulation design pattern.
+Dependency graph is transformed before executing by the engine
+component. Execution is performed by one of the plugins. Currently
+NiPyPe supports serial and parallel (both local multithreading and
+cluster) execution.
 
 Interfaces
 ~~~~~~~~~~
@@ -279,48 +279,74 @@ matlab script, or call a command line program); and (d) a mapping which
 defines the outputs that are produced given a particular set of inputs.
 Using an object oriented approach, we minimize redundancy in interface
 definition by creating a hierarchy of base Interface classes (see Figure
-simplified\_hierarchy) to encapsulate common functionality (e.g.
-Interfaces that call command line programs are derived from the
-CommandLine class, which provides methods to translate Interface inputs
-into command line parameters and for calling the command).
+2) to encapsulate common functionality (e.g. Interfaces that call
+command line programs are derived from the CommandLine class, which
+provides methods to translate Interface inputs into command line
+parameters and for calling the command). Source code of an example
+Interface an be seen in Listing 1.
 
 from nipype.interfaces.base import (
- TraitedSpec,
- CommandLineInputSpec,
- CommandLine,
- File
+
+TraitedSpec,
+
+CommandLineInputSpec,
+
+CommandLine,
+
+File
+
 )
+
 import os
+
 class GZipInputSpec(CommandLineInputSpec):
- input\_file = File(desc = "File", exists = True, mandatory = True,
+
+input\_file = File(desc = "File", exists = True, mandatory = True,
 argstr="%s")
+
 class GZipOutputSpec(TraitedSpec):
- output\_file = File(desc = "Zip file", exists = True)
+
+output\_file = File(desc = "Zip file", exists = True)
+
 class GZipTask(CommandLine):
- input\_spec = GZipInputSpec
- output\_spec = GZipOutputSpec
- cmd = 'gzip'
- def \_list\_outputs(self):
- outputs = self.output\_spec().get()
- outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +
-".gz")\ :sup:``[e] <#cmnt5>`_`\ 
- return outputs
+
+input\_spec = GZipInputSpec
+
+output\_spec = GZipOutputSpec
+
+cmd = 'gzip'
+
+def \_list\_outputs(self):
+
+outputs = self.output\_spec().get()
+
+outputs['output\_file'] = os.path.abspath(self.inputs.input\_file +\\
+".gz")
+
+return outputs
+
 if \_\_name\_\_ == '\_\_main\_\_':
- zipper = GZipTask(input\_file='an\_existing\_file')
- print zipper.cmdline
- zipper.run()
+
+zipper = GZipTask(input\_file='an\_existing\_file')
+
+print zipper.cmdline
+
+zipper.run()
+
+Listing 1. An example interface wrapping gzip command line together with
+example use. This Interface takes a file name as an input calls gzip to
+compress it and returns a name of a compressed file.
 
 .. figure:: images/image01.png
    :align: center
    :alt: 
-Figure simplified\_class\_hierarchy. Simplified class hierarchy of
-Interfaces. Our framework tries to reduce code redundancy and thus make
-adding new interfaces easier and quicker. For example all functionality
-related to execution of command line applications is grouped in one
-class. New classes can inherit from CommandLineInterface. For example
-FSL Interfaces are essentially command lines with some extra common
-properties (such as setting the type of the output file by an
-environment variable).\ :sup:``[f] <#cmnt6>`_`\ 
+Figure 2. Simplified class hierarchy of Interfaces. Our framework tries
+to reduce code redundancy and thus make adding new interfaces easier and
+quicker. For example all functionality related to execution of command
+line applications is grouped in one class. New classes can inherit from
+CommandLineInterface. For example FSL Interfaces are essentially command
+lines with some extra common properties (such as setting the type of the
+output file by an environment variable).\ :sup:``[e] <#cmnt5>`_`\ 
 
 We use Enthought Traits\ :sup:``[3] <#ftnt3>`_`\  to create a formal
 definition for Interface inputs and outputs, to define input constraints
@@ -331,7 +357,7 @@ definition also allows specifying relations between inputs. Often, some
 input options should not be set together (mutual exclusion) while other
 inputs need to be set as a group (mutual inclusion). An example input
 specification for the ‘bet’ (Brain Extraction Tool) program from FSL is
-shown in Listing bet.
+shown in Listing 2.
 
 class BETInputSpec(FSLCommandInputSpec):
 
@@ -354,11 +380,7 @@ functional = traits.Bool(argstr='-F', xor=('functional',
 
 desc="apply to 4D fMRI data")
 
-reduce\_bias = traits.Bool(argstr='-B', xor=\_xor\_inputs,
-
-desc="bias field and neck cleanup")
-
-Listing bet. Part of the inputs specification for the Brain Extraction
+Listing 2. Part of the inputs specification for the Brain Extraction
 Tool (BET) Interface. Full specification covers 18 different arguments.
 Each field of this class is a Traits object which defines an input with
 its data type (i.e. list of integers), constraints (i.e. length of the
@@ -465,12 +487,11 @@ single input to execute the Interface on multiple inputs. When a MapNode
 executes, it creates a separate instance of the underlying Interface for
 every value of an input list and executes these instances independently.
 When all instances finish running, their results are collected into a
-list and exposed through the MapNode’s outputs (see Figure
-iterabes\_vs\_mapnode). This approach improves granularity of the
-workflow and provides easy support for Interfaces that can process only
-one input at a time. For example, the FSL ‘bet’ program can only run on
-a single input, but wrapping the BET Interface in a MapNode allows
-running ‘bet’ on multiple inputs.
+list and exposed through the MapNode’s outputs (see Figure 3). This
+approach improves granularity of the workflow and provides easy support
+for Interfaces that can process only one input at a time. For example,
+the FSL ‘bet’ program can only run on a single input, but wrapping the
+BET Interface in a MapNode allows running ‘bet’ on multiple inputs.
 
 A Workflow object captures the processing stages of a pipeline and the
 dependencies between these processes. Interfaces encapsulated into Node
@@ -479,17 +500,17 @@ connecting outputs of some Nodes to inputs of others, the user
 implicitly specifies dependencies. These are represented internally as a
 directed acyclic graph (DAG). The current semantics of Workflow do not
 allow conditionals and hence the graph needs to be acyclic. Workflows
-themselves can be a node of the Workflow graph (see Figure
-architecture\_overview). This enables a hierarchical architecture and
-encourages workflow reuse. The workflow engine validates that all nodes
-have unique names, ensures that there are no cycles and prevents
-connecting multiple outputs to a given input. For example in an fMRI
-processing Workflow, the preprocessing, model fitting and visualisation
-of results can be implemented as individual Workflows connected together
-in the main Workflow. This not only improves clarity of designed
-Workflows but also enables easy exchange of whole subsets. Common
-Workflows can be shared across different studies within and across
-laboratories thus reducing redundancy and increasing consistency.
+themselves can be a node of the Workflow graph (see Figure 1). This
+enables a hierarchical architecture and encourages workflow reuse. The
+workflow engine validates that all nodes have unique names, ensures that
+there are no cycles and prevents connecting multiple outputs to a given
+input. For example in an fMRI processing Workflow, the preprocessing,
+model fitting and visualisation of results can be implemented as
+individual Workflows connected together in the main Workflow. This not
+only improves clarity of designed Workflows but also enables easy
+exchange of whole subsets. Common Workflows can be shared across
+different studies within and across laboratories thus reducing
+redundancy and increasing consistency.
 
 While a neuroimaging processing pipeline could be implemented as a Bash,
 MATLAB or a Python script, NiPyPe explicitly implements a pipeline as a
@@ -587,12 +608,12 @@ rerunning.
 .. figure:: images/image08.png
    :align: center
    :alt: 
-Figure workflow\_from\_scratch. Graph describing the processing steps
-and dependencies for the example workflow. Every output-input connection
-is represented with a separate arrow. Nodes from every subworkflow are
-grouped in boxes with labels corresponding to the name of the
-subworkflow. Such graphs can be automatically generated from a Workflow
-definition and provide a quick overview of the pipeline.
+Figure 3. Graph describing the processing steps and dependencies for the
+example workflow. Every output-input connection is represented with a
+separate arrow. Nodes from every subworkflow are grouped in boxes with
+labels corresponding to the name of the subworkflow. Such graphs can be
+automatically generated from a Workflow definition and provide a quick
+overview of the pipeline.
 
 Iterables - Parameter space exploration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -676,7 +697,7 @@ Rerunning workflows has also been optimized. The framework checks which
 inputs parameters has changed from the last run and will execute only
 the nodes for which inputs have changed. Even though those changes can
 propagate rerunning time can decrease
-dramatically.\ :sup:``[g] <#cmnt7>`_`\ 
+dramatically.\ :sup:``[f] <#cmnt6>`_`\ 
 
 The Function Interface
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -804,6 +825,7 @@ The help() function for each interface prints the inputs and the outputs
 associated with the interface.
 
 >>> DTIFit.help()
+
 Inputs
 ------
 Mandatory:
@@ -833,6 +855,7 @@ demonstrate how the interface can be used.
 For every Interface, input values are set through the inputs field:
 
 >>> fit.inputs.scheme\_file = 'A.scheme'
+
 >>> fit.inputs.in\_file = 'tensor\_fitted\_data.Bfloat'
 
 When trying to set an invalid input type (for example a non existing
@@ -1007,7 +1030,7 @@ to execute the analysis steps in series for a single subject on the same
 cluster. The difference from the expected runtime of 64 minutes (32
 minutes for the first 40 subjects and another 32 minutes for the
 remaining 29 subjects) stems from disk i/o and other network and
-processing resource bottlenecks.\ :sup:``[h] <#cmnt8>`_`\ 
+processing resource bottlenecks.\ :sup:``[g] <#cmnt7>`_`\ 
 
 .. figure:: images/image07.png
    :align: center
@@ -1140,7 +1163,7 @@ space exploration are some of the core design features. Our framework
 also improves reproducibility by providing provenance tracking.
 Exchangibility of pipelines created using NiPyPe stimulates
 collaboration in the broader neuroimaging
-community.\ :sup:``[i] <#cmnt9>`_`\ 
+community.\ :sup:``[h] <#cmnt8>`_`\ 
 
 Acknowledgements
 
@@ -1630,18 +1653,7 @@ satrajit.ghosh:
 
 how does this one look?
 
-`[e] <#cmnt_ref5>`_davclark:
-
-I assume you'll fix the formatting here - it might confuse people with
-moderate familiarity with python
-
---------------
-
-krzysztof.gorgolewski:
-
-Yes.
-
-`[f] <#cmnt_ref6>`_uni.designer.sg:
+`[e] <#cmnt_ref5>`_uni.designer.sg:
 
 You might want to remove this last sentence, because it is about
 something other than depicted in the Figure
@@ -1653,7 +1665,7 @@ krzysztof.gorgolewski:
 It's an example which in my opinion makes the explanation easier to
 understand.
 
-`[g] <#cmnt_ref7>`_Michael.L.Waskom:
+`[f] <#cmnt_ref6>`_Michael.L.Waskom:
 
 A big advantage of the efficient rerunning in my opinion is the ability,
 after you've written your workflow and started analyzing data, to add
@@ -1688,7 +1700,7 @@ On the other side this is not something that we have address . We plan
 to, and there was some talking about it, but there aren't any quality
 assurance specific mechanisms in nipype.
 
-`[h] <#cmnt_ref8>`_cindeem:
+`[g] <#cmnt_ref7>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1699,37 +1711,37 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[i] <#cmnt_ref9>`_satrajit.ghosh:
+`[h] <#cmnt_ref8>`_satrajit.ghosh:
 
 needs a rewrite and a stronger finishing statement.
 
-`[j] <#cmnt_ref10>`_davclark:
+`[i] <#cmnt_ref9>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[m] <#cmnt_ref13>`_Michael.L.Waskom:
+`[l] <#cmnt_ref12>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1739,7 +1751,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[p] <#cmnt_ref16>`_yarikoptic:
+`[o] <#cmnt_ref15>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1758,6 +1770,17 @@ Camino), Matlab (SPM) and Python (NiPy)."?
 yarikoptic:
 
 something like that ;-)
+
+`[p] <#cmnt_ref16>`_davclark:
+
+I assume you'll fix the formatting here - it might confuse people with
+moderate familiarity with python
+
+--------------
+
+krzysztof.gorgolewski:
+
+Yes.
 
 `[q] <#cmnt_ref17>`_uni.designer.sg:
 
