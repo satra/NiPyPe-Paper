@@ -60,20 +60,19 @@ not address computational efficiency; and 5) Methods sections in journal
 articles are inadequate for reproducing results. To address these
 issues, we present NiPyPe (Neuroimaging in Python: Pipelines and
 Interfaces), an open-source, community-developed, Python-based software
-package. NiPyPe solves the issues by providing Interfaces to existing
-neuroimaging software with uniform usage semantics and by facilitating
-interaction between these packages using Workflows. NiPyPe provides an
-environment that encourages interactive exploration of algorithms, eases
-the design of Workflows within and between packages, allows rapid
-comparative development of algorithms and reduces the learning curve
-necessary to use different packages. NiPyPe supports both local
-execution on multicore machines and remote execution on clusters,
-without additional scripting. NiPyPe is distributed with a BSD License
-allowing anyone unrestricted usage. An open, community-driven
-development philosophy allows rapid adaptation of the software to
-address the varied needs of the evolving neuroimaging community,
-especially in the context of increasing demand for reproducible
-research.
+package and scriptable library. NiPyPe solves the issues by providing
+Interfaces to existing neuroimaging software with uniform usage
+semantics and by facilitating interaction between these packages using
+Workflows. NiPyPe provides an environment that encourages interactive
+exploration of algorithms, eases the design of Workflows within and
+between packages, allows rapid comparative development of algorithms and
+reduces the learning curve necessary to use different packages. NiPyPe
+supports both local and remote execution on multicore machines and
+clusters, without additional scripting. NiPyPe is distributed with a BSD
+License allowing anyone unrestricted usage. An open, community-driven
+development philosophy allows the software to quickly adapt and address
+the varied needs of the evolving neuroimaging community, especially in
+the context of increasing demand for reproducible research.
 
 Keywords: neuroimaging, data processing, workflow, pipeline,
 reproducible research, python
@@ -126,9 +125,9 @@ within the walls of a lab, without extensive exposure or testing.
 Furthermore, testing comparative efficacy of algorithms often requires
 significant effort (Klein et al., 2010). In general, developers create
 software for a single package (e.g., VBM8 for SPM), create a standalone
-cross-platform tool (e.g., mricron) or simply do not distribute the
+cross-platform tool (e.g., Mricron) or simply do not distribute the
 software (e.g., normalization software used for the architectonic
-atlases - CHECK).
+atlases - REF XX).
 
 3) Personnel turnover in laboratories often limits methodological
 continuity and training new personnel takes time. Most cognitive
@@ -954,14 +953,14 @@ Workflows can be very useful in dividing the data processing into
 reusable building blocks. This not only improves the speed of building
 new Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
-reimplemented every time). Reusing workflows is especially important for
-long-running studies when all data has to be analyzed using the same
-methods, but different people might be assigned to do this throut the
-years. Furthermore, a data independent Workflow definition (see Figure
-create\_spm\_preproc) enables sharing Workflows within and across
-research laboratories. NiPyPe provides a medium for exchanging knowledge
-and expertise between researchers focused on methods in neuroimaging and
-those interested in applications.
+reimplemented every time). Since a Workflow definition is an abstract
+and simplified representation of the data processing stream, it is much
+easier to describe and hand over to new project personnel. Furthermore,
+a data independent Workflow definition (see Figure create\_spm\_preproc)
+enables sharing Workflows within and across research laboratories.
+NiPyPe provides a high-level abstraction mechanism for exchanging
+knowledge and expertise between researchers focused on methods in
+neuroimaging and those interested in applications.
 
 The uniform access to Interfaces and the ease of use of Workflows in
 NiPyPe helps with training new staff. Encapsulation provided by
