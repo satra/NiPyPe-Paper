@@ -1036,22 +1036,21 @@ packages. NiPyPe is addressing limitations of existing pipeline systems
 and creating a collaborative platform for neuroimaging software
 development in Python, a high-level scientific computing language.
 
-We use Python for several reasons\ :sup:``[j] <#cmnt10>`_`\ . It has
-extensive scientific computing and visualization support through
-packages such as SciPy, NumPy, Matplotlib and Mayavi (Millman & Aivazis,
-2011; Pérez, Granger, & Hunter, 2010) . The Nibabel package provides
-support for reading and writing common neuroimaging file formats (e.g.,
-NIFTI, ANALYZE and DICOM). Being a high-level language, Python supports
-rapid prototyping, is easy to learn and adopt and is available across
-all major operating systems. But the Python community also embraces
-openness in design and availability of software and is evidenced by the
-growing list of python software. Python has already been embraced by the
-neuroscientific community and is rapidly gaining popularity (Bednar,
-2009; Goodman & Brette, 2009). NiPy, DiPy, Nibabel, Nitime, the
-Connectome viewer and library and PyXNAT are just a few examples.
-NiPyPe, based on Python, thus has immediate access to this extensive
-community and its software, technological resources and support
-structure.
+We use Python for several reasons. It has extensive scientific computing
+and visualization support through packages such as SciPy, NumPy,
+Matplotlib and Mayavi (Millman & Aivazis, 2011; Pérez, Granger, &
+Hunter, 2010) . The Nibabel package provides support for reading and
+writing common neuroimaging file formats (e.g., NIFTI, ANALYZE and
+DICOM). Being a high-level language, Python supports rapid prototyping,
+is easy to learn and adopt and is available across all major operating
+systems. But the Python community also embraces openness in design and
+availability of software and is evidenced by the growing list of python
+software. Python has already been embraced by the neuroscientific
+community and is rapidly gaining popularity (Bednar, 2009; Goodman &
+Brette, 2009). NiPy, DiPy, Nibabel, Nitime, the Connectome viewer and
+library and PyXNAT are just a few examples. NiPyPe, based on Python,
+thus has immediate access to this extensive community and its software,
+technological resources and support structure.
 
 NiPyPe provides a formal and flexible framework to accommodate the
 diversity of imaging software. Within neuroimaging community, not all
@@ -1119,7 +1118,7 @@ Acknowledgements
 
 A complete list of people who have contributed code to the project is
 available at
-http://nipy.org/nipype/contributors.html\ :sup:``[k] <#cmnt11>`_`\ . We
+http://nipy.org/nipype/contributors.html\ :sup:``[j] <#cmnt10>`_`\ . We
 thank Fernando Perez, Matthew Brett, Gael Varoquaux, Jean-Baptiste
 Poline, Bertrand Thirion, Alexis Roche and Jarrod Millman for technical
 and social support and for design discussions. We would like to thank
@@ -1733,33 +1732,7 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[j] <#cmnt_ref10>`_Michael.L.Waskom:
-
-Perhaps more general Python evangelism is out of the scope of this
-paper, but I think that it's worth pointing out that the
-simplicity/consistency of Python syntax compared to BASH or MATLAB is a
-particular virtue in neuroimaging environments where a) "single
-experiments" are often long and involved and outlast the terms of
-individual research staff members (this ties into points you make
-elsewhere in the paper) and b) the people writing, editing, and reading
-the code are generally not trained in software development.
-
---------------
-
-krzysztof.gorgolewski:
-
-True, but such a claim would have to be supported somehow (by a citation
-or an example). Any ideas?
-
---------------
-
-Michael.L.Waskom:
-
-Good point. I replied to this over email as I'm not aware of any but
-wanted to bring it to Yarick's attention because I thought he might be.
-If anyone else is, feel free to chime in!
-
-`[k] <#cmnt_ref11>`_satrajit.ghosh:
+`[j] <#cmnt_ref10>`_satrajit.ghosh:
 
 need to create this page
 
@@ -1775,33 +1748,33 @@ satrajit.ghosh:
 
 because we don't have 33 contributors
 
-`[l] <#cmnt_ref12>`_davclark:
+`[k] <#cmnt_ref11>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[o] <#cmnt_ref15>`_Michael.L.Waskom:
+`[n] <#cmnt_ref14>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[q] <#cmnt_ref17>`_krzysztof.gorgolewski:
+`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1811,7 +1784,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[r] <#cmnt_ref18>`_yarikoptic:
+`[q] <#cmnt_ref17>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1831,7 +1804,7 @@ yarikoptic:
 
 something like that ;-)
 
-`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
+`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
 
 a graph of for example create\_susan\_smooth() or code listing?
 
@@ -1841,11 +1814,11 @@ satrajit.ghosh:
 
 sure
 
-`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
+`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[u] <#cmnt_ref21>`_chris.d.burns:
+`[t] <#cmnt_ref20>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1863,7 +1836,7 @@ What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
 
-`[v] <#cmnt_ref22>`_yarikoptic:
+`[u] <#cmnt_ref21>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
