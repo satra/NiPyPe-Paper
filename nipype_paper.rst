@@ -59,20 +59,21 @@ training new personnel takes time; 4) Neuroimaging software packages do
 not address computational efficiency; and 5) Methods sections in journal
 articles are inadequate for reproducing results. To address these
 issues, we present NiPyPe (Neuroimaging in Python: Pipelines and
-Interfaces), an open-source, community-developed, Python-based software
-package and scriptable library. NiPyPe solves the issues by providing
-Interfaces to existing neuroimaging software with uniform usage
-semantics and by facilitating interaction between these packages using
-Workflows. NiPyPe provides an environment that encourages interactive
-exploration of algorithms, eases the design of Workflows within and
-between packages, allows rapid comparative development of algorithms and
-reduces the learning curve necessary to use different packages. NiPyPe
-supports both local and remote execution on multicore machines and
-clusters, without additional scripting. NiPyPe is distributed with a BSD
-License allowing anyone unrestricted usage. An open, community-driven
-development philosophy allows the software to quickly adapt and address
-the varied needs of the evolving neuroimaging community, especially in
-the context of increasing demand for reproducible research.
+Interfaces; http://nipy.org/nipype), an open-source,
+community-developed, software package and scriptable library. NiPyPe
+solves the issues by providing Interfaces to existing neuroimaging
+software with uniform usage semantics and by facilitating interaction
+between these packages using Workflows. NiPyPe provides an environment
+that encourages interactive exploration of algorithms, eases the design
+of Workflows within and between packages, allows rapid comparative
+development of algorithms and reduces the learning curve necessary to
+use different packages. NiPyPe supports both local and remote execution
+on multicore machines and clusters, without additional scripting. NiPyPe
+is BSD licensed, allowing anyone unrestricted usage. An open,
+community-driven development philosophy allows the software to quickly
+adapt and address the varied needs of the evolving neuroimaging
+community, especially in the context of increasing demand for
+reproducible research.
 
 Keywords: neuroimaging, data processing, workflow, pipeline,
 reproducible research, python
@@ -238,7 +239,7 @@ environment (e.g., Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the
 following sections, we describe key architectural components and
 features of this software.
 
-.. figure:: images/image04.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 
@@ -308,7 +309,7 @@ if \_\_name\_\_ == '\_\_main\_\_':
  print zipper.cmdline
  zipper.run()
 
-.. figure:: images/image06.png
+.. figure:: images/image01.png
    :align: center
    :alt: 
 Figure simplified\_class\_hierarchy. Simplified class hierarchy of
@@ -582,7 +583,7 @@ parameter of specify\_model is changed, some of the Nodes (but not all)
 would have to rerun. NiPyPe automatically determines which Nodes require
 rerunning.
 
-.. figure:: images/image07.png
+.. figure:: images/image08.png
    :align: center
    :alt: 
 Figure workflow\_from\_scratch. Graph describing the processing steps
@@ -653,9 +654,9 @@ the Workflow in series is then simply a matter of performing a
 topological sort on the graph and running each node in the sorted order.
 However, NiPyPe also provides additional plugins using Python’s
 multi-processing module, IPython (includes ssh-based, SGE, LSF, PBS,
-among others) and native interfaces to SGE/PBS clusters. For all of
-these, the graph structure defines the dependencies as well as which
-nodes can be executed in parallel at any given stage of execution.
+among others) and native interfaces to SGE or PBS/Torque clusters. For
+all of these, the graph structure defines the dependencies as well as
+which nodes can be executed in parallel at any given stage of execution.
 
 One of the biggest advantages of NiPyPe’s execution system is that
 parallel execution using local multi processing plug-in does not require
@@ -852,7 +853,7 @@ appropriate form (e.g., command line arguments or matlab scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image03.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure html\_help. HTML help page for dtfit command from Camino. This
@@ -972,7 +973,7 @@ Playing with Interfaces in an interactive console is also a great way to
 learn how different algorithms work with different parameters without
 having to understand how to set them up and execute them.
 
-.. figure:: images/image01.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 Figure create\_spm\_preproc. create\_spm\_preproc() functions returns
@@ -995,17 +996,23 @@ exploration of parameter space eases Workflow development. The NiPyPe
 package provides a seamless and flexible environment for executing
 Workflows in parallel on a variety of environments from local multi-core
 workstations to high-performance clusters. In the SPM workflow for
-single subject functional data analysis shown
-below\ :sup:``[d] <#cmnt4>`_`\ , only a few components can be
-parallelized. However, running this workflow across several subjects
-provides room for embarrassingly parallel execution. Running this
-Workflow in distributed mode for 69 subjects on a compute cluster (40
-cores distributed across 6 machines) took 1 hour and 40 minutes relative
-to the 32 minutes required to execute the analysis steps in series for a
-single subject on the same cluster. The difference from the expected
-runtime of 64 minutes (32 minutes for the first 40 subjects and another
-32 minutes for the remaining 29 subjects) stems from disk i/o and other
-network and processing resource bottlenecks.\ :sup:``[e] <#cmnt5>`_`\ 
+single subject functional data analysis (see Figure
+spm\_tutorial2\_graph), only a few components can be parallelized.
+However, running this workflow across several subjects provides room for
+embarrassingly parallel execution. Running this Workflow in distributed
+mode for 69 subjects on a compute cluster (40 cores distributed across 6
+machines) took 1 hour and 40 minutes relative to the 32 minutes required
+to execute the analysis steps in series for a single subject on the same
+cluster. The difference from the expected runtime of 64 minutes (32
+minutes for the first 40 subjects and another 32 minutes for the
+remaining 29 subjects) stems from disk i/o and other network and
+processing resource bottlenecks.\ :sup:``[d] <#cmnt4>`_`\ 
+
+.. figure:: images/image07.png
+   :align: center
+   :alt: 
+Figure spm\_tutorial2\_graph. Single subject fMRI Workflow used for
+benchmarking parallel execution.
 
 Captures details of analysis required to reproduce results
 
@@ -1132,7 +1139,7 @@ space exploration are some of the core design features. Our framework
 also improves reproducibility by providing provenance tracking.
 Exchangibility of pipelines created using NiPyPe stimulates
 collaboration in the broader neuroimaging
-community.\ :sup:``[f] <#cmnt6>`_`\ 
+community.\ :sup:``[e] <#cmnt5>`_`\ 
 
 Acknowledgements
 
@@ -1647,23 +1654,7 @@ On the other side this is not something that we have address . We plan
 to, and there was some talking about it, but there aren't any quality
 assurance specific mechanisms in nipype.
 
-`[d] <#cmnt_ref4>`_satrajit.ghosh:
-
-INSERT workflow figure or attach as supplementary material
-
---------------
-
-krzysztof.gorgolewski:
-
-is that spm\_tutorial.py?
-
---------------
-
-satrajit.ghosh:
-
-yes
-
-`[e] <#cmnt_ref5>`_cindeem:
+`[d] <#cmnt_ref4>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1674,20 +1665,20 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[f] <#cmnt_ref6>`_satrajit.ghosh:
+`[e] <#cmnt_ref5>`_satrajit.ghosh:
 
 needs a rewrite and a stronger finishing statement.
 
-`[g] <#cmnt_ref7>`_davclark:
+`[f] <#cmnt_ref6>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
+`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[i] <#cmnt_ref9>`_uni.designer.sg:
+`[h] <#cmnt_ref8>`_uni.designer.sg:
 
 if there are no publications to reference, the URL should go as
 footnotes (as required by Frontiers)
@@ -1698,24 +1689,24 @@ krzysztof.gorgolewski:
 
 There is a proper reference - I'll put it when I compose the manuscript.
 
-`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
+`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[k] <#cmnt_ref11>`_Michael.L.Waskom:
+`[j] <#cmnt_ref10>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1725,7 +1716,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[n] <#cmnt_ref14>`_yarikoptic:
+`[m] <#cmnt_ref13>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1745,7 +1736,7 @@ yarikoptic:
 
 something like that ;-)
 
-`[o] <#cmnt_ref15>`_uni.designer.sg:
+`[n] <#cmnt_ref14>`_uni.designer.sg:
 
 Is plugin the correct term here?
 
@@ -1755,11 +1746,11 @@ krzysztof.gorgolewski:
 
 Yes. An exchangeable piece of code with unified interface.
 
-`[p] <#cmnt_ref16>`_uni.designer.sg:
+`[o] <#cmnt_ref15>`_uni.designer.sg:
 
 developer
 
-`[q] <#cmnt_ref17>`_uni.designer.sg:
+`[p] <#cmnt_ref16>`_uni.designer.sg:
 
 You might want to remove this last sentence, because it is about
 something other than depicted in the Figure
@@ -1770,6 +1761,22 @@ krzysztof.gorgolewski:
 
 It's an example which in my opinion makes the explanation easier to
 understand.
+
+`[q] <#cmnt_ref17>`_satrajit.ghosh:
+
+INSERT workflow figure or attach as supplementary material
+
+--------------
+
+krzysztof.gorgolewski:
+
+is that spm\_tutorial.py?
+
+--------------
+
+satrajit.ghosh:
+
+yes
 
 `[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
 
@@ -1809,4 +1816,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image02.png
+.. |image0| image:: images/image03.png
