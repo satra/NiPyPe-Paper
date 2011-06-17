@@ -44,6 +44,37 @@ Running title: NiPyPe Neuroimaging Data Processing Framework
 
 Abstract
 
+Current neuroimaging software offer users an incredible opportunity to
+analyze their data in different ways, with different underlying
+assumptions. Several sophisticated software packages (e.g., AFNI,
+BrainVoyager, FSL, FreeSurfer, NiPy, R, SPM) are used to process and
+analyze large and often diverse (highly multi-dimensional) data.
+However, this heterogeneous collection of specialized applications
+creates several issues that hinder replicable, efficient and optimal use
+of neuroimaging analysis approaches: 1) No uniform access to
+neuroimaging analysis software and usage information; 2) No framework
+for comparative algorithm development and dissemination; 3) Personnel
+turnover in laboratories often limits methodological continuity and
+training new personnel takes time; 4) Neuroimaging software packages do
+not address computational efficiency; and 5) Methods sections in journal
+articles are inadequate for reproducing results. To address these
+issues, we present NiPyPe (Neuroimaging in Python: Pipelines and
+Interfaces), an open-source, community-developed, Python-based software
+package. NiPyPe solves the issues by providing Interfaces to existing
+neuroimaging software with uniform usage semantics and by facilitating
+interaction between these packages using Workflows. NiPyPe provides an
+environment that encourages interactive exploration of algorithms, eases
+the design of Workflows within and between packages, allows rapid
+comparative development of algorithms and reduces the learning curve
+necessary to use different packages. NiPyPe supports both local
+execution on multicore machines and remote execution on clusters,
+without additional scripting. NiPyPe is distributed with a BSD License
+allowing anyone unrestricted usage. An open, community-driven
+development philosophy allows rapid adaptation of the software to
+address the varied needs of the evolving neuroimaging community,
+especially in the context of increasing demand for reproducible
+research.
+
 Keywords: neuroimaging, data processing, workflow, pipeline, provenance,
 python
 
@@ -71,9 +102,8 @@ difficult.
 Current problems
 ~~~~~~~~~~~~~~~~
 
-Here we outline major technical, practical and social issues hinder
-replicable, efficient and optimal use of neuroimaging analysis
-approaches:
+Here we outline issues that hinder replicable, efficient and optimal use
+of neuroimaging analysis approaches.
 
 1) No uniform access to neuroimaging analysis software and usage
 information. For current multi-modal datasets, researchers typically
