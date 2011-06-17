@@ -402,65 +402,65 @@ Name
 
 URL
 
-FSL
+AFNI
 
-www.fmrib.ox.ac.uk/fsl
-
-SPM
-
-www.fil.ion.ucl.ac.uk/spm
-
-Camino
-
-www.cs.ucl.ac.uk/research/medic/camino
-
-NiPy
-
-nipy.sourceforge.net/nipy
-
-ConnecomeViewerToolkit
-
-www.connectomeviewer.org
-
-NiTime
-
-nipy.sourceforge.net/nitime
-
-Diffusion Toolkit
-
-www.trackvis.org/dtk
-
-Camino-TrackVis
-
-www.nitrc.org/projects/camino-trackvis
-
-FreeSurfer
-
-surfer.nmr.mgh.harvard.edu
-
-Slicer
-
-www.slicer.org/
+afni.nimh.nih.gov/afni
 
 BRAINS
 
 www.psychiatry.uiowa.edu/mhcrc/IPLpages/BRAINS.htm
 
+Camino
+
+www.cs.ucl.ac.uk/research/medic/camino
+
+Camino-TrackVis
+
+www.nitrc.org/projects/camino-trackvis
+
+ConnecomeViewerToolkit
+
+www.connectomeviewer.org
+
 dcm2nii
 
 www.cabiatl.com/mricro/mricron/dcm2nii.html
 
-AFNI
+Diffusion Toolkit
 
-afni.nimh.nih.gov/afni
+www.trackvis.org/dtk
 
-XNAT
+FreeSurfer
 
-www.xnat.org
+surfer.nmr.mgh.harvard.edu
+
+FSL
+
+www.fmrib.ox.ac.uk/fsl
+
+NiPy
+
+nipy.sourceforge.net/nipy
+
+NiTime
+
+nipy.sourceforge.net/nitime
+
+Slicer
+
+www.slicer.org/
+
+SPM
+
+www.fil.ion.ucl.ac.uk/spm
 
 SQLite
 
 www.sqlite.org
+
+XNAT
+
+www.xnat.org
 
 Table supported\_software. List of software packages fully or partially
 supported by NiPyPe. For more details
@@ -786,13 +786,13 @@ modification and distribution and additionally meets all the
 requirements of open source definition (see Open Source
 Initiative\ :sup:``[4] <#ftnt4>`_`\ ) and Debian Free Software
 Guidelines\ :sup:``[5] <#ftnt5>`_`\ . Development is carried out openly
-through distributed version control system (GIT via GitHub) in an online
-community. The current version of the source code together with complete
-history is accessible to everyone. Discussions between developers and
-design decisions are done on an open access mailing list. Such setup
-encourages a broader community of developers to join the project and
-allows sharing of the development resources (effort, money, information
-and time).
+through distributed version control system (GIT via
+GitHub\ :sup:``[6] <#ftnt6>`_`\ ) in an online community. The current
+version of the source code together with complete history is accessible
+to everyone. Discussions between developers and design decisions are
+done on an open access mailing list. Such setup encourages a broader
+community of developers to join the project and allows sharing of the
+development resources (effort, money, information and time).
 
 In these previous paragraphs, we presented key features of NiPyPe that
 facilitate rapid development and deployment of analysis procedures in
@@ -1082,7 +1082,7 @@ is easy to learn and adopt and is available across all major operating
 systems. Python is also known to be a good choice for the first
 programming language to learn (Zelle 1999) and is chosen as the language
 for introductory programming at many schools and
-universities\ :sup:``[6] <#ftnt6>`_`\ . Being a generic and free, with
+universities\ :sup:``[7] <#ftnt7>`_`\ . Being a generic and free, with
 various extensions available "out of the box", it allowed many
 researchers to start implementing and sharing their ideas (scratching
 their itch) with minimal knowledge of Python while learning more of it
@@ -1119,7 +1119,7 @@ contributions from users from all around the world. The diverse and
 geographically distributed user and developer base makes NiPyPe a
 flexible project that takes into account needs of many scientists.
 
-Improving openness and transparency, and reproducibility of research has
+Improving openness, transparency, and reproducibility of research has
 been a goal of NiPyPe since its inception. A Workflow definition is, in
 principle, sufficient to reproduce the analysis. Since it was used to
 actually analyze the data it is more detailed and accurate than a
@@ -1166,18 +1166,18 @@ Acknowledgements
 A list of people who have contributed code to the project is available
 at http://github.com/nipy/nipype/contributors. We thank Fernando Perez,
 Matthew Brett, Gael Varoquaux, Jean-Baptiste Poline, Bertrand Thirion,
-Alexis Roche and Jarrod Millman for technical and social support and for
-design discussions. We would like to thank Prof. John Gabrieli’s
-laboratory at MIT for testing NiPyPe through its evolutionary stages, in
-particular, Tyler Perrachione and Gretchen Reynolds. We would also like
-to thank the developers of FreeSurfer, FSL and SPM for being supportive
-of the project and providing valuable feedback on technical issues. We
-would like to thank XX for providing feedback during the preparation of
-the manuscript. Satrajit Ghosh would like to acknowledge support from
-NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the Ellison
-Medical Foundation, Katrien Vander Straeten and Amie Ghosh. Krzysztof
-Gorgolewski would like to thank Mark Bastin, Cyril Pernet, and Amos
-Storkey for their supervision.
+Stephan Gerhard, Alexis Roche and Jarrod Millman for technical and
+social support and for design discussions. We would like to thank Prof.
+John Gabrieli’s laboratory at MIT for testing NiPyPe through its
+evolutionary stages, in particular, Tyler Perrachione and Gretchen
+Reynolds. We would also like to thank the developers of FreeSurfer, FSL
+and SPM for being supportive of the project and providing valuable
+feedback on technical issues. We would like to thank XX for providing
+feedback during the preparation of the manuscript. Satrajit Ghosh would
+like to acknowledge support from NIBIB R03 EB008673 (PI: Ghosh and
+Whitfield-Gabrieli), the Ellison Medical Foundation, Katrien Vander
+Straeten and Amie Ghosh. Krzysztof Gorgolewski would like to thank Mark
+Bastin, Cyril Pernet, and Amos Storkey for their supervision.
 
 --------------
 
@@ -1578,7 +1578,9 @@ main\_workflow.write\_graph()
 
 `[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
 
-`[6] <#ftnt_ref6>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
+`[6] <#ftnt_ref6>`_`http://github.com/nipy/nipype <https://github.com/nipy/nipype>`_
+
+`[7] <#ftnt_ref7>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
 
 `[a] <#cmnt_ref1>`_uni.designer.sg:
 
