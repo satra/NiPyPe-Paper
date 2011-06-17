@@ -68,8 +68,8 @@ that encourages interactive exploration of algorithms, eases the design
 of Workflows within and between packages, allows rapid comparative
 development of algorithms and reduces the learning curve necessary to
 use different packages. NiPyPe supports both local and remote execution
-on multicore machines and clusters, without additional scripting. NiPyPe
-is BSD licensed, allowing anyone unrestricted usage. An open,
+on multi-core machines and clusters, without additional scripting.
+NiPyPe is BSD licensed, allowing anyone unrestricted usage. An open,
 community-driven development philosophy allows the software to quickly
 adapt and address the varied needs of the evolving neuroimaging
 community, especially in the context of increasing demand for
@@ -158,7 +158,7 @@ Researchers usually experiment with different methods and their
 parameters to create a workflow suitable for their application, but no
 suitable framework currently exists to make this process efficient.
 Furthermore, very few of the available neuroimaging tools take advantage
-of the growing number of parallel hardware configurations (multicore,
+of the growing number of parallel hardware configurations (multi-core,
 clusters, clouds and supercomputers).
 
 5) Method sections of journal articles are often inadequate for
@@ -218,7 +218,7 @@ programming language – Python – as its foundation. Processing modules
 and their inputs and outputs are described in an object-oriented manner
 providing the flexibility to interface with any type of software (not
 just well behaved command lines). The workflow execution engine has a
-plug-in architecture and supports both local execution on multicore
+plug-in architecture and supports both local execution on multi-core
 machines and remote execution on clusters. NiPyPe is distributed
 with\ :sup:``[b] <#cmnt2>`_`\  a BSD license allowing anyone to make
 changes and redistribute it. Development is done openly with
@@ -317,8 +317,8 @@ Figure simplified\_class\_hierarchy. Simplified class hierarchy of
 Interfaces. Our framework tries to reduce code redundancy and thus make
 adding new interfaces easier and quicker. For example all functionality
 related to execution of command line applications is grouped in one
-class. New classes can be added on top of that. For example FSL
-Interfaces are essentially command lines with some extra common
+class. New classes can inherit from CommandLineInterface. For example
+FSL Interfaces are essentially command lines with some extra common
 properties (such as setting the type of the output file by an
 environment variable).\ :sup:``[f] <#cmnt6>`_`\ 
 
@@ -367,14 +367,14 @@ exclusive with another, see the xor parameter), and additional
 parameters (such as argstr and position which describe how to convert an
 input into a command line argument).
 
-Currently, NiPyPe (version 0.4) ships with wide range of interfaces (see
-Table supported\_software.). Adding new Interfaces is simply a matter of
-writing a Python class definition as was shown in Figure XX. When a
-formal specification of inputs and outputs are provided by the
-underlying software, NiPyPe can support these programs automatically.
-For example, the Slicer command line execution modules come with an XML
-specification that allows NiPyPe to wrap them without creating
-individual interfaces.
+Currently, NiPyPe (version 0.4) is distributed with a wide range of
+interfaces (see Table supported\_software.). Adding new Interfaces is
+simply a matter of writing a Python class definition as was shown in
+Figure XX. When a formal specification of inputs and outputs are
+provided by the underlying software, NiPyPe can support these programs
+automatically. For example, the Slicer command line execution modules
+come with an XML specification that allows NiPyPe to wrap them without
+creating individual interfaces.
 
 Name
 
@@ -761,9 +761,9 @@ Development
 NiPyPe is trying to address the problem of interacting with ever
 changing universe of neuroimaging software in a sustainable manner.
 Therefore the way its development is managed is a part of the solution.
-NiPyPe is distributed under Berkeley Software Distribution license which
-allows free copying, modification and distribution and additionally
-meets all the requirements of open source definition (see Open Source
+NiPyPe is distributed under BSD license which allows free copying,
+modification and distribution and additionally meets all the
+requirements of open source definition (see Open Source
 Initiative\ :sup:``[4] <#ftnt4>`_`\ ) and Debian Free Software
 Guidelines\ :sup:``[5] <#ftnt5>`_`\ . Development is carried out openly
 through distributed version control system (GIT via GitHub) in an online
@@ -850,7 +850,7 @@ these conditions are not met.
 NiPyPe standardizes running and accessing help information irrespective
 of whether the underlying software is a MATLAB program, a command line
 tool or Python module. The framework deals with translating inputs into
-appropriate form (e.g., command line arguments or matlab scripts) for
+appropriate form (e.g., command line arguments or MATLAB scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
@@ -928,14 +928,13 @@ main contrast.
 
 Algorithm comparison is not the only way NiPyPe can be useful for a
 neuroimaging methods researcher. It is in the interest of every methods
-author\ :sup:``[h] <#cmnt8>`_`\  to make his or hers work most
-accessible. This usually means providing ready to use implementations.
-However, because the field is so diverse, software developers have to
-provide several packages (SPM toolbox, command line tool, C++ library
-etc.) to cover the whole user base. With NiPyPe, a developer can create
-one Interface and expose a new tool, written in any language, to a
-greater range of users, knowing it will work with the wide range of
-software currently supported by NiPyPe.
+developer to make his or hers work most accessible. This usually means
+providing ready to use implementations. However, because the field is so
+diverse, software developers have to provide several packages (SPM
+toolbox, command line tool, C++ library etc.) to cover the whole user
+base. With NiPyPe, a developer can create one Interface and expose a new
+tool, written in any language, to a greater range of users, knowing it
+will work with the wide range of software currently supported by NiPyPe.
 
 A good example of such scenario is ArtifactDetection toolbox (ref TODO).
 This piece of software uses EPI timeseries and realignment parameters to
@@ -1008,7 +1007,7 @@ to execute the analysis steps in series for a single subject on the same
 cluster. The difference from the expected runtime of 64 minutes (32
 minutes for the first 40 subjects and another 32 minutes for the
 remaining 29 subjects) stems from disk i/o and other network and
-processing resource bottlenecks.\ :sup:``[i] <#cmnt9>`_`\ 
+processing resource bottlenecks.\ :sup:``[h] <#cmnt8>`_`\ 
 
 .. figure:: images/image07.png
    :align: center
@@ -1093,13 +1092,13 @@ classes.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NiPyPe development welcomes input and contributions from the community.
-The source code is freely distributed under a BSD license allowing
-anyone any use of the software and NiPyPe conforms to the Open Software
-Definition of the Open Source Initiative. Development process is fully
-transparent and encourages contributions from users from all around the
-world. The diverse and geographically distributed user and developer
-base makes NiPyPe a flexible project that takes into account needs of
-many scientists.
+The source code is freely distributed under a Berkeley Software
+Distribution (BSD) license allowing anyone any use of the software and
+NiPyPe conforms to the Open Software Definition of the Open Source
+Initiative. Development process is fully transparent and encourages
+contributions from users from all around the world. The diverse and
+geographically distributed user and developer base makes NiPyPe a
+flexible project that takes into account needs of many scientists.
 
 Improving openness and transparency, and reproducibility of research has
 been a goal of NiPyPe since its inception. A Workflow definition is, in
@@ -1141,7 +1140,7 @@ space exploration are some of the core design features. Our framework
 also improves reproducibility by providing provenance tracking.
 Exchangibility of pipelines created using NiPyPe stimulates
 collaboration in the broader neuroimaging
-community.\ :sup:``[j] <#cmnt10>`_`\ 
+community.\ :sup:``[i] <#cmnt9>`_`\ 
 
 Acknowledgements
 
@@ -1689,11 +1688,7 @@ On the other side this is not something that we have address . We plan
 to, and there was some talking about it, but there aren't any quality
 assurance specific mechanisms in nipype.
 
-`[h] <#cmnt_ref8>`_uni.designer.sg:
-
-developer
-
-`[i] <#cmnt_ref9>`_cindeem:
+`[h] <#cmnt_ref8>`_cindeem:
 
 Unless you want to be more qualitative you may need more info on the
 system here, or make it more general??
@@ -1704,37 +1699,37 @@ satrajit.ghosh:
 
 does this address your concern?
 
-`[j] <#cmnt_ref10>`_satrajit.ghosh:
+`[i] <#cmnt_ref9>`_satrajit.ghosh:
 
 needs a rewrite and a stronger finishing statement.
 
-`[k] <#cmnt_ref11>`_davclark:
+`[j] <#cmnt_ref10>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[n] <#cmnt_ref14>`_Michael.L.Waskom:
+`[m] <#cmnt_ref13>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
+`[n] <#cmnt_ref14>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[p] <#cmnt_ref16>`_krzysztof.gorgolewski:
+`[o] <#cmnt_ref15>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1744,7 +1739,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[q] <#cmnt_ref17>`_yarikoptic:
+`[p] <#cmnt_ref16>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1763,6 +1758,10 @@ Camino), Matlab (SPM) and Python (NiPy)."?
 yarikoptic:
 
 something like that ;-)
+
+`[q] <#cmnt_ref17>`_uni.designer.sg:
+
+developer
 
 `[r] <#cmnt_ref18>`_satrajit.ghosh:
 
