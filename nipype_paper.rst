@@ -1143,21 +1143,21 @@ community.\ :sup:``[e] <#cmnt5>`_`\
 
 Acknowledgements
 
-A complete list of people who have contributed code to the project is
-available at http://nipy.org/nipype/contributors.html. We thank Fernando
-Perez, Matthew Brett, Gael Varoquaux, Jean-Baptiste Poline, Bertrand
-Thirion, Alexis Roche and Jarrod Millman for technical and social
-support and for design discussions. We would like to thank Prof. John
-Gabrieli’s laboratory at MIT for testing NiPyPe through its evolutionary
-stages, in particular, Tyler Perrachione and Gretchen Reynolds. We would
-also like to thank the developers of FreeSurfer, FSL and SPM for being
-supportive of the project and providing valuable feedback on technical
-issues. We would like to thank XX for providing feedback during the
-preparation of the manuscript. Satrajit Ghosh would like to acknowledge
-support from NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the
-Ellison Medical Foundation, Katrien Vander Straeten and Amie Ghosh.
-Krzysztof Gorgolewski would like to thank Mark Bastin, Cyril Pernet, and
-Amos Storkey for their supervision.
+A list of people who have contributed code to the project is available
+at http://github.com/nipy/nipype/contributors. We thank Fernando Perez,
+Matthew Brett, Gael Varoquaux, Jean-Baptiste Poline, Bertrand Thirion,
+Alexis Roche and Jarrod Millman for technical and social support and for
+design discussions. We would like to thank Prof. John Gabrieli’s
+laboratory at MIT for testing NiPyPe through its evolutionary stages, in
+particular, Tyler Perrachione and Gretchen Reynolds. We would also like
+to thank the developers of FreeSurfer, FSL and SPM for being supportive
+of the project and providing valuable feedback on technical issues. We
+would like to thank XX for providing feedback during the preparation of
+the manuscript. Satrajit Ghosh would like to acknowledge support from
+NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the Ellison
+Medical Foundation, Katrien Vander Straeten and Amie Ghosh. Krzysztof
+Gorgolewski would like to thank Mark Bastin, Cyril Pernet, and Amos
+Storkey for their supervision.
 
 --------------
 
