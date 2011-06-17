@@ -348,7 +348,7 @@ mask = traits.Bool(desc = 'create binary mask image',
 
 argstr='-m')
 
-functional = traits.Bool(argstr='-F', xor= ('functional',
+functional = traits.Bool(argstr='-F', xor=('functional',
 'reduce\_bias'),
 
 desc="apply to 4D fMRI data")
