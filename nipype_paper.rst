@@ -1041,8 +1041,6 @@ access to specific versions of the underlying tools. This provides an
 easy mechanism to be compliant with the submitting data and scripts/code
 mandates of journals such as PNAS and Science.
 
---------------
-
 Discussion
 
 Current neuroimaging software offer users an incredible opportunity to
@@ -1147,16 +1145,18 @@ efficient data analysis for the community.
 Summary
 ~~~~~~~
 
-We present an extensible framework for creating Interfaces and Workflows
-for neuroimaging data processing. An open, community-driven development
-philosophy provides flexibility required to address the diverse needs in
-neuroimaging analysis. Some of the core features include prototyping,
-algorithm comparison and parameter space exploration. Our framework also
-improves reproducibility by providing provenance tracking. Additionally,
-Exchangibility of pipelines created using NiPyPe stimulates
-collaboration in the broader neuroimaging community. NiPyPe makes data
-analysis workflows easy to design, share and execute efficiently,
-improving the overall quality of neuroimaging research.
+We presented NiPyPe, an extensible Python library and framework that
+provides interactive manipulation of neuroimaging data through uniform
+Interfaces and enables reproducible, distributed analysis using the
+Workflow system. Nipype has encouraged the scientific exploration of
+different algorithms and associated parameters, eased the development of
+Workflows within and between packages and reduced the learning curve
+associated with understanding the algorithms, APIs and user interfaces
+of disparate packages. An open, community-driven development philosophy
+provides flexibility required to address the diverse needs in
+neuroimaging analysis. Overall, NiPyPe represents an effort towards
+collaborative, open-source, reproducible and efficient neuroimaging
+software development and analysis.
 
 Acknowledgements
 
