@@ -238,7 +238,7 @@ either locally or in a distributed processing environment (e.g.,
 Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the following sections,
 we describe key architectural components and features of this software.
 
-.. figure:: images/image02.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 
@@ -389,7 +389,7 @@ input into a command line argument).
 Currently, NiPyPe (version 0.4) is distributed with a wide range of
 interfaces (see Table supported\_software.). Adding new Interfaces is
 simply a matter of writing a Python class definition as was shown in
-Listing 1. When a formal specification of inputs and outputs are
+Figure XX. When a formal specification of inputs and outputs are
 provided by the underlying software, NiPyPe can support these programs
 automatically. For example, the Slicer command line execution modules
 come with an XML specification that allows NiPyPe to wrap them without
@@ -873,7 +873,7 @@ appropriate form (e.g., command line arguments or MATLAB scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image05.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure 5. HTML help page for dtfit command from Camino. This was
@@ -934,7 +934,7 @@ parameters comparison. The gray shaded nodes have iterables parameter
 set. This allows to easily iterate over all combinations of FWHM and
 smoothing algorithms used in the comparison.
 
-.. figure:: images/image06.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure 7. Influence of different smoothing methods and their parameters.
@@ -990,7 +990,7 @@ Playing with Interfaces in an interactive console is also a great way to
 learn how different algorithms work with different parameters without
 having to understand how to set them up and execute them.
 
-.. figure:: images/image03.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 Figure 8. create\_spm\_preproc() functions returns this reusable, data
@@ -1771,4 +1771,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image04.png
+.. |image0| image:: images/image03.png
