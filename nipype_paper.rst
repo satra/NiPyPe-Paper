@@ -245,7 +245,7 @@ we describe key architectural components and features of this software.
 Figure 1. Architecture overview of the NiPyPe framework. Interfaces are
 wrapped with Nodes or MapNodes and connected together within a
 Workflows. Workflows themselves can act as a Node inside another
-Workflows supporting encapsulation design pattern. Dependency graph is
+Workflows supporting composite design pattern. Dependency graph is
 transformed before executing by the engine component. Execution is
 performed by one of the plugins. Currently NiPyPe supports serial and
 parallel (both local multithreading and cluster) execution.
@@ -279,7 +279,7 @@ definition by creating a hierarchy of base Interface classes (see Figure
 2) to encapsulate common functionality (e.g. Interfaces that call
 command line programs are derived from the CommandLine class, which
 provides methods to translate Interface inputs into command line
-parameters and for calling the command). Source code of an example
+parameters and for calling the command.) Source code of an example
 Interface an be seen in Listing 1.
 
 from nipype.interfaces.base import (
@@ -299,7 +299,7 @@ import os
 class GZipInputSpec(CommandLineInputSpec):
 
 input\_file = File(desc = "File", exists = True, mandatory = True,
-argstr="%s")
+argstr = "%s")
 
 class GZipOutputSpec(TraitedSpec):
 
