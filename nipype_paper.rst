@@ -127,8 +127,8 @@ Furthermore, testing comparative efficacy of algorithms often requires
 significant effort (Klein et al., 2010). In general, developers create
 software for a single package (e.g., VBM8 for SPM), create a standalone
 cross-platform tool (e.g., Mricron) or simply do not distribute the
-software (e.g., normalization software used for the architectonic
-atlases - REF XX).
+software or code (e.g., normalization software used for registering
+architectonic atlases to MNI single subject template - REF).
 
 3) Personnel turnover in laboratories often limits methodological
 continuity and training new personnel takes time. Most cognitive
@@ -178,9 +178,10 @@ Current solutions
 There were several attempts to address those issues by creating a
 pipeline engine. Taverna (REF), VisTrails(REF) are general pipelining
 systems and do not address problems specific to neuroimaging. BrainVisa
-(REF), MIPAV (REF), SPM (REF) include their own batch processing tools,
-but do not allow mixing components from other packages. Fiswidgets is on
-the other side outdated and does not support state of the art methods. A
+(REF), MIPAV (REF), SPM\ :sup:``[1] <#ftnt1>`_`\  include their own
+batch processing tools, but do not allow mixing components from other
+packages. Fiswidgets (REF), a promising initial approach, appears to
+have not been developed and does not support state of the art methods. A
 much more extensive and feature rich solution is the LONI Pipeline (I.
 D. Dinov et al., 2009; I. Dinov et al., 2010; Rex, Ma, & A. W. Toga,
 2003). It provides an easy to use graphical interface for choosing
@@ -203,9 +204,8 @@ arguments are not easy to describe in the LONI XML schema (e.g., ANTS –
 Avants & Gee, 2004). Although it provides a helpful graphical interface,
 the LONI Pipeline environment does not provide an easy option to script
 a workflow or for rapidly exploring parametric variations within a
-workflow (e.g., VisTrails\ :sup:``[1] <#ftnt1>`_`\ ). Finally, due to
-restrictive licensing, it is not straightforward to modify and
-redistribute the modifications.
+workflow (e.g., VisTrails). Finally, due to restrictive licensing, it is
+not straightforward to modify and redistribute the modifications.
 
 To address issues with existing workflow systems and the ones described
 earlier, we present NiPyPe (Neuroimaging in Python: Pipelines and
@@ -222,7 +222,7 @@ machines and remote execution on clusters. NiPyPe is distributed
 with\ :sup:``[a] <#cmnt1>`_`\  a BSD license allowing anyone to make
 changes and redistribute it. Development is done openly with
 collaborators from many different labs, allowing adaptation to the
-varied needs of a broad neuroimaging community.
+varied needs of the neuroimaging community.
 
 --------------
 
@@ -238,7 +238,7 @@ either locally or in a distributed processing environment (e.g.,
 Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the following sections,
 we describe key architectural components and features of this software.
 
-.. figure:: images/image02.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 
@@ -334,7 +334,7 @@ Listing 1. An example interface wrapping gzip command line together with
 example use. This Interface takes a file name as an input calls gzip to
 compress it and returns a name of a compressed file.
 
-.. figure:: images/image01.png
+.. figure:: images/image00.png
    :align: center
    :alt: 
 Figure 2. Simplified class hierarchy of Interfaces. Our framework tries
@@ -602,7 +602,7 @@ parameter of specify\_model is changed, some of the Nodes (but not all)
 would have to rerun. NiPyPe automatically determines which Nodes require
 rerunning.
 
-.. figure:: images/image08.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure 3. Graph describing the processing steps and dependencies for the
@@ -873,7 +873,7 @@ appropriate form (e.g., command line arguments or MATLAB scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image05.png
+.. figure:: images/image07.png
    :align: center
    :alt: 
 Figure 5. HTML help page for dtfit command from Camino. This was
@@ -926,7 +926,7 @@ only to demonstrate NiPyPe capabilities a comparison between smoothing
 methods is outside of the scope of this paper and will most likely
 require more subjects and quantitative metrics.
 
-.. figure:: images/image00.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure 6. Graph showing the workflow used for the smoothing methods and
@@ -934,7 +934,7 @@ parameters comparison. The gray shaded nodes have iterables parameter
 set. This allows to easily iterate over all combinations of FWHM and
 smoothing algorithms used in the comparison.
 
-.. figure:: images/image06.png
+.. figure:: images/image03.png
    :align: center
    :alt: 
 Figure 7. Influence of different smoothing methods and their parameters.
@@ -952,14 +952,14 @@ base. With NiPyPe, a developer can create one Interface and expose a new
 tool, written in any language, to a greater range of users, knowing it
 will work with the wide range of software currently supported by NiPyPe.
 
-A good example of such scenario is ArtifactDetection toolbox (ref TODO).
-This piece of software uses EPI timeseries and realignment parameters to
-find timepoints (volumes) that are most likely artifacts and should be
-removed (by including them as confound regressors in the design matrix).
-The tool was initially implemented as a MATLAB script, compatible only
-with SPM and used locally within the lab. The current NiPyPe interface
-can work with SPM or FSL Workflows, thereby not limiting its users to
-SPM.
+A good example of such scenario is ArtifactDetection toolbox (ref
+TODO\ :sup:``[d] <#cmnt4>`_`\ ). This piece of software uses EPI
+timeseries and realignment parameters to find timepoints (volumes) that
+are most likely artifacts and should be removed (by including them as
+confound regressors in the design matrix). The tool was initially
+implemented as a MATLAB script, compatible only with SPM and used
+locally within the lab. The current NiPyPe interface can work with SPM
+or FSL Workflows, thereby not limiting its users to SPM.
 
 An environment for methodological continuity and paced training of new
 personnel in laboratories
@@ -990,7 +990,7 @@ Interfaces in an interactive console is also a great way to learn how
 different algorithms work with different parameters without having to
 understand how to set them up and execute them.
 
-.. figure:: images/image03.png
+.. figure:: images/image01.png
    :align: center
    :alt: 
 Figure 8. create\_spm\_preproc() functions returns this reusable, data
@@ -1024,7 +1024,7 @@ from the expected runtime of 64 minutes (32 minutes for the first 40
 subjects and another 32 minutes for the remaining 29 subjects) stems
 from disk I/O and other network and processing resource bottlenecks.
 
-.. figure:: images/image07.png
+.. figure:: images/image08.png
    :align: center
    :alt: 
 Figure 9. Single subject fMRI Workflow used for benchmarking parallel
@@ -1085,11 +1085,13 @@ endeavors later on became popular community-driven FOSS projects,
 attracting users and contributors, and even outlasting the involvement
 of the original authors. Python has already been embraced by the
 neuroscientific community and is rapidly gaining popularity (Bednar,
-2009; Goodman & Brette, 2009). The Connectome Viewer Toolkit(REF), DiPy,
-NiBabel, NiPy, NiTime, PyMVPA, PyXNAT and Scikits-Learn are just a few
-examples of neuroimaging related software written in Python. NiPyPe,
-based on Python, thus has immediate access to this extensive community
-and its software, technological resources and support structure.
+2009; Goodman & Brette, 2009). The Connectome Viewer Toolkit(REF),
+DiPy(REF), NiBabel\ :sup:``[8] <#ftnt8>`_`\ ,
+NiPy\ :sup:``[9] <#ftnt9>`_`\ , NiTime(REF), PyMVPA (REF), PyXNAT (REF)
+and Scikits-Learn\ :sup:``[10] <#ftnt10>`_`\  are just a few examples of
+neuroimaging related software written in Python. NiPyPe, based on
+Python, thus has immediate access to this extensive community and its
+software, technological resources and support structure.
 
 NiPyPe provides a formal and flexible framework to accommodate the
 diversity of imaging software. Within neuroimaging community, not all
@@ -1565,7 +1567,7 @@ main\_workflow.write\_graph()
 
 --------------
 
-`[1] <#ftnt_ref1>`_ http://www.vistrails.org/
+`[1] <#ftnt_ref1>`_`http://www.fil.ion.ucl.ac.uk/spm/software/ <http://www.fil.ion.ucl.ac.uk/spm/software/>`_
 
 `[2] <#ftnt_ref2>`_`http://www.clusterresources.com/products/torque-resource-manager.php <http://www.clusterresources.com/products/torque-resource-manager.php>`_
 
@@ -1578,6 +1580,12 @@ main\_workflow.write\_graph()
 `[6] <#ftnt_ref6>`_`http://github.com/nipy/nipype <https://github.com/nipy/nipype>`_
 
 `[7] <#ftnt_ref7>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
+
+`[8] <#ftnt_ref8>`_`http://nipy.sourceforge.net/nibabel/ <http://nipy.sourceforge.net/nibabel/>`_
+
+`[9] <#ftnt_ref9>`_`http://nipy.sourceforge.net/nipy/ <http://nipy.sourceforge.net/nipy/>`_
+
+`[10] <#ftnt_ref10>`_`http://scikit-learn.sourceforge.net <http://scikit-learn.sourceforge.net/>`_
 
 `[b] <#cmnt_ref2>`_uni.designer.sg:
 
@@ -1626,22 +1634,22 @@ On the other side this is not something that we have address . We plan
 to, and there was some talking about it, but there aren't any quality
 assurance specific mechanisms in nipype.
 
-`[d] <#cmnt_ref4>`_satrajit.ghosh:
+`[d] <#cmnt_ref4>`_krzysztof.gorgolewski:
 
-anybody who has commented on the paper (not the authors)
+I could not find this one.
 
 `[e] <#cmnt_ref5>`_satrajit.ghosh:
 
+anybody who has commented on the paper (not the authors)
+
+`[f] <#cmnt_ref6>`_satrajit.ghosh:
+
 greve and fischl, neuroimage
 
-`[f] <#cmnt_ref6>`_davclark:
+`[g] <#cmnt_ref7>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
-
-`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
-
-I could not find this one.
 
 `[h] <#cmnt_ref8>`_chris.d.burns:
 
@@ -1771,4 +1779,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image04.png
+.. |image0| image:: images/image02.png
