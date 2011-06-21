@@ -981,14 +981,14 @@ between researchers focused on methods in neuroimaging and those
 interested in applications.
 
 The uniform access to Interfaces and the ease of use of Workflows in
-NiPyPe helps with training new staff. Encapsulation provided by
-Workflows allows users to gradually increase the level of details when
-learning how to perform neuroimaging analysis. For example user can
-start with a “black box” Workflow that does analysis from A-Z, and
-gradually learn what the sub-components (and their sub-components) do.
-Playing with Interfaces in an interactive console is also a great way to
-learn how different algorithms work with different parameters without
-having to understand how to set them up and execute them.
+NiPyPe helps with training new staff. Composition provided by Workflows
+allows users to gradually increase the level of details when learning
+how to perform neuroimaging analysis. For example user can start with a
+“black box” Workflow that does analysis from A-Z, and gradually learn
+what the sub-components (and their sub-components) do. Playing with
+Interfaces in an interactive console is also a great way to learn how
+different algorithms work with different parameters without having to
+understand how to set them up and execute them.
 
 .. figure:: images/image03.png
    :align: center
@@ -1022,7 +1022,7 @@ minutes relative to the 32 minutes required to execute the analysis
 steps in series for a single subject on the same cluster. The difference
 from the expected runtime of 64 minutes (32 minutes for the first 40
 subjects and another 32 minutes for the remaining 29 subjects) stems
-from disk i/o and other network and processing resource bottlenecks.
+from disk I/O and other network and processing resource bottlenecks.
 
 .. figure:: images/image07.png
    :align: center
@@ -1076,20 +1076,20 @@ is easy to learn and adopt and is available across all major operating
 systems. Python is also known to be a good choice for the first
 programming language to learn (Zelle 1999) and is chosen as the language
 for introductory programming at many schools and
-universities\ :sup:``[7] <#ftnt7>`_`\ . Being a generic and free, with
-various extensions available "out of the box", it allowed many
-researchers to start implementing and sharing their ideas (scratching
-their itch) with minimal knowledge of Python while learning more of it
-and programming principles along the way. Many of such endeavors later
-on became popular community-driven FOSS projects, attracting users and
-contributors, and even often outlasting the involvement of the original
-authors. Python has already been embraced by the neuroscientific
-community and is rapidly gaining popularity (Bednar, 2009; Goodman &
-Brette, 2009). The Connectome Viewer Toolkit(REF), DiPy, NiBabel, NiPy,
-NiTime, PyMVPA, PyXNAT and Scikits-Learn are just a few examples of
-neuroimaging related software written in Python. NiPyPe, based on
-Python, thus has immediate access to this extensive community and its
-software, technological resources and support structure.
+universities\ :sup:``[7] <#ftnt7>`_`\ . Being a generic and free
+language, with various extensions available "out of the box", it allowed
+many researchers to start implementing and sharing their ideas
+(scratching their itch) with minimal knowledge of Python while learning
+more of the language and programming principles along the way. Many such
+endeavors later on became popular community-driven FOSS projects,
+attracting users and contributors, and even outlasting the involvement
+of the original authors. Python has already been embraced by the
+neuroscientific community and is rapidly gaining popularity (Bednar,
+2009; Goodman & Brette, 2009). The Connectome Viewer Toolkit(REF), DiPy,
+NiBabel, NiPy, NiTime, PyMVPA, PyXNAT and Scikits-Learn are just a few
+examples of neuroimaging related software written in Python. NiPyPe,
+based on Python, thus has immediate access to this extensive community
+and its software, technological resources and support structure.
 
 NiPyPe provides a formal and flexible framework to accommodate the
 diversity of imaging software. Within neuroimaging community, not all
