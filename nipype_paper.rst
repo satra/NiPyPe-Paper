@@ -238,7 +238,7 @@ either locally or in a distributed processing environment (e.g.,
 Torque\ :sup:``[1] <#ftnt1>`_`\ , SGE/OGE). In the following sections,
 we describe key architectural components and features of this software.
 
-.. figure:: images/image01.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 
@@ -334,7 +334,7 @@ Listing 1. An example interface wrapping the gzip command line tool and
 a usage example. This Interface takes a file name as an input, calls
 gzip to compress it and returns a name of the compressed output file.
 
-.. figure:: images/image04.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 Figure 2. Simplified hierarchy of Interface classes. An object-oriented
@@ -609,7 +609,7 @@ parameter of specify\_model is changed, some of the Nodes (but not all)
 would have to rerun. NiPyPe automatically determines which Nodes require
 rerunning.
 
-.. figure:: images/image08.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure 3. Graph depicting the processing steps and dependencies for a
@@ -654,11 +654,11 @@ only the node but also all the nodes dependent on it (see Figure 4).
 we take the processing pipeline A and set iterables parameter of
 DataGrabber to a list of two subjects, NiPyPe will effectivelly execute
 graph B. Identical processing will be applied to every subject from the
-list. Iterables can be used in a graph on many levels. For example
+list. Iterables can be used in a graph on many levels. For example,
 setting iterables on Smooth FWHM to a list of 4 and 8 mm will result in
-graph C. MapNode also branches the execution tree but in contrast to
-iterables it merges it straight away effectively performing a MapReduce
-operation (D).
+graph C. In contrast to iterables, MapNode branches within a node of the
+graph and also merges the results of the branches, effectively
+performing a MapReduce operation (D).
 
 Parallel Distribution and Execution Plug-ins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -677,11 +677,12 @@ writing a plug-in extension conforming to the plug-in API.
 The Workflow engine sends an execution graph to the plug-in. Executing
 the Workflow in series is then simply a matter of performing a
 topological sort on the graph and running each node in the sorted order.
-However, NiPyPe also provides additional plugins using Python’s
-multi-processing module, IPython (includes ssh-based, SGE, LSF, PBS,
-among others) and native interfaces to SGE or PBS/Torque clusters. For
-all of these, the graph structure defines the dependencies as well as
-which nodes can be executed in parallel at any given stage of execution.
+However, NiPyPe also provides additional plugins that use Python’s
+multi-processing module, use IPython (includes ssh-based, SGE, LSF, PBS,
+among others) and provide native interfaces to SGE or PBS/Torque
+clusters. For all of these, the graph structure defines the dependencies
+as well as which nodes can be executed in parallel at any given stage of
+execution.
 
 One of the biggest advantages of NiPyPe’s execution system is that
 parallel execution using local multi processing plug-in does not require
@@ -696,11 +697,10 @@ developing a processing pipeline on a single subject on a local
 workstation to executing it on a bigger cohort on a cluster is therefore
 seamless.
 
-Rerunning workflows has also been optimized. The framework checks which
-inputs parameters has changed from the last run and will execute only
-the nodes for which inputs have changed. Even though those changes can
-propagate rerunning time can decrease
-dramatically.\ :sup:``[b] <#cmnt2>`_`\ 
+Rerunning workflows has also been optimized. When a Node or MapNode is
+run, the framework will actually execute the underlying interface only
+if inputs have changed relative to prior execution. If not, it will
+simply return cached results.\ :sup:``[b] <#cmnt2>`_`\ 
 
 The Function Interface
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -721,15 +721,16 @@ Workflow Visualisation
 ~~~~~~~~~~~~~~~~~~~~~~
 
 To be able to efficiently manage and debug Workflow one has to have
-access to a graphical representation. Using graphviz (Ref), NiPyPe
-generates static graphs representing Nodes and connections between them.
-In the current version four types of graphs are supported: orig – does
-not expand inner Workflows, flat – expands inner workflows, exec –
-expands workflows and iterables, and hierarchical – expands workflows
-but maintains their hierarchy. Graphs can be saved in a variety of file
-formats including Scalable Vector Graphics (SVG) and Portable Network
-Graphics (PNG) (see Figures workflow\_from\_scratch and
-smoothing\_comparison\_workflow for an examples)
+access to a graphical representation. Using graphviz
+(Ref)\ :sup:``[c] <#cmnt3>`_`\ , NiPyPe generates static graphs
+representing Nodes and connections between them. In the current version
+four types of graphs are supported: orig – does not expand inner
+Workflows, flat – expands inner workflows, exec – expands workflows and
+iterables, and hierarchical – expands workflows but maintains their
+hierarchy. Graphs can be saved in a variety of file formats including
+Scalable Vector Graphics (SVG) and Portable Network Graphics (PNG) (see
+Figures workflow\_from\_scratch and smoothing\_comparison\_workflow for
+an examples)
 
 Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~
@@ -772,12 +773,12 @@ automatically installing required packages. NiPyPe is available from
 standard repositories on recent Debian and Ubuntu releases. Moreover,
 NeuroDebian (http://neuro.debian.net - Hanke et al. 2010) repository
 provides the most recent releases of NiPyPe for Debian-based systems and
-a NeuroDebian Virtual Appliance making it possible to deploy NiPyPe in a
-virtual environment on Mac OS X and Windows systems. In addition to
-providing all core dependencies and automatic updates NeuroDebian also
-provides many of the software packages supported by NiPyPe (AFNI, FSL,
-Mricron, etc), making deployment of heterogeneous NiPyPe pipelines more
-straightforward.
+a NeuroDebian Virtual Appliance making it possible to deploy NiPyPe and
+other imaging tools in a virtual environment on several operating
+systems. In addition to providing all core dependencies and automatic
+updates NeuroDebian also provides many of the software packages
+supported by NiPyPe (AFNI, FSL, Mricron, etc), making deployment of
+heterogeneous NiPyPe pipelines more straightforward.
 
 Development
 ~~~~~~~~~~~
@@ -790,7 +791,7 @@ modification and distribution and additionally meets all the
 requirements of open source definition (see Open Source
 Initiative\ :sup:``[3] <#ftnt3>`_`\ ) and Debian Free Software
 Guidelines\ :sup:``[4] <#ftnt4>`_`\ . Development is carried out openly
-through distributed version control system (GIT via
+through distributed version control system (git via
 GitHub\ :sup:``[5] <#ftnt5>`_`\ ) in an online community. The current
 version of the source code together with complete history is accessible
 to everyone. Discussions between developers and design decisions are
@@ -818,7 +819,7 @@ Results
 Uniform accessing to tools, their usage, and execution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Users access interfaces by importing them from NiPyPe modules. Each
+Users access Interfaces by importing them from NiPyPe modules. Each
 neuroimaging software distribution such as FSL, SPM, Camino, etc., has a
 corresponding module in the nipype.interfaces namespace.
 
@@ -848,12 +849,12 @@ Outputs
 tensor\_fitted: path/name of 4D volume in voxel order
 
 The output of the help() function is standardized across all Interfaces.
-It is automatically generated based on input and output definitions and
-includes information about required inputs, types, and default value.
-Alternatively, extended information is available in the form of
-auto-generated HTML documentation on the NiPyPe website (see Figure 5).
-This extended information includes examples that demonstrate how the
-interface can be used.
+It is automatically generated based on the traited input and output
+definitions and includes information about required inputs, types, and
+default value. Alternatively, extended information is available in the
+form of auto-generated HTML documentation on the NiPyPe website (see
+Figure 5). This extended information includes examples that demonstrate
+how the interface can be used.
 
 For every Interface, input values are set through the inputs field:
 
@@ -862,8 +863,8 @@ For every Interface, input values are set through the inputs field:
 >>> fit.inputs.in\_file = 'tensor\_fitted\_data.Bfloat'
 
 When trying to set an invalid input type (for example a non existing
-input file, or a number instead of a string) NiPyPe framework will send
-an error message. Input validity checking before actual Workflow
+input file, or a number instead of a string) NiPyPe framework will
+display an error message. Input validity checking before actual Workflow
 execution saves time. To run an Interface user needs to call run()
 method:
 
@@ -880,7 +881,7 @@ appropriate form (e.g., command line arguments or MATLAB scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image05.png
+.. figure:: images/image07.png
    :align: center
    :alt: 
 Figure 5. HTML help page for dtfit command from Camino. This was
@@ -913,27 +914,25 @@ kernel as implemented in SPM. Second one involves smoothing only voxels
 of similar intensity in attempt to retain structure. This was
 implemented in SUSAN from FSL (S.M. Smith, 1992). Third method involves
 reconstructing surface of the cortex and smoothing along it (Hagler Jr.,
-Saygin, & Martin I. Sereno, 2006). This avoids bleeding of signal over
-sulci.
+Saygin, & Sereno, 2006). This avoids bleeding of signal over sulci.
 
 Establishing parameters from data and smoothing using SUSAN is already
-build into NiPyPe as a Workflow. It can be created using
+built into NiPyPe as a Workflow. It can be created using
 create\_susan\_smooth() function. It has similar inputs and outputs as
 SPM Smooth Interface. Smoothing on a surface involves doing a full
-cortical reconstruction from T1 volume using FreeSurfer (Fischl, M I
-Sereno, & Dale, 1999) followed by coregistering functional images to the
-reconstructed surface using BBRegister. Finally surface smoothing
-algorithm from FreeSurfer is called.
+cortical reconstruction from T1 volume using FreeSurfer (Fischl, Sereno,
+& Dale, 1999) followed by coregistering functional images to the
+reconstructed surface using BBRegister (REF\ :sup:``[d] <#cmnt4>`_`\ ).
+Finally, surface smoothing algorithm from FreeSurfer is called.
 
 Smoothed EPI volumes (direct/local influence) and statistical maps
 (indirect/global influence), along with the pipeline used to generate
 them can be found in Figure 6 and 7. Full code used to generate this
 data can be found in the supplementary material. This comparison serves
-only to demonstrate NiPyPe capabilities a comparison between smoothing
-methods is outside of the scope of this paper and will most likely
-require more subjects and quantitative metrics.
+only to demonstrate NiPyPe capabilities; a comparison between smoothing
+methods is outside of the scope of this paper.
 
-.. figure:: images/image00.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure 6. Graph showing the workflow used for the smoothing methods and
@@ -941,7 +940,7 @@ parameters comparison. The gray shaded nodes have iterables parameter
 set. This allows to easily iterate over all combinations of FWHM and
 smoothing algorithms used in the comparison.
 
-.. figure:: images/image06.png
+.. figure:: images/image03.png
    :align: center
    :alt: 
 Figure 7. Influence of different smoothing methods and their parameters.
@@ -959,8 +958,8 @@ base. With NiPyPe, a developer can create one Interface and expose a new
 tool, written in any language, to a greater range of users, knowing it
 will work with the wide range of software currently supported by NiPyPe.
 
-A good example of such scenario is ArtifactDetection toolbox (ref
-TODO\ :sup:``[c] <#cmnt3>`_`\ ). This piece of software uses EPI
+A good example of such scenario is ArtifactDetection
+toolbox\ :sup:``[6] <#ftnt6>`_`\ . This piece of software uses EPI
 timeseries and realignment parameters to find timepoints (volumes) that
 are most likely artifacts and should be removed (by including them as
 confound regressors in the design matrix). The tool was initially
@@ -972,11 +971,11 @@ An environment for methodological continuity and paced training of new
 personnel in laboratories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Several neuroimaging studies in any laboratory typically use similar
-data processing methods with possibly different parameters. NiPyPe
-Workflows can be very useful in dividing the data processing into
-reusable building blocks. This not only improves the speed of building
-new Workflows but also reduces the number of potential errors, because a
+Neuroimaging studies in any laboratory typically use similar data
+processing methods with possibly different parameters. NiPyPe Workflows
+can be very useful in dividing the data processing into reusable
+building blocks. This not only improves the speed of building new
+Workflows but also reduces the number of potential errors, because a
 well tested piece of code is being reused (instead of being
 reimplemented every time). Since a Workflow definition is an abstract
 and simplified representation of the data processing stream, it is much
@@ -997,7 +996,7 @@ Interfaces in an interactive console is also a great way to learn how
 different algorithms work with different parameters without having to
 understand how to set them up and execute them.
 
-.. figure:: images/image02.png
+.. figure:: images/image00.png
    :align: center
    :alt: 
 Figure 8. create\_spm\_preproc() functions returns this reusable, data
@@ -1021,7 +1020,7 @@ package provides a seamless and flexible environment for executing
 Workflows in parallel on a variety of environments from local multi-core
 workstations to high-performance clusters. In the SPM workflow for
 single subject functional data analysis (see Figure 9), only a few
-components can be parallelized. However, running this workflow across
+components can be parallelized. However, running this Workflow across
 several subjects provides room for embarrassingly parallel execution.
 Running this Workflow in distributed mode for 69 subjects on a compute
 cluster (40 cores distributed across 6 machines) took 1 hour and 40
@@ -1031,7 +1030,7 @@ from the expected runtime of 64 minutes (32 minutes for the first 40
 subjects and another 32 minutes for the remaining 29 subjects) stems
 from disk I/O and other network and processing resource bottlenecks.
 
-.. figure:: images/image07.png
+.. figure:: images/image08.png
    :align: center
    :alt: 
 Figure 9. Single subject fMRI Workflow used for benchmarking parallel
@@ -1083,19 +1082,19 @@ is easy to learn and adopt and is available across all major operating
 systems. Python is also known to be a good choice for the first
 programming language to learn (Zelle 1999) and is chosen as the language
 for introductory programming at many schools and
-universities\ :sup:``[6] <#ftnt6>`_`\ . Being a generic and free
-language, with various extensions available "out of the box", it allowed
-many researchers to start implementing and sharing their ideas
-(scratching their itch) with minimal knowledge of Python while learning
-more of the language and programming principles along the way. Many such
-endeavors later on became popular community-driven FOSS projects,
-attracting users and contributors, and even outlasting the involvement
-of the original authors. Python has already been embraced by the
-neuroscientific community and is rapidly gaining popularity (Bednar,
-2009; Goodman & Brette, 2009). The Connectome Viewer Toolkit(REF),
-DiPy(REF), NiBabel\ :sup:``[7] <#ftnt7>`_`\ ,
-NiPy\ :sup:``[8] <#ftnt8>`_`\ , NiTime(REF), PyMVPA (REF), PyXNAT (REF)
-and Scikits-Learn\ :sup:``[9] <#ftnt9>`_`\  are just a few examples of
+universities\ :sup:``[7] <#ftnt7>`_`\ . Being a generic and free
+language, with various extensions available "out of the box", it has
+allowed many researchers to start implementing and sharing their ideas
+with minimal knowledge of Python while learning more of the language and
+programming principles along the way. Many such endeavors later on
+became popular community-driven FOSS projects, attracting users and
+contributors, and even outlasting the involvement of the original
+authors. Python has already been embraced by the neuroscientific
+community and is rapidly gaining popularity (Bednar, 2009; Goodman &
+Brette, 2009). The Connectome Viewer Toolkit(REF), DiPy(REF),
+NiBabel\ :sup:``[8] <#ftnt8>`_`\ , NiPy\ :sup:``[9] <#ftnt9>`_`\ ,
+NiTime(REF), PyMVPA (REF), PyXNAT (REF) and
+Scikits-Learn\ :sup:``[10] <#ftnt10>`_`\  are just a few examples of
 neuroimaging related software written in Python. NiPyPe, based on
 Python, thus has immediate access to this extensive community and its
 software, technological resources and support structure.
@@ -1584,13 +1583,15 @@ main\_workflow.write\_graph()
 
 `[5] <#ftnt_ref5>`_`http://github.com/nipy/nipype <https://github.com/nipy/nipype>`_
 
-`[6] <#ftnt_ref6>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
+`[6] <#ftnt_ref6>`_http://www.nitrc.org/projects/artifact\_detect/
 
-`[7] <#ftnt_ref7>`_`http://nipy.sourceforge.net/nibabel/ <http://nipy.sourceforge.net/nibabel/>`_
+`[7] <#ftnt_ref7>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
 
-`[8] <#ftnt_ref8>`_`http://nipy.sourceforge.net/nipy/ <http://nipy.sourceforge.net/nipy/>`_
+`[8] <#ftnt_ref8>`_`http://nipy.sourceforge.net/nibabel/ <http://nipy.sourceforge.net/nibabel/>`_
 
-`[9] <#ftnt_ref9>`_`http://scikit-learn.sourceforge.net <http://scikit-learn.sourceforge.net/>`_
+`[9] <#ftnt_ref9>`_`http://nipy.sourceforge.net/nipy/ <http://nipy.sourceforge.net/nipy/>`_
+
+`[10] <#ftnt_ref10>`_`http://scikit-learn.sourceforge.net <http://scikit-learn.sourceforge.net/>`_
 
 `[b] <#cmnt_ref2>`_Michael.L.Waskom:
 
@@ -1627,49 +1628,53 @@ On the other side this is not something that we have address . We plan
 to, and there was some talking about it, but there aren't any quality
 assurance specific mechanisms in nipype.
 
-`[c] <#cmnt_ref3>`_krzysztof.gorgolewski:
+`[c] <#cmnt_ref3>`_satrajit.ghosh:
 
-I could not find this one.
+reference
 
 `[d] <#cmnt_ref4>`_satrajit.ghosh:
 
-anybody who has commented on the paper (not the authors)
+greve and fischl, neuroimage
 
 `[e] <#cmnt_ref5>`_satrajit.ghosh:
 
-greve and fischl, neuroimage
+anybody who has commented on the paper (not the authors)
 
 `[f] <#cmnt_ref6>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[g] <#cmnt_ref7>`_chris.d.burns:
+`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
+
+I could not find this one.
+
+`[h] <#cmnt_ref8>`_chris.d.burns:
 
 Composition?
 
-`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
+`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
+`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[j] <#cmnt_ref10>`_Michael.L.Waskom:
+`[k] <#cmnt_ref11>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1679,7 +1684,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[m] <#cmnt_ref13>`_yarikoptic:
+`[n] <#cmnt_ref14>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1699,7 +1704,7 @@ yarikoptic:
 
 something like that ;-)
 
-`[n] <#cmnt_ref14>`_davclark:
+`[o] <#cmnt_ref15>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1710,7 +1715,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[o] <#cmnt_ref15>`_uni.designer.sg:
+`[p] <#cmnt_ref16>`_uni.designer.sg:
 
 You might want to remove this last sentence, because it is about
 something other than depicted in the Figure
@@ -1722,11 +1727,11 @@ krzysztof.gorgolewski:
 It's an example which in my opinion makes the explanation easier to
 understand.
 
-`[p] <#cmnt_ref16>`_uni.designer.sg:
+`[q] <#cmnt_ref17>`_uni.designer.sg:
 
 developer
 
-`[q] <#cmnt_ref17>`_satrajit.ghosh:
+`[r] <#cmnt_ref18>`_satrajit.ghosh:
 
 INSERT workflow figure or attach as supplementary material
 
@@ -1742,7 +1747,7 @@ satrajit.ghosh:
 
 yes
 
-`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
+`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
 
 a graph of for example create\_susan\_smooth() or code listing?
 
@@ -1752,11 +1757,11 @@ satrajit.ghosh:
 
 sure
 
-`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
+`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[t] <#cmnt_ref20>`_chris.d.burns:
+`[u] <#cmnt_ref21>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1774,14 +1779,10 @@ What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
 
-`[u] <#cmnt_ref21>`_satrajit.ghosh:
-
-reference
-
 `[v] <#cmnt_ref22>`_yarikoptic:
 
 what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image03.png
+.. |image0| image:: images/image01.png
