@@ -243,9 +243,9 @@ we describe key architectural components and features of this software.
    :alt: 
 
 Figure 1. Architecture overview of the NiPyPe framework. Interfaces are
-wrapped with Nodes or MapNodes and connected together within a
-Workflows. Workflows themselves can act as a Node inside another
-Workflows supporting composite design pattern. Dependency graph is
+wrapped with Nodes or MapNodes and connected together as a graph within
+a Workflow. Workflows themselves can act as a Node inside another
+Workflow, supporting a composite design pattern. Dependency graph is
 transformed before executing by the engine component. Execution is
 performed by one of the plugins. Currently NiPyPe supports serial and
 parallel (both local multithreading and cluster) execution.
@@ -274,13 +274,13 @@ dependencies (e.g., does input ‘a’ require input ‘b’); (b) outputs and
 their types, (c) how to execute the underlying software (e.g., run a
 matlab script, or call a command line program); and (d) a mapping which
 defines the outputs that are produced given a particular set of inputs.
-Using an object oriented approach, we minimize redundancy in interface
+Using an object-oriented approach, we minimize redundancy in interface
 definition by creating a hierarchy of base Interface classes (see Figure
 2) to encapsulate common functionality (e.g. Interfaces that call
 command line programs are derived from the CommandLine class, which
 provides methods to translate Interface inputs into command line
 parameters and for calling the command.) Source code of an example
-Interface an be seen in Listing 1.
+Interface is shown in Listing 1.
 
 from nipype.interfaces.base import (
 
@@ -330,20 +330,20 @@ print zipper.cmdline
 
 zipper.run()
 
-Listing 1. An example interface wrapping gzip command line together with
-example use. This Interface takes a file name as an input calls gzip to
-compress it and returns a name of a compressed file.
+Listing 1. An example interface wrapping the gzip command line tool and
+a usage example. This Interface takes a file name as an input, calls
+gzip to compress it and returns a name of the compressed output file.
 
 .. figure:: images/image00.png
    :align: center
    :alt: 
-Figure 2. Simplified class hierarchy of Interfaces. Our framework tries
-to reduce code redundancy and thus make adding new interfaces easier and
-quicker. For example all functionality related to execution of command
-line applications is grouped in one class. New classes can inherit from
-CommandLineInterface. For example FSL Interfaces are essentially command
-lines with some extra common properties (such as setting the type of the
-output file by an environment variable).\ :sup:``[b] <#cmnt2>`_`\ 
+Figure 2. Simplified hierarchy of Interface classes. An object-oriented
+design is used to reduce code redundancy by defining common
+functionality in base classes, and makes adding new interfaces easier
+and quicker. MatlabCommand, FSLCommand and FSCommand extend the
+CommandLine class to provide functionality specific to executing MATLAB,
+FSL and FreeSurfer programs. The SPMCommand class defines functions that
+simplify wrapping SPM functionality.
 
 We use Enthought Traits\ :sup:``[3] <#ftnt3>`_`\  to create a formal
 definition for Interface inputs and outputs, to define input constraints
@@ -352,7 +352,7 @@ definition for Interface inputs and outputs, to define input constraints
 to be detected prior to executing the underlying program. The input
 definition also allows specifying relations between inputs. Often, some
 input options should not be set together (mutual exclusion) while other
-inputs need to be set as a group (mutual inclusion). An example input
+inputs need to be set as a group (mutual inclusion). Part of the input
 specification for the ‘bet’ (Brain Extraction Tool) program from FSL is
 shown in Listing 2.
 
@@ -377,9 +377,11 @@ functional = traits.Bool(argstr='-F', xor=('functional',
 
 desc="apply to 4D fMRI data")
 
-Listing 2. Part of the inputs specification for the Brain Extraction
-Tool (BET) Interface. Full specification covers 18 different arguments.
-Each field of this class is a Traits object which defines an input with
+...
+
+Listing 2. Part of the input specification for the Brain Extraction Tool
+(BET) Interface. Full specification covers 18 different arguments. Each
+attribute of this class is a Traits object which defines an input and
 its data type (i.e. list of integers), constraints (i.e. length of the
 list), dependencies (when for example setting one option is mutually
 exclusive with another, see the xor parameter), and additional
@@ -429,7 +431,7 @@ www.trackvis.org/dtk
 
 FreeSurfer
 
-surfer.nmr.mgh.harvard.edu
+freesurfer.net
 
 FSL
 
@@ -437,11 +439,11 @@ www.fmrib.ox.ac.uk/fsl
 
 NiPy
 
-nipy.sourceforge.net/nipy
+nipy.org/nipy
 
 NiTime
 
-nipy.sourceforge.net/nitime
+nipy.org/nitime
 
 Slicer
 
@@ -455,9 +457,9 @@ SQLite
 
 www.sqlite.org
 
-XNAT
+PyXNAT
 
-www.xnat.org
+github.com/pyxnat, xnat.org
 
 Table supported\_software. List of software packages fully or partially
 supported by NiPyPe. For more details
@@ -469,24 +471,25 @@ Nodes, MapNodes, and Workflows
 NiPyPe provides a framework for connecting Interfaces to create a data
 analysis Workflow. In order for Interfaces to be used in a Workflow they
 need to be encapsulated in either Node or MapNode objects. Node and
-MapNode objects provide Interfaces with additional properties (e.g.,
-hash checking of inputs, caching of results, ability to iterate over
-inputs). Additionally they execute the underlying interfaces in their
-own uniquely named directories (almost like a sandbox), thus providing a
-mechanism to isolate and track the outputs resulting from executing the
-Interfaces. These mechanisms allow not only for provenance tracking, but
-aid in efficient pipeline execution.
+MapNode objects provide additional functionality to Interfaces. For
+example, creating a hash of the input state, caching of results and the
+ability to iterate over inputs. Additionally, they execute the
+underlying interfaces in their own uniquely named directories (almost
+like a sandbox), thus providing a mechanism to isolate and track the
+outputs resulting from executing the Interfaces. These mechanisms allow
+not only for provenance tracking, but aid in efficient pipeline
+execution.
 
-The MapNode class is special sub-class of Node that implements a
+The MapNode class is a sub-class of Node that implements a
 MapReduce-like architecture (Dean and Ghemawat 2008). Encapsulating an
 Interface within a MapNode allows Interfaces that normally operate on a
 single input to execute the Interface on multiple inputs. When a MapNode
 executes, it creates a separate instance of the underlying Interface for
 every value of an input list and executes these instances independently.
 When all instances finish running, their results are collected into a
-list and exposed through the MapNode’s outputs (see Figure 4). This
-approach improves granularity of the workflow and provides easy support
-for Interfaces that can process only one input at a time. For example,
+list and exposed through the MapNode’s outputs (see Figure 4D). This
+approach improves granularity of the Workflow and provides easy support
+for Interfaces that can only process one input at a time. For example,
 the FSL ‘bet’ program can only run on a single input, but wrapping the
 BET Interface in a MapNode allows running ‘bet’ on multiple inputs.
 
@@ -693,7 +696,7 @@ Rerunning workflows has also been optimized. The framework checks which
 inputs parameters has changed from the last run and will execute only
 the nodes for which inputs have changed. Even though those changes can
 propagate rerunning time can decrease
-dramatically.\ :sup:``[c] <#cmnt3>`_`\ 
+dramatically.\ :sup:``[b] <#cmnt2>`_`\ 
 
 The Function Interface
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -953,7 +956,7 @@ tool, written in any language, to a greater range of users, knowing it
 will work with the wide range of software currently supported by NiPyPe.
 
 A good example of such scenario is ArtifactDetection toolbox (ref
-TODO\ :sup:``[d] <#cmnt4>`_`\ ). This piece of software uses EPI
+TODO\ :sup:``[c] <#cmnt3>`_`\ ). This piece of software uses EPI
 timeseries and realignment parameters to find timepoints (volumes) that
 are most likely artifacts and should be removed (by including them as
 confound regressors in the design matrix). The tool was initially
@@ -1587,19 +1590,7 @@ main\_workflow.write\_graph()
 
 `[10] <#ftnt_ref10>`_`http://scikit-learn.sourceforge.net <http://scikit-learn.sourceforge.net/>`_
 
-`[b] <#cmnt_ref2>`_uni.designer.sg:
-
-You might want to remove this last sentence, because it is about
-something other than depicted in the Figure
-
---------------
-
-krzysztof.gorgolewski:
-
-It's an example which in my opinion makes the explanation easier to
-understand.
-
-`[c] <#cmnt_ref3>`_Michael.L.Waskom:
+`[b] <#cmnt_ref2>`_Michael.L.Waskom:
 
 A big advantage of the efficient rerunning in my opinion is the ability,
 after you've written your workflow and started analyzing data, to add
@@ -1634,49 +1625,49 @@ On the other side this is not something that we have address . We plan
 to, and there was some talking about it, but there aren't any quality
 assurance specific mechanisms in nipype.
 
-`[d] <#cmnt_ref4>`_krzysztof.gorgolewski:
+`[c] <#cmnt_ref3>`_krzysztof.gorgolewski:
 
 I could not find this one.
 
-`[e] <#cmnt_ref5>`_satrajit.ghosh:
+`[d] <#cmnt_ref4>`_satrajit.ghosh:
 
 anybody who has commented on the paper (not the authors)
 
-`[f] <#cmnt_ref6>`_satrajit.ghosh:
+`[e] <#cmnt_ref5>`_satrajit.ghosh:
 
 greve and fischl, neuroimage
 
-`[g] <#cmnt_ref7>`_davclark:
+`[f] <#cmnt_ref6>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[h] <#cmnt_ref8>`_chris.d.burns:
+`[g] <#cmnt_ref7>`_chris.d.burns:
 
 Composition?
 
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
+`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
+`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[k] <#cmnt_ref11>`_Michael.L.Waskom:
+`[j] <#cmnt_ref10>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1686,7 +1677,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[n] <#cmnt_ref14>`_yarikoptic:
+`[m] <#cmnt_ref13>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1706,7 +1697,7 @@ yarikoptic:
 
 something like that ;-)
 
-`[o] <#cmnt_ref15>`_davclark:
+`[n] <#cmnt_ref14>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1716,6 +1707,18 @@ moderate familiarity with python
 krzysztof.gorgolewski:
 
 Yes.
+
+`[o] <#cmnt_ref15>`_uni.designer.sg:
+
+You might want to remove this last sentence, because it is about
+something other than depicted in the Figure
+
+--------------
+
+krzysztof.gorgolewski:
+
+It's an example which in my opinion makes the explanation easier to
+understand.
 
 `[p] <#cmnt_ref16>`_uni.designer.sg:
 
