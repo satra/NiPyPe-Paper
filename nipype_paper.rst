@@ -178,23 +178,20 @@ Current solutions
 There were several attempts to address those issues by creating a
 pipeline engine. Taverna (Oinn et al. 2006), VisTrails (Callahan et al.
 2006) are general pipelining systems and do not address problems
-specific to neuroimaging. BrainVisa
-
-(Cointepas et al. 2001), MIPAV (REF), SPM include their own batch
-processing tools, but do not allow mixing components from other
-packages. Fiswidgets (REF), a promising initial approach, appears to
-have not been developed and does not support state of the art methods. A
-much more extensive and feature rich solution is the LONI Pipeline
-(Dinov et al., 2009; 2010; Rex et al.,2003). It provides an easy to use
-graphical interface for choosing processing steps or nodes from a
-predefined library and defining their dependencies and parameters. It
-also has extensive support for parallel execution on an appropriately
-configured cluster (including data transfer, pausing execution, and
-combining local and remote software). Additionally, the LONI Pipeline
-saves information about executed steps (such as software origin, version
-and architecture) providing provenance information (A. J.
-Mackenzie-Graham, J. D. Van Horn, R. P. Woods, Crawford, & A. W. Toga,
-2008).
+specific to neuroimaging. BrainVisa (Cointepas et al. 2001), MIPAV
+(McAuliffe et al. 2001), SPM include their own batch processing tools,
+but do not allow mixing components from other packages. Fiswidgets
+(Fissell et al. 2003), a promising initial approach, appears to have not
+been developed and does not support state of the art methods. A much
+more extensive and feature rich solution is the LONI Pipeline (Dinov et
+al., 2009; 2010; Rex et al.,2003). It provides an easy to use graphical
+interface for choosing processing steps or nodes from a predefined
+library and defining their dependencies and parameters. It also has
+extensive support for parallel execution on an appropriately configured
+cluster (including data transfer, pausing execution, and combining local
+and remote software). Additionally, the LONI Pipeline saves information
+about executed steps (such as software origin, version and architecture)
+providing provenance information (Mackenzie-Graham et al., 2008).
 
 However, the LONI Pipeline does not come without limitations. Processing
 nodes are defined using eXtensible Markup Language (XML). This “one size
@@ -723,16 +720,14 @@ Workflow Visualisation
 ~~~~~~~~~~~~~~~~~~~~~~
 
 To be able to efficiently manage and debug Workflow one has to have
-access to a graphical representation. Using graphviz
-(Ref)\ :sup:``[c] <#cmnt3>`_`\ , NiPyPe generates static graphs
-representing Nodes and connections between them. In the current version
-four types of graphs are supported: orig – does not expand inner
-Workflows, flat – expands inner workflows, exec – expands workflows and
-iterables, and hierarchical – expands workflows but maintains their
-hierarchy. Graphs can be saved in a variety of file formats including
-Scalable Vector Graphics (SVG) and Portable Network Graphics (PNG) (see
-Figures workflow\_from\_scratch and smoothing\_comparison\_workflow for
-an examples)
+access to a graphical representation. Using graphviz (Ellson et al.
+2002), NiPyPe generates static graphs representing Nodes and connections
+between them. In the current version four types of graphs are supported:
+orig – does not expand inner Workflows, flat – expands inner workflows,
+exec – expands workflows and iterables, and hierarchical – expands
+workflows but maintains their hierarchy. Graphs can be saved in a
+variety of file formats including Scalable Vector Graphics (SVG) and
+Portable Network Graphics (PNG) (see Figures 3 and 6 for an examples)
 
 Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~
@@ -914,18 +909,18 @@ voxelwise anisotropic and surface based smoothing all for two levels of
 FWHM - 4 and 8mm. First one is the standard convolution with Gaussian
 kernel as implemented in SPM. Second one involves smoothing only voxels
 of similar intensity in attempt to retain structure. This was
-implemented in SUSAN from FSL (S.M. Smith, 1992). Third method involves
-reconstructing surface of the cortex and smoothing along it (Hagler Jr.,
-Saygin, & Sereno, 2006). This avoids bleeding of signal over sulci.
+implemented in SUSAN from FSL (Smith, 1992). Third method involves
+reconstructing surface of the cortex and smoothing along it (Hagler et
+al., 2006). This avoids bleeding of signal over sulci.
 
 Establishing parameters from data and smoothing using SUSAN is already
 built into NiPyPe as a Workflow. It can be created using
 create\_susan\_smooth() function. It has similar inputs and outputs as
 SPM Smooth Interface. Smoothing on a surface involves doing a full
-cortical reconstruction from T1 volume using FreeSurfer (Fischl, Sereno,
-& Dale, 1999) followed by coregistering functional images to the
-reconstructed surface using BBRegister (REF\ :sup:``[d] <#cmnt4>`_`\ ).
-Finally, surface smoothing algorithm from FreeSurfer is called.
+cortical reconstruction from T1 volume using FreeSurfer (Fischl et al.,
+1999) followed by coregistering functional images to the reconstructed
+surface using BBRegister (Grave at el. 2009). Finally, surface smoothing
+algorithm from FreeSurfer is called.
 
 Smoothed EPI volumes (direct/local influence) and statistical maps
 (indirect/global influence), along with the pipeline used to generate
@@ -1093,9 +1088,10 @@ became popular community-driven FOSS projects, attracting users and
 contributors, and even outlasting the involvement of the original
 authors. Python has already been embraced by the neuroscientific
 community and is rapidly gaining popularity (Bednar, 2009; Goodman &
-Brette, 2009). The Connectome Viewer Toolkit(REF), DiPy(REF),
-NiBabel\ :sup:``[8] <#ftnt8>`_`\ , NiPy\ :sup:``[9] <#ftnt9>`_`\ ,
-NiTime(REF), PyMVPA (REF), PyXNAT (REF) and
+Brette, 2009). The Connectome Viewer Toolkit (Gerhard et al. 2011), DiPy
+(Garyfallidis et al. 2011), NiBabel\ :sup:``[8] <#ftnt8>`_`\ ,
+NiPy\ :sup:``[9] <#ftnt9>`_`\ , NiTime (Rokem, et al. 2009), PyMVPA
+(Hanke et al. 2009), PyXNAT (Schwartz et al. 2008) and
 Scikits-Learn\ :sup:``[10] <#ftnt10>`_`\  are just a few examples of
 neuroimaging related software written in Python. NiPyPe, based on
 Python, thus has immediate access to this extensive community and its
@@ -1173,19 +1169,147 @@ Acknowledgements
 A list of people who have contributed code to the project is available
 at http://github.com/nipy/nipype/contributors. We thank Fernando Perez,
 Matthew Brett, Gael Varoquaux, Jean-Baptiste Poline, Bertrand Thirion,
-Stephan Gerhard, Alexis Roche and Jarrod Millman for technical and
-social support and for design discussions. We would like to thank Prof.
-John Gabrieli’s laboratory at MIT for testing NiPyPe through its
-evolutionary stages, in particular, Tyler Perrachione and Gretchen
-Reynolds. We would also like to thank the developers of FreeSurfer, FSL
-and SPM for being supportive of the project and providing valuable
-feedback on technical issues. We would like to thank
-XX\ :sup:``[e] <#cmnt5>`_`\  for providing feedback during the
+Alexis Roche and Jarrod Millman for technical and social support and for
+design discussions. We would like to thank Prof. John Gabrieli’s
+laboratory at MIT for testing NiPyPe through its evolutionary stages, in
+particular, Tyler Perrachione and Gretchen Reynolds. We would also like
+to thank the developers of FreeSurfer, FSL and SPM for being supportive
+of the project and providing valuable feedback on technical issues. We
+would like to thank Stephan Gerhard and Helen
+RamsdenXX\ :sup:``[c] <#cmnt3>`_`\  for providing feedback during the
 preparation of the manuscript. Satrajit Ghosh would like to acknowledge
 support from NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the
 Ellison Medical Foundation, Katrien Vander Straeten and Amie Ghosh.
 Krzysztof Gorgolewski would like to thank Mark Bastin, Cyril Pernet, and
 Amos Storkey for their supervision.
+
+References
+
+Avants, Brian, and JC Gee. 2004. Geodesic estimation for large
+deformation anatomical shape averaging and interpolation. NeuroImage 23
+Suppl 1 (January): S139-50.
+
+Bednar, James a. 2009. Topographica: Building and Analyzing Map-Level
+Simulations from Python, C/C++, MATLAB, NEST, or NEURON Components.
+Frontiers in neuroinformatics 3, no.
+
+Callahan, Steven P, Juliana Freire, Emanuele Santos, Carlos E
+Scheidegger, and T Silva Huy T Vo. 2006. VisTrails : Visualization meets
+Data Management. In Proceedings of the 2006 ACM SIGMOD international
+conference on Management of data, 745-747.
+
+Churchill, Nathan W, Anita Oder, Hervé Abdi, Fred Tam, Wayne Lee,
+Christopher Thomas, Jon E Ween, Simon J Graham, and Stephen C Strother.
+2011. Optimizing preprocessing and analysis pipelines for single-subject
+fMRI. I. Standard temporal motion and physiological noise correction
+methods. Human brain mapping 000, no.
+
+Cointepas, Yann, Jf Mangin, L Garnero, and Jb Poline. 2001. BrainVISA:
+Software platform for visualization and analysis of multi-modality brain
+data. NeuroImage, no. 6: 2001-2001.
+
+Dean, Jeffrey, and Sanjay Ghemawat. 2008. MapReduce: Simplified data
+processing on large clusters. Communications of the ACM: 1-13.
+
+Dinov, ID, JD Van Horn, KM Lozev, Rico Magsipoc, Petros Petrosyan,
+Zhizhong Liu, A Mackenzie-Graham, Paul Eggert, Douglas S Parker, and AW
+Toga. 2009. Efficient, Distributed and Interactive Neuroimaging Data
+Analysis Using the LONI Pipeline. Frontiers in neuroinformatics 3, no.
+
+Dinov, I, K Lozev, Petros Petrosyan, Zhizhong Liu, Paul Eggert, Jonathan
+Pierce, Alen Zamanyan, et al. 2010. Neuroimaging study designs,
+computational analyses and data provenance using the LONI pipeline. PloS
+one 5, no. 9
+
+Ellson, John, Emden Gansner, Lefteris Koutsofios, S. North, and Gordon
+Woodhull. 2002. Graphviz—open source graph drawing tools. In Graph
+Drawing, 594–597. Springer.
+
+Fischl, B, M I Sereno, and a M Dale. 1999. Cortical surface-based
+analysis. II: Inflation, flattening, and a surface-based coordinate
+system. NeuroImage 9, no. 2 (February): 195-207.
+
+Fissell, Kate, Eugene Tseytlin, Daniel Cunningham, Karthickeyan Iyer,
+Cameron S Carter, Walter Schneider, and Jonathan D Cohen. 2003. A
+Graphical Computing Environment for Neuroimaging Analysis.
+Neuroinformatics: 111-125.
+
+Garyfallidis, E., M. Brett, B. Amirbekian, C. Nguyen, F.-C. Yeh, Y
+Halchenko, and I. Nimmo-Smith. 2011. Dipy - a novel software library for
+diffusion MR and tractography. In 17th Annual Meeting of the
+Organization for Human Brain Mapping. Quebec, Canada.
+
+Gerhard, Stephan, Alessandro Daducci, Alia Lemkaddem, Reto Meuli,
+Jean-Philippe Thiran, and Patric Hagmann. 2011. The Connectome Viewer
+Toolkit: An Open Source Framework to Manage, Analyze, and Visualize
+Connectomes. Frontiers in Neuroinformatics 5, no. June: 1-15.
+
+Goodman, Dan F M, and Romain Brette. 2009. The brian simulator.
+Frontiers in neuroscience 3, no. 2 (September): 192-7.
+doi:10.3389/neuro.01.026.2009.
+
+Hagler Jr., Donald J., Ayse Pinar Saygin, and Martin I. Sereno. 2006.
+Smoothing and cluster thresholding for cortical surface-based group
+analysis of fMRI data. NeuroImage 33, no. 4
+
+Hanke, M., Y. O. Halchenko, J. V. Haxby, and S. Pollmann. 2010.
+Improving efficiency in cognitive neuroscience research with
+NeuroDebian. In Cognitive Neuroscience Society. Montréal, Canada.
+
+Hanke, Michael, Yaroslav O Halchenko, Per B Sederberg, Stephen José
+Hanson, James V Haxby, and Stefan Pollmann. 2009. PyMVPA: A python
+toolbox for multivariate pattern analysis of fMRI data. Neuroinformatics
+7, no. 1 (January): 37-53.
+
+Hömke, Lars. 2006. A multigrid method for anisotropic PDEs in elastic
+image registration. Numerical Linear Algebra with Applications 13, no.
+2-3 (March): 215-229.
+
+Klein, Arno, Jesper Andersson, B a Ardekani, John Ashburner, Brian
+Avants, Ming-Chang Chiang, Gary E Christensen, et al. 2009. Evaluation
+of 14 nonlinear deformation algorithms applied to human brain MRI
+registration. NeuroImage 46, no. 3 (July 1): 786-802.
+
+Klein, Arno, Satrajit S Ghosh, Brian Avants, B T T Yeo, Bruce Fischl, B
+Ardekani, JC Gee, J J Mann, and Ramin V Parsey. 2010. Evaluation of
+volume-based and surface-based brain image registration methods.
+NeuroImage 51, no. 1: 214-220.
+
+Mackenzie-Graham, AJ, JD Van Horn, RP Woods, Karen L Crawford, and AW
+Toga. 2008. Provenance in neuroimaging. NeuroImage 42, no. 1 (August 1):
+178-95.
+
+McAuliffe, M.J., F.M. Lalonde, D. McGarry, W. Gandler, K. Csaky, and
+B.L. Trus. 2001. Medical Image Processing, Analysis and Visualization in
+clinical research. Proceedings 14th IEEE Symposium on Computer-Based
+Medical Systems. 381-386.
+
+Millman, K.J., and Michael Aivazis. 2011. Python for Scientists and
+Engineers. Computing in Science & Engineering 13, no. 2: 9–12.
+
+Oinn, Tom, Mark Greenwood, Matthew Addis, M. Nedim Alpdemir, Justin
+Ferris, Kevin Glover, Carole Goble, et al. 2006. Taverna: lessons in
+creating a workflow environment for the life sciences. Concurrency and
+Computation: Practice and Experience 18, no. 10 (August 25): 1067-1100.
+
+Pérez, F., B.E. Granger, and J.D. Hunter. 2010. Python: an ecosystem for
+scientific computing. Computing in Science and Engineering: 13-21.
+
+Rex, David E, Jeffrey Q Ma, and AW Toga. 2003. The LONI Pipeline
+Processing Environment. NeuroImage 19, no. 3 (July): 1033-1048.
+
+Rokem, A., M. Trumpis, and F. Perez. 2009. Nitime: time-series analysis
+for neuroimaging data. In Proceedings of the 8th Python in Science
+conference. Pasadena.
+
+Schwartz, Y, A Barbot, F Vincent, B Thyreau, G Varoquaux, B Thirion, and
+J Poline. 2008. PyXNAT: a Python interface for XNAT. imagen-europe.com.
+
+Smith, S.M. 1992. A new class of corner finder. In Proc. 3rd British
+Machine Vision Conference, 139–148. University of Leeds.
+
+Zelle, J.M. 1999. Python as a first language. In Proceedings of 13th
+Annual Midwest Computer Conference, 2:
 
 --------------
 
@@ -1633,51 +1757,47 @@ assurance specific mechanisms in nipype.
 
 `[c] <#cmnt_ref3>`_satrajit.ghosh:
 
-reference
+anybody who has commented on the paper (not the authors)
 
 `[d] <#cmnt_ref4>`_satrajit.ghosh:
 
 greve and fischl, neuroimage
 
-`[e] <#cmnt_ref5>`_satrajit.ghosh:
-
-anybody who has commented on the paper (not the authors)
-
-`[f] <#cmnt_ref6>`_davclark:
+`[e] <#cmnt_ref5>`_davclark:
 
 delete? Verbose and (to my eye) counter to the clearly evident truth
 ("in fact" often cues "you might not have thought XXX")
 
-`[g] <#cmnt_ref7>`_krzysztof.gorgolewski:
+`[f] <#cmnt_ref6>`_krzysztof.gorgolewski:
 
 I could not find this one.
 
-`[h] <#cmnt_ref8>`_chris.d.burns:
+`[g] <#cmnt_ref7>`_chris.d.burns:
 
 Composition?
 
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
+`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
 
 Is this something different than iterables\_vs\_mapnode?
 
-`[j] <#cmnt_ref10>`_krzysztof.gorgolewski:
+`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
 
 Isn't it a bit of an overkill to show all different types of graphs?
 Maybe we should point just to one of the workflow graphs from Result
 section?
 
-`[k] <#cmnt_ref11>`_Michael.L.Waskom:
+`[j] <#cmnt_ref10>`_Michael.L.Waskom:
 
 Looks like find and replace got greedy
 
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
+`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
 
 I am a bit afraid to make provenance tracking a big point. UCLA
 implementation has the following advantages: it's independent from LONI
 Pipeline, its standardized using an XML Schema, it includes architecture
 and version tracking.
 
-`[m] <#cmnt_ref13>`_krzysztof.gorgolewski:
+`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
 
 What figure dis you have in mind here?
 
@@ -1687,7 +1807,7 @@ satrajit.ghosh:
 
 i was thinking of a simple doctest code
 
-`[n] <#cmnt_ref14>`_yarikoptic:
+`[m] <#cmnt_ref13>`_yarikoptic:
 
 It doesn't matter really for a user in what language it is written. It
 is important on how to interface/use it. E.g. shell scripting (FSL,
@@ -1707,7 +1827,7 @@ yarikoptic:
 
 something like that ;-)
 
-`[o] <#cmnt_ref15>`_davclark:
+`[n] <#cmnt_ref14>`_davclark:
 
 I assume you'll fix the formatting here - it might confuse people with
 moderate familiarity with python
@@ -1718,7 +1838,7 @@ krzysztof.gorgolewski:
 
 Yes.
 
-`[p] <#cmnt_ref16>`_uni.designer.sg:
+`[o] <#cmnt_ref15>`_uni.designer.sg:
 
 You might want to remove this last sentence, because it is about
 something other than depicted in the Figure
@@ -1730,11 +1850,11 @@ krzysztof.gorgolewski:
 It's an example which in my opinion makes the explanation easier to
 understand.
 
-`[q] <#cmnt_ref17>`_uni.designer.sg:
+`[p] <#cmnt_ref16>`_uni.designer.sg:
 
 developer
 
-`[r] <#cmnt_ref18>`_satrajit.ghosh:
+`[q] <#cmnt_ref17>`_satrajit.ghosh:
 
 INSERT workflow figure or attach as supplementary material
 
@@ -1750,7 +1870,7 @@ satrajit.ghosh:
 
 yes
 
-`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
+`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
 
 a graph of for example create\_susan\_smooth() or code listing?
 
@@ -1760,11 +1880,11 @@ satrajit.ghosh:
 
 sure
 
-`[t] <#cmnt_ref20>`_krzysztof.gorgolewski:
+`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
 
 Needs incorporating into the section.
 
-`[u] <#cmnt_ref21>`_chris.d.burns:
+`[t] <#cmnt_ref20>`_chris.d.burns:
 
 "rapid adaptation to the varied needs...", I know what you mean, but it
 sounds a bit chaotic, almost like the software could change direction
@@ -1781,6 +1901,10 @@ Agreed, but this is just geek talk ;)
 What about "Development is done openly with collaborators from many
 different labs, allowing adaptation to the varied needs of a broad
 neuroimaging community."
+
+`[u] <#cmnt_ref21>`_satrajit.ghosh:
+
+reference
 
 `[v] <#cmnt_ref22>`_yarikoptic:
 
