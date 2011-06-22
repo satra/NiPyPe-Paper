@@ -128,7 +128,7 @@ significant effort (Klein et al., 2010). In general, developers create
 software for a single package (e.g., VBM8 for SPM), create a standalone
 cross-platform tool (e.g., Mricron) or simply do not distribute the
 software or code (e.g., normalization software used for registering
-architectonic atlases to MNI single subject template - REF).
+architectonic atlases to MNI single subject template - Hömke, 2006).
 
 3) Personnel turnover in laboratories often limits methodological
 continuity and training new personnel takes time. Most cognitive
@@ -176,14 +176,16 @@ details are preserved with the intent to reproduce.
 Current solutions
 
 There were several attempts to address those issues by creating a
-pipeline engine. Taverna (REF), VisTrails(REF) are general pipelining
-systems and do not address problems specific to neuroimaging. BrainVisa
-(REF), MIPAV (REF), SPM include their own batch processing tools, but do
-not allow mixing components from other packages. Fiswidgets (REF), a
-promising initial approach, appears to have not been developed and does
-not support state of the art methods. A much more extensive and feature
-rich solution is the LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov
-et al., 2010; Rex, Ma, & A. W. Toga, 2003). It provides an easy to use
+pipeline engine. Taverna (Oinn et al. 2006), VisTrails (Callahan et al.
+2006) are general pipelining systems and do not address problems
+specific to neuroimaging. BrainVisa
+
+(Cointepas et al. 2001), MIPAV (REF), SPM include their own batch
+processing tools, but do not allow mixing components from other
+packages. Fiswidgets (REF), a promising initial approach, appears to
+have not been developed and does not support state of the art methods. A
+much more extensive and feature rich solution is the LONI Pipeline
+(Dinov et al., 2009; 2010; Rex et al.,2003). It provides an easy to use
 graphical interface for choosing processing steps or nodes from a
 predefined library and defining their dependencies and parameters. It
 also has extensive support for parallel execution on an appropriately
@@ -1124,9 +1126,9 @@ flexible project that takes into account needs of many scientists.
 Improving openness, transparency, and reproducibility of research has
 been a goal of NiPyPe since its inception. A Workflow definition is, in
 principle, sufficient to reproduce the analysis. Since it was used to
-actually analyze the data it is more detailed and accurate than a
-typical methods description in a paper, but also has the advantage of
-being reused and shared within and across laboratories. Accompanying a
+analyze the data, it is more detailed and accurate than a typical
+methods description in a paper, but also has the advantage of being
+reused and shared within and across laboratories. Accompanying a
 publication with a formal definition of the processing pipeline (such as
 a NiPyPe script) increases reproducibility and transparency of research.
 The Interfaces and Workflows of NiPyPe capture neuroimaging analysis
@@ -1177,12 +1179,13 @@ John Gabrieli’s laboratory at MIT for testing NiPyPe through its
 evolutionary stages, in particular, Tyler Perrachione and Gretchen
 Reynolds. We would also like to thank the developers of FreeSurfer, FSL
 and SPM for being supportive of the project and providing valuable
-feedback on technical issues. We would like to thank XX for providing
-feedback during the preparation of the manuscript. Satrajit Ghosh would
-like to acknowledge support from NIBIB R03 EB008673 (PI: Ghosh and
-Whitfield-Gabrieli), the Ellison Medical Foundation, Katrien Vander
-Straeten and Amie Ghosh. Krzysztof Gorgolewski would like to thank Mark
-Bastin, Cyril Pernet, and Amos Storkey for their supervision.
+feedback on technical issues. We would like to thank
+XX\ :sup:``[e] <#cmnt5>`_`\  for providing feedback during the
+preparation of the manuscript. Satrajit Ghosh would like to acknowledge
+support from NIBIB R03 EB008673 (PI: Ghosh and Whitfield-Gabrieli), the
+Ellison Medical Foundation, Katrien Vander Straeten and Amie Ghosh.
+Krzysztof Gorgolewski would like to thank Mark Bastin, Cyril Pernet, and
+Amos Storkey for their supervision.
 
 --------------
 
