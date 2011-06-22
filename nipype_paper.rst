@@ -507,7 +507,7 @@ enables a hierarchical architecture and encourages Workflow reuse. The
 Workflow engine validates that all nodes have unique names, ensures that
 there are no cycles, and prevents connecting multiple outputs to a given
 input. For example in an fMRI processing Workflow, preprocessing, model
-fitting and visualisation of results can be implemented as individual
+fitting and visualization of results can be implemented as individual
 Workflows connected together in a main Workflow. This not only improves
 clarity of designed Workflows but also enables easy exchange of whole
 subsets. Common Workflows can be shared across different studies within
