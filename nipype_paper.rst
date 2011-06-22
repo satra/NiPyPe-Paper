@@ -110,7 +110,7 @@ information. For current multi-modal datasets, researchers typically
 resort to using different software packages for different components of
 the analysis. However, these different software packages are accessed,
 and interfaced with, in different ways, such as: shell scripting (FSL,
-AFNI, Camino), Matlab (SPM) and Python (NiPy). This has resulted in a
+AFNI, Camino), MATLAB (SPM) and Python (NiPy). This has resulted in a
 heterogeneous set of software with no uniform way to use these tools or
 execute them. With the primary focus on algorithmic improvement,
 academic software development often lacks a rigorous software
@@ -178,21 +178,21 @@ Current solutions
 There were several attempts to address those issues by creating a
 pipeline engine. Taverna (REF), VisTrails(REF) are general pipelining
 systems and do not address problems specific to neuroimaging. BrainVisa
-(REF), MIPAV (REF), SPM\ :sup:``[1] <#ftnt1>`_`\  include their own
-batch processing tools, but do not allow mixing components from other
-packages. Fiswidgets (REF), a promising initial approach, appears to
-have not been developed and does not support state of the art methods. A
-much more extensive and feature rich solution is the LONI Pipeline (I.
-D. Dinov et al., 2009; I. Dinov et al., 2010; Rex, Ma, & A. W. Toga,
-2003). It provides an easy to use graphical interface for choosing
-processing steps or nodes from a predefined library and defining their
-dependencies and parameters. It also has extensive support for parallel
-execution on an appropriately configured cluster (including data
-transfer, pausing execution, and combining local and remote software).
-Additionally, the LONI Pipeline saves information about executed steps
-(such as software origin, version and architecture) providing provenance
-information (A. J. Mackenzie-Graham, J. D. Van Horn, R. P. Woods,
-Crawford, & A. W. Toga, 2008).
+(REF), MIPAV (REF), SPM include their own batch processing tools, but do
+not allow mixing components from other packages. Fiswidgets (REF), a
+promising initial approach, appears to have not been developed and does
+not support state of the art methods. A much more extensive and feature
+rich solution is the LONI Pipeline (I. D. Dinov et al., 2009; I. Dinov
+et al., 2010; Rex, Ma, & A. W. Toga, 2003). It provides an easy to use
+graphical interface for choosing processing steps or nodes from a
+predefined library and defining their dependencies and parameters. It
+also has extensive support for parallel execution on an appropriately
+configured cluster (including data transfer, pausing execution, and
+combining local and remote software). Additionally, the LONI Pipeline
+saves information about executed steps (such as software origin, version
+and architecture) providing provenance information (A. J.
+Mackenzie-Graham, J. D. Van Horn, R. P. Woods, Crawford, & A. W. Toga,
+2008).
 
 However, the LONI Pipeline does not come without limitations. Processing
 nodes are defined using eXtensible Markup Language (XML). This “one size
@@ -235,10 +235,10 @@ and retrieving outputs; 2) a workflow engine that allows creating
 analysis pipelines by connecting inputs and outputs of interfaces as a
 directed acyclic graph (DAG); and 3) plugins that execute workflows
 either locally or in a distributed processing environment (e.g.,
-Torque\ :sup:``[2] <#ftnt2>`_`\ , SGE/OGE). In the following sections,
+Torque\ :sup:``[1] <#ftnt1>`_`\ , SGE/OGE). In the following sections,
 we describe key architectural components and features of this software.
 
-.. figure:: images/image06.png
+.. figure:: images/image01.png
    :align: center
    :alt: 
 
@@ -272,7 +272,7 @@ An Interface definition consists of: (a) input parameters, their types
 (e.g., file, floating point value, list of integers, etc.,.) and
 dependencies (e.g., does input ‘a’ require input ‘b’); (b) outputs and
 their types, (c) how to execute the underlying software (e.g., run a
-matlab script, or call a command line program); and (d) a mapping which
+MATLAB script, or call a command line program); and (d) a mapping which
 defines the outputs that are produced given a particular set of inputs.
 Using an object-oriented approach, we minimize redundancy in interface
 definition by creating a hierarchy of base Interface classes (see Figure
@@ -334,7 +334,7 @@ Listing 1. An example interface wrapping the gzip command line tool and
 a usage example. This Interface takes a file name as an input, calls
 gzip to compress it and returns a name of the compressed output file.
 
-.. figure:: images/image00.png
+.. figure:: images/image04.png
    :align: center
    :alt: 
 Figure 2. Simplified hierarchy of Interface classes. An object-oriented
@@ -345,7 +345,7 @@ CommandLine class to provide functionality specific to executing MATLAB,
 FSL and FreeSurfer programs. The SPMCommand class defines functions that
 simplify wrapping SPM functionality.
 
-We use Enthought Traits\ :sup:``[3] <#ftnt3>`_`\  to create a formal
+We use Enthought Traits\ :sup:``[2] <#ftnt2>`_`\  to create a formal
 definition for Interface inputs and outputs, to define input constraints
 (e.g., type, dependency, whether mandatory) and to provide validation
 (e.g., file existence). This allows malformed or underspecified inputs
@@ -536,7 +536,7 @@ Example - building a Workflow from scratch
 
 In this section, we describe how to create and extend a typical fMRI
 processing Workflow. A typical fMRI Workflow can be divided into two
-sections: 1) preprocessing and 2) modelling. The first one deals with
+sections: 1) preprocessing and 2) modeling. The first one deals with
 cleaning data from confounds and noise and the second one fits a model
 to the cleaned data based on the experimental design. The preprocessing
 stage in this Workflow will consist of only two steps: 1) motion
@@ -561,22 +561,22 @@ preprocessing = pe.Workflow(name="preprocessing")
 
 preprocessing.connect(realign, "realigned\_files", smooth, "in\_files")
 
-A modelling Workflow is constructed in an analogous manner, by first
+A modeling Workflow is constructed in an analogous manner, by first
 defining Nodes from model design, model estimation and contrast
 estimation. We again use SPM Interfaces for this purpose. However,
 NiPyPe adds an extra abstraction Interface for model specification whose
 output can be used to create models in different packages (e.g., SPM,
 FSL and NiPy). The nodes of this Workflow are: SpecifyModel (NiPyPe
 model abstraction Interface), Level1Design (SPM design definition),
-ModelEstimate, and ContrastEstimate. The connected modelling Workflow
-can be seen on Figure workflow\_from\_scratch.
+ModelEstimate, and ContrastEstimate. The connected modeling Workflow can
+be seen on Figure workflow\_from\_scratch.
 
-We create a master Workflow that connects the preprocessing and
-modelling Workflows, adds the ability to select data for processing
-(using DataGrabber Interface) and a DataSink Node to save the outputs of
-the entire Workflow. NiPyPe allows connecting Nodes between Workflows.
-We will use this feature to connect realignment\_parameters and
-smoothed\_files to modelling workflow.
+We create a master Workflow that connects the preprocessing and modeling
+Workflows, adds the ability to select data for processing (using
+DataGrabber Interface) and a DataSink Node to save the outputs of the
+entire Workflow. NiPyPe allows connecting Nodes between Workflows. We
+will use this feature to connect realignment\_parameters and
+smoothed\_files to modeling workflow.
 
 The DataGrabber Interface allows the user to define flexible search
 patterns which can be parameterized by user defined inputs (such as
@@ -605,7 +605,7 @@ parameter of specify\_model is changed, some of the Nodes (but not all)
 would have to rerun. NiPyPe automatically determines which Nodes require
 rerunning.
 
-.. figure:: images/image04.png
+.. figure:: images/image08.png
    :align: center
    :alt: 
 Figure 3. Graph describing the processing steps and dependencies for the
@@ -784,10 +784,10 @@ Therefore the way its development is managed is a part of the solution.
 NiPyPe is distributed under BSD license which allows free copying,
 modification and distribution and additionally meets all the
 requirements of open source definition (see Open Source
-Initiative\ :sup:``[4] <#ftnt4>`_`\ ) and Debian Free Software
-Guidelines\ :sup:``[5] <#ftnt5>`_`\ . Development is carried out openly
+Initiative\ :sup:``[3] <#ftnt3>`_`\ ) and Debian Free Software
+Guidelines\ :sup:``[4] <#ftnt4>`_`\ . Development is carried out openly
 through distributed version control system (GIT via
-GitHub\ :sup:``[6] <#ftnt6>`_`\ ) in an online community. The current
+GitHub\ :sup:``[5] <#ftnt5>`_`\ ) in an online community. The current
 version of the source code together with complete history is accessible
 to everyone. Discussions between developers and design decisions are
 done on an open access mailing list. Such setup encourages a broader
@@ -876,7 +876,7 @@ appropriate form (e.g., command line arguments or MATLAB scripts) for
 executing the underlying tools in the right way, while presenting the
 user with a uniform interface.
 
-.. figure:: images/image07.png
+.. figure:: images/image05.png
    :align: center
    :alt: 
 Figure 5. HTML help page for dtfit command from Camino. This was
@@ -929,7 +929,7 @@ only to demonstrate NiPyPe capabilities a comparison between smoothing
 methods is outside of the scope of this paper and will most likely
 require more subjects and quantitative metrics.
 
-.. figure:: images/image05.png
+.. figure:: images/image00.png
    :align: center
    :alt: 
 Figure 6. Graph showing the workflow used for the smoothing methods and
@@ -937,7 +937,7 @@ parameters comparison. The gray shaded nodes have iterables parameter
 set. This allows to easily iterate over all combinations of FWHM and
 smoothing algorithms used in the comparison.
 
-.. figure:: images/image03.png
+.. figure:: images/image06.png
    :align: center
    :alt: 
 Figure 7. Influence of different smoothing methods and their parameters.
@@ -993,7 +993,7 @@ Interfaces in an interactive console is also a great way to learn how
 different algorithms work with different parameters without having to
 understand how to set them up and execute them.
 
-.. figure:: images/image01.png
+.. figure:: images/image02.png
    :align: center
    :alt: 
 Figure 8. create\_spm\_preproc() functions returns this reusable, data
@@ -1027,7 +1027,7 @@ from the expected runtime of 64 minutes (32 minutes for the first 40
 subjects and another 32 minutes for the remaining 29 subjects) stems
 from disk I/O and other network and processing resource bottlenecks.
 
-.. figure:: images/image08.png
+.. figure:: images/image07.png
    :align: center
    :alt: 
 Figure 9. Single subject fMRI Workflow used for benchmarking parallel
@@ -1079,7 +1079,7 @@ is easy to learn and adopt and is available across all major operating
 systems. Python is also known to be a good choice for the first
 programming language to learn (Zelle 1999) and is chosen as the language
 for introductory programming at many schools and
-universities\ :sup:``[7] <#ftnt7>`_`\ . Being a generic and free
+universities\ :sup:``[6] <#ftnt6>`_`\ . Being a generic and free
 language, with various extensions available "out of the box", it allowed
 many researchers to start implementing and sharing their ideas
 (scratching their itch) with minimal knowledge of Python while learning
@@ -1089,9 +1089,9 @@ attracting users and contributors, and even outlasting the involvement
 of the original authors. Python has already been embraced by the
 neuroscientific community and is rapidly gaining popularity (Bednar,
 2009; Goodman & Brette, 2009). The Connectome Viewer Toolkit(REF),
-DiPy(REF), NiBabel\ :sup:``[8] <#ftnt8>`_`\ ,
-NiPy\ :sup:``[9] <#ftnt9>`_`\ , NiTime(REF), PyMVPA (REF), PyXNAT (REF)
-and Scikits-Learn\ :sup:``[10] <#ftnt10>`_`\  are just a few examples of
+DiPy(REF), NiBabel\ :sup:``[7] <#ftnt7>`_`\ ,
+NiPy\ :sup:``[8] <#ftnt8>`_`\ , NiTime(REF), PyMVPA (REF), PyXNAT (REF)
+and Scikits-Learn\ :sup:``[9] <#ftnt9>`_`\  are just a few examples of
 neuroimaging related software written in Python. NiPyPe, based on
 Python, thus has immediate access to this extensive community and its
 software, technological resources and support structure.
@@ -1248,21 +1248,21 @@ cont2 = ('Task-Odd>Task-Even','T', ['Task-Odd','Task-Even'],[1,-1])
 
 contrastestimate.inputs.contrasts = [cont1, cont2]
 
-modelling = pe.Workflow(name="modelling")
+modeling = pe.Workflow(name="modeling")
 
-modelling.connect(specify\_model, 'session\_info', level1design,
+modeling.connect(specify\_model, 'session\_info', level1design,
 'session\_info')
 
-modelling.connect(level1design, 'spm\_mat\_file', level1estimate,
+modeling.connect(level1design, 'spm\_mat\_file', level1estimate,
 'spm\_mat\_file')
 
-modelling.connect(level1estimate,'spm\_mat\_file',
+modeling.connect(level1estimate,'spm\_mat\_file',
 contrastestimate,'spm\_mat\_file')
 
-modelling.connect(level1estimate,'beta\_images',
+modeling.connect(level1estimate,'beta\_images',
 contrastestimate,'beta\_images')
 
-modelling.connect(level1estimate,'residual\_image',
+modeling.connect(level1estimate,'residual\_image',
 contrastestimate,'residual\_image')
 
 main\_workflow = pe.Workflow(name="main\_workflow")
@@ -1271,11 +1271,11 @@ main\_workflow.base\_dir = "workflow\_from\_scratch"
 
 main\_workflow.connect(preprocessing, "realign.realignment\_parameters",
 
-modelling, "specify\_model.realignment\_parameters")
+modeling, "specify\_model.realignment\_parameters")
 
 main\_workflow.connect(preprocessing, "smooth.smoothed\_files",
 
-modelling, "specify\_model.functional\_runs")
+modeling, "specify\_model.functional\_runs")
 
 datasource = pe.Node(interface=nio.DataGrabber(infields=['subject\_id'],
 
@@ -1300,7 +1300,7 @@ datasink = pe.Node(interface=nio.DataSink(), name="datasink")
 datasink.inputs.base\_directory =
 os.path.abspath('workflow\_from\_scratch/output')
 
-main\_workflow.connect(modelling, 'contrastestimate.spmT\_images',
+main\_workflow.connect(modeling, 'contrastestimate.spmT\_images',
 datasink, 'contrasts.@T')
 
 main\_workflow.run()
@@ -1495,21 +1495,21 @@ name="contrastestimate")
 contrastestimate.inputs.contrasts = [('Task>Baseline','T',
 ['Task-Odd','Task-Even'],[0.5,0.5])]
 
-modelling = pe.Workflow(name="modelling")
+modeling = pe.Workflow(name="modeling")
 
-modelling.connect(specify\_model, 'session\_info', level1design,
+modeling.connect(specify\_model, 'session\_info', level1design,
 'session\_info')
 
-modelling.connect(level1design, 'spm\_mat\_file', level1estimate,
+modeling.connect(level1design, 'spm\_mat\_file', level1estimate,
 'spm\_mat\_file')
 
-modelling.connect(level1estimate,'spm\_mat\_file',
+modeling.connect(level1estimate,'spm\_mat\_file',
 contrastestimate,'spm\_mat\_file')
 
-modelling.connect(level1estimate,'beta\_images',
+modeling.connect(level1estimate,'beta\_images',
 contrastestimate,'beta\_images')
 
-modelling.connect(level1estimate,'residual\_image',
+modeling.connect(level1estimate,'residual\_image',
 contrastestimate,'residual\_image')
 
 main\_workflow = pe.Workflow(name="main\_workflow")
@@ -1518,15 +1518,15 @@ main\_workflow.base\_dir = "smoothing\_comparison\_workflow"
 
 main\_workflow.connect(preprocessing, "realign.realignment\_parameters",
 
-modelling, "specify\_model.realignment\_parameters")
+modeling, "specify\_model.realignment\_parameters")
 
 main\_workflow.connect(preprocessing, "select\_smoothed\_files.out",
 
-modelling, "specify\_model.functional\_runs")
+modeling, "specify\_model.functional\_runs")
 
 main\_workflow.connect(preprocessing, "compute\_mask.brain\_mask",
 
-modelling, "level1design.mask\_image")
+modeling, "level1design.mask\_image")
 
 datasource = pe.Node(interface=nio.DataGrabber(infields=['subject\_id'],
 
@@ -1558,7 +1558,7 @@ os.path.abspath('smoothing\_comparison\_workflow/output')
 
 datasink.inputs.regexp\_substitutions = [("\_rename[0-9]", "")]
 
-main\_workflow.connect(modelling, 'contrastestimate.spmT\_images',
+main\_workflow.connect(modeling, 'contrastestimate.spmT\_images',
 datasink, 'contrasts')
 
 main\_workflow.connect(preprocessing, 'rename.out\_file', datasink,
@@ -1570,25 +1570,23 @@ main\_workflow.write\_graph()
 
 --------------
 
-`[1] <#ftnt_ref1>`_`http://www.fil.ion.ucl.ac.uk/spm/software/ <http://www.fil.ion.ucl.ac.uk/spm/software/>`_
+`[1] <#ftnt_ref1>`_`http://www.clusterresources.com/products/torque-resource-manager.php <http://www.clusterresources.com/products/torque-resource-manager.php>`_
 
-`[2] <#ftnt_ref2>`_`http://www.clusterresources.com/products/torque-resource-manager.php <http://www.clusterresources.com/products/torque-resource-manager.php>`_
+`[2] <#ftnt_ref2>`_http://code.enthought.com/projects/traits/
 
-`[3] <#ftnt_ref3>`_http://code.enthought.com/projects/traits/
+`[3] <#ftnt_ref3>`_http://www.opensource.org/docs/osd
 
-`[4] <#ftnt_ref4>`_http://www.opensource.org/docs/osd
+`[4] <#ftnt_ref4>`_http://www.debian.org/social\_contract#guidelines
 
-`[5] <#ftnt_ref5>`_http://www.debian.org/social\_contract#guidelines
+`[5] <#ftnt_ref5>`_`http://github.com/nipy/nipype <https://github.com/nipy/nipype>`_
 
-`[6] <#ftnt_ref6>`_`http://github.com/nipy/nipype <https://github.com/nipy/nipype>`_
+`[6] <#ftnt_ref6>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
 
-`[7] <#ftnt_ref7>`_`http://wiki.python.org/moin/SchoolsUsingPython <http://wiki.python.org/moin/SchoolsUsingPython>`_
+`[7] <#ftnt_ref7>`_`http://nipy.sourceforge.net/nibabel/ <http://nipy.sourceforge.net/nibabel/>`_
 
-`[8] <#ftnt_ref8>`_`http://nipy.sourceforge.net/nibabel/ <http://nipy.sourceforge.net/nibabel/>`_
+`[8] <#ftnt_ref8>`_`http://nipy.sourceforge.net/nipy/ <http://nipy.sourceforge.net/nipy/>`_
 
-`[9] <#ftnt_ref9>`_`http://nipy.sourceforge.net/nipy/ <http://nipy.sourceforge.net/nipy/>`_
-
-`[10] <#ftnt_ref10>`_`http://scikit-learn.sourceforge.net <http://scikit-learn.sourceforge.net/>`_
+`[9] <#ftnt_ref9>`_`http://scikit-learn.sourceforge.net <http://scikit-learn.sourceforge.net/>`_
 
 `[b] <#cmnt_ref2>`_Michael.L.Waskom:
 
@@ -1782,4 +1780,4 @@ what kind of script was meant so that it is different from command line
 tool? probably you meant native "Python module" like in the case of
 nipy?
 
-.. |image0| image:: images/image02.png
+.. |image0| image:: images/image03.png
