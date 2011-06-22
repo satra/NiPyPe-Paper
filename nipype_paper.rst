@@ -501,16 +501,16 @@ implicitly specifies dependencies. These are represented internally as a
 directed acyclic graph (DAG). The current semantics of Workflow do not
 allow conditionals and hence the graph needs to be acyclic. Workflows
 themselves can be a node of the Workflow graph (see Figure 1). This
-enables a hierarchical architecture and encourages workflow reuse. The
-workflow engine validates that all nodes have unique names, ensures that
-there are no cycles and prevents connecting multiple outputs to a given
-input. For example in an fMRI processing Workflow, the preprocessing,
-model fitting and visualisation of results can be implemented as
-individual Workflows connected together in the main Workflow. This not
-only improves clarity of designed Workflows but also enables easy
-exchange of whole subsets. Common Workflows can be shared across
-different studies within and across laboratories thus reducing
-redundancy and increasing consistency.
+enables a hierarchical architecture and encourages Workflow reuse. The
+Workflow engine validates that all nodes have unique names, ensures that
+there are no cycles, and prevents connecting multiple outputs to a given
+input. For example in an fMRI processing Workflow, preprocessing, model
+fitting and visualisation of results can be implemented as individual
+Workflows connected together in a main Workflow. This not only improves
+clarity of designed Workflows but also enables easy exchange of whole
+subsets. Common Workflows can be shared across different studies within
+and across laboratories thus reducing redundancy and increasing
+consistency.
 
 While a neuroimaging processing pipeline could be implemented as a Bash,
 MATLAB or a Python script, NiPyPe explicitly implements a pipeline as a
