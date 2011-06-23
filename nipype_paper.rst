@@ -133,17 +133,16 @@ architectonic atlases to MNI single subject template - Hömke, 2006).
 3) Personnel turnover in laboratories often limits methodological
 continuity and training new personnel takes time. Most cognitive
 neuroscience laboratories aim to understand some aspect of cognition.
-Although, a majority of such laboratories gather and analyze
-neuroimaging data, very few of them have the personnel with the
-technical expertise to understand methodological development and modify
-laboratory procedures to adopt new tools. Lab personnel with no prior
-imaging experience often learn by following online tutorials, taking
-organized courses or, as is most often the case, by learning from
-existing members of the lab. While this provides some amount of
-continuity, understanding different aspects of neuroimaging has a steep
-learning curve, and steeper when one takes into account the time and
-resources needed to learn the different package interfaces and
-algorithms.
+Although a majority of such laboratories gather and analyze neuroimaging
+data, very few of them have the personnel with the technical expertise
+to understand methodological development and modify laboratory
+procedures to adopt new tools. Lab personnel with no prior imaging
+experience often learn by following online tutorials, taking organized
+courses or, as is most often the case, by learning from existing members
+of the lab. While this provides some amount of continuity, understanding
+the different aspects of neuroimaging has a steep learning curve, and
+steeper when one takes into account the time and resources needed to
+learn the different package interfaces and algorithms.
 
 4) Neuroimaging software packages do not address computational
 efficiency. The primary focus of neuroimaging analysis algorithms is to
@@ -175,7 +174,7 @@ details are preserved with the intent to reproduce.
 
 Current solutions
 
-There were several attempts to address those issues by creating a
+There have been several attempts to address those issues by creating a
 pipeline engine. Taverna (Oinn et al. 2006), VisTrails (Callahan et al.
 2006) are general pipelining systems and do not address problems
 specific to neuroimaging. BrainVisa (Cointepas et al. 2001), MIPAV
@@ -244,8 +243,8 @@ we describe key architectural components and features of this software.
 Figure 1. Architecture overview of the NiPyPe framework. Interfaces are
 wrapped with Nodes or MapNodes and connected together as a graph within
 a Workflow. Workflows themselves can act as a Node inside another
-Workflow, supporting a composite design pattern. Dependency graph is
-transformed before executing by the engine component. Execution is
+Workflow, supporting a composite design pattern. The dependency graph is
+transformed before being executed by the engine component. Execution is
 performed by one of the plugins. Currently NiPyPe supports serial and
 parallel (both local multithreading and cluster) execution.
 
@@ -763,8 +762,8 @@ PyPi repository
 (`http://pypi.python.org/pypi/nipype/ <http://pypi.python.org/pypi/nipype/>`_),
 and from package repositories on Debian-based systems. Manual
 installation involves downloading a source code archive and running a
-standard Python installation script (distutils). This way user has to
-take care of installing all of the dependencies. Installing from PyPI
+standard Python installation script (distutils). This way the user has
+to take care of installing all of the dependencies. Installing from PyPI
 repository lifts this constraint by providing dependency information and
 automatically installing required packages. NiPyPe is available from
 standard repositories on recent Debian and Ubuntu releases. Moreover,
@@ -792,7 +791,7 @@ through distributed version control system (git via
 GitHub\ :sup:``[5] <#ftnt5>`_`\ ) in an online community. The current
 version of the source code together with complete history is accessible
 to everyone. Discussions between developers and design decisions are
-done on an open access mailing list. Such setup encourages a broader
+done on an open access mailing list. This setup encourages a broader
 community of developers to join the project and allows sharing of the
 development resources (effort, money, information and time).
 
@@ -947,7 +946,7 @@ smoothing on the T maps (same slice) of the main contrast.
 
 Algorithm comparison is not the only way NiPyPe can be useful for a
 neuroimaging methods researcher. It is in the interest of every methods
-developer to make his or hers work most accessible. This usually means
+developer to make his or her work most accessible. This usually means
 providing ready to use implementations. However, because the field is so
 diverse, software developers have to provide several packages (SPM
 toolbox, command line tool, C++ library etc.) to cover the whole user
@@ -1098,17 +1097,17 @@ Python, thus has immediate access to this extensive community and its
 software, technological resources and support structure.
 
 NiPyPe provides a formal and flexible framework to accommodate the
-diversity of imaging software. Within neuroimaging community, not all
-software are limited to well behaved command line tools. Furthermore, a
-number of these tools do not have well defined inputs, outputs or usage
-help. Although, currently we use Enthought Traits to define inputs and
-outputs of interfaces, such definitions could be easily translated into
-instances of XML schemas compatible with other pipeline frameworks. On
-the other hand, when a tool provides a formal XML description of their
-inputs and outputs (e.g., Slicer 3D, BRAINS), it is possible to take
-these definitions and automatically generate NiPyPe wrappers for those
-classes.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diversity of imaging software. Within the neuroimaging community, not
+all software is limited to well behaved command line tools. Furthermore,
+a number of these tools do not have well defined inputs, outputs or
+usage help. Although currently we use Enthought Traits to define inputs
+and outputs of interfaces, such definitions could be easily translated
+into instances of XML schemas compatible with other pipeline frameworks.
+On the other hand, when a tool provides a formal XML description of
+their inputs and outputs (e.g., Slicer 3D, BRAINS), it is possible to
+take these definitions and automatically generate NiPyPe wrappers for
+those classes.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NiPyPe development welcomes input and contributions from the community.
 The source code is freely distributed under a Berkeley Software
@@ -1129,8 +1128,8 @@ publication with a formal definition of the processing pipeline (such as
 a NiPyPe script) increases reproducibility and transparency of research.
 The Interfaces and Workflows of NiPyPe capture neuroimaging analysis
 knowledge and the evolution of methods. Although, at the execution
-level, NiPyPe captures a variety of provenance information, this aspect
-can be improved by generating provenance reports defined by a
+level, NiPyPe already captures a variety of provenance information, this
+aspect can be improved by generating provenance reports defined by a
 standardized XML schema (Mackenzie-Graham, Van Horn, Woods, Crawford, &
 Toga, 2008).
 
@@ -1758,158 +1757,5 @@ assurance specific mechanisms in nipype.
 `[c] <#cmnt_ref3>`_satrajit.ghosh:
 
 anybody who has commented on the paper (not the authors)
-
-`[d] <#cmnt_ref4>`_satrajit.ghosh:
-
-greve and fischl, neuroimage
-
-`[e] <#cmnt_ref5>`_davclark:
-
-delete? Verbose and (to my eye) counter to the clearly evident truth
-("in fact" often cues "you might not have thought XXX")
-
-`[f] <#cmnt_ref6>`_krzysztof.gorgolewski:
-
-I could not find this one.
-
-`[g] <#cmnt_ref7>`_chris.d.burns:
-
-Composition?
-
-`[h] <#cmnt_ref8>`_krzysztof.gorgolewski:
-
-Is this something different than iterables\_vs\_mapnode?
-
-`[i] <#cmnt_ref9>`_krzysztof.gorgolewski:
-
-Isn't it a bit of an overkill to show all different types of graphs?
-Maybe we should point just to one of the workflow graphs from Result
-section?
-
-`[j] <#cmnt_ref10>`_Michael.L.Waskom:
-
-Looks like find and replace got greedy
-
-`[k] <#cmnt_ref11>`_krzysztof.gorgolewski:
-
-I am a bit afraid to make provenance tracking a big point. UCLA
-implementation has the following advantages: it's independent from LONI
-Pipeline, its standardized using an XML Schema, it includes architecture
-and version tracking.
-
-`[l] <#cmnt_ref12>`_krzysztof.gorgolewski:
-
-What figure dis you have in mind here?
-
---------------
-
-satrajit.ghosh:
-
-i was thinking of a simple doctest code
-
-`[m] <#cmnt_ref13>`_yarikoptic:
-
-It doesn't matter really for a user in what language it is written. It
-is important on how to interface/use it. E.g. shell scripting (FSL,
-AFNI, Camino), Matlab (SPM), Python (NiPy).
-
---------------
-
-krzysztof.gorgolewski:
-
-Good point: "However, these different software packages are accessed and
-interfaced with in different ways, such as: shell scripting (FSL, AFNI,
-Camino), Matlab (SPM) and Python (NiPy)."?
-
---------------
-
-yarikoptic:
-
-something like that ;-)
-
-`[n] <#cmnt_ref14>`_davclark:
-
-I assume you'll fix the formatting here - it might confuse people with
-moderate familiarity with python
-
---------------
-
-krzysztof.gorgolewski:
-
-Yes.
-
-`[o] <#cmnt_ref15>`_uni.designer.sg:
-
-You might want to remove this last sentence, because it is about
-something other than depicted in the Figure
-
---------------
-
-krzysztof.gorgolewski:
-
-It's an example which in my opinion makes the explanation easier to
-understand.
-
-`[p] <#cmnt_ref16>`_uni.designer.sg:
-
-developer
-
-`[q] <#cmnt_ref17>`_satrajit.ghosh:
-
-INSERT workflow figure or attach as supplementary material
-
---------------
-
-krzysztof.gorgolewski:
-
-is that spm\_tutorial.py?
-
---------------
-
-satrajit.ghosh:
-
-yes
-
-`[r] <#cmnt_ref18>`_krzysztof.gorgolewski:
-
-a graph of for example create\_susan\_smooth() or code listing?
-
---------------
-
-satrajit.ghosh:
-
-sure
-
-`[s] <#cmnt_ref19>`_krzysztof.gorgolewski:
-
-Needs incorporating into the section.
-
-`[t] <#cmnt_ref20>`_chris.d.burns:
-
-"rapid adaptation to the varied needs...", I know what you mean, but it
-sounds a bit chaotic, almost like the software could change direction
-wildly. When in reality, a variety of collaborators increases your
-sampling of the community, giving you better coverage of the problem
-domain resulting in a tool suite that is more broadly applicable.
-
---------------
-
-krzysztof.gorgolewski:
-
-Agreed, but this is just geek talk ;)
-
-What about "Development is done openly with collaborators from many
-different labs, allowing adaptation to the varied needs of a broad
-neuroimaging community."
-
-`[u] <#cmnt_ref21>`_satrajit.ghosh:
-
-reference
-
-`[v] <#cmnt_ref22>`_yarikoptic:
-
-what kind of script was meant so that it is different from command line
-tool? probably you meant native "Python module" like in the case of
-nipy?
 
 .. |image0| image:: images/image01.png
